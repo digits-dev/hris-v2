@@ -4,6 +4,7 @@
     <div class="logo-container">
       <img
         src="{{asset('images/navigation/hris-logo.png')}}"
+        width="45"
         class="nav-logo margin-auto"
       />
     </div>
