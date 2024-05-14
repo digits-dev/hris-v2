@@ -2,6 +2,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     {{-- bootstrap
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> --}}
@@ -11,20 +12,30 @@
         :root {
             --primary-color: #1F6268;
             --stroke-color: #599297;
-            --secondary-color: #DDFAFD;
+            --secondary-color: #cbfaff;
             --primary-text: #113437;
+            --primary-hover: #DDFAFD;
+            --tertiary-color: #27C1CE;
+
+
         }
 
         section {
             margin: 1rem 2.5rem;
-            /* background: yellow; */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .module {
             font-size: 20px;
-            /* font-weight: bold; */
-            /* font-family: "Inter", sans-serif; */
+            font-weight: bold;
+            font-family: "Inter", sans-serif;
 
+        }
+
+        .pagination{
+            margin-top: auto;
         }
 
         .inter {
@@ -47,7 +58,7 @@
             border-radius: 8px;
             display: flex;
             gap: 5px;
-            padding: 4px;
+            padding:5px 4px;
             border: 2px solid var(--stroke-color);
             width: 500px;
         }
@@ -55,18 +66,21 @@
         .search-form__button {
             background: var(--primary-color);
             color: white;
-            font-size: 13px;
-            /* font-weight: bold; */
+            font-size: 12px;
             padding: 6px 12px;
             border-radius: 8px;
             border: 2px solid var(--stroke-color);
             cursor: pointer;
-            /* font-family: "Inter", sans-serif; */
+            font-weight: 500;
+            font-family: "Inter", sans-serif;
 
+        }
+        .search-form__button:hover{
+            opacity: 0.9;
         }
 
         .search-form__input {
-            padding: 3px 5px;
+            padding: 3px 10px;
             outline: none;
             border: none;
             font-weight: normal;
@@ -78,55 +92,132 @@
             width: 100%;
             margin: 30px 0;
             gap: 0;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             border-collapse: collapse;
             text-align: left;
         }
+        /* role */
+        
+        .table th:nth-child(7), .table td:nth-child(7){
+            text-align: center;
+        }
+        /* status */
+        .table th:nth-child(8), .table td:nth-child(8){
+            text-align: center;
 
+        }
+
+        
         .table thead {
             background: var(--secondary-color);
+            
         }
 
         .table th {
             color: var(--primary-text);
             font-weight: bold;
             font-family: "Inter", sans-serif;
-            padding: 10px 0;
-
-
+            padding: 12px 10px;
+            font-size:13px;
         }
 
+        .table thead tr{
+            border-bottom: unset;
+            border-radius: 10px;
+        }
+
+        .table tr{
+            color: var(--primary-text);
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
+            border-bottom: 0.1px solid var(--stroke-color);
+        }
+        .table tbody tr:hover{
+            background-color: var(--primary-hover);
+        }
+
+        .table td{
+            color: var(--primary-text);
+            font-weight: 500;
+            font-family: "Inter", sans-serif;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        /* Table Column Widths  */
+
+        /* checkbox  */
+        .table th:nth-child(1), .table td:nth-child(1){
+            width:1%;
+        }
+        /* image  */
+        .table th:nth-child(2), .table td:nth-child(2){
+            width:4%;
+        }
+        /* name */
+        .table th:nth-child(3), .table td:nth-child(3){
+            width:15%;
+        }
+        /* employee id */
+        .table th:nth-child(4), .table td:nth-child(4){
+            width:10%;
+        }
+        /* email address */
+        .table th:nth-child(5), .table td:nth-child(5){
+            width:20%;
+        }
+        /* location */
+        .table th:nth-child(6), .table td:nth-child(6){
+            width:20%;
+        }
+        /* role */
+        .table th:nth-child(7), .table td:nth-child(7){
+            width:10%;
+        }
+        /* status */
+        .table th:nth-child(8), .table td:nth-child(8){
+            width:10%;
+        }
+        /* action */
+        .table th:nth-child(9), .table td:nth-child(9){
+            width:4%;
+        }
+
+        /* End of Table Column Widths  */
+        
         .table input {
             display: inline-block;
-            margin-left: 10px;
         }
 
         ::placeholder {
             color: var(--primary-color);
-            /* Change placeholder text color */
-            font-weight: bold;
+            font-weight: 500;
         }
 
-        .btn {
+        .add-btn {
             background-color: var(--primary-color);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 12px;
             border: 2px solid var(--stroke-color);
-            padding: 10px 16px;
+            padding: 10px 20px;
             cursor: pointer;
+        }
+
+        .add-btn:hover{
+            opacity: 0.9;
         }
 
         input[type="checkbox"] {
             -webkit-appearance: none; /* Remove default appearance */
             -moz-appearance: none;
             background-color: white; /* Background color when checked */
-
             appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid #ccc; /* Default border color */
+            margin-top: 5px;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--stroke-color); /* Default border color */
             border-radius: 4px;
             outline: none;
             cursor: pointer;
@@ -134,19 +225,74 @@
         }
         /* Custom checkbox when checked */
         input[type="checkbox"]:checked {
-            background-color: orange; /* Background color when checked */
-            border-color: red; /* Border color when checked */
+            background-color:var(--primary-color); /* Background color when checked */
+            padding: 5px;
+
         }
         /* Custom checkbox when checked - checkmark */
         input[type="checkbox"]:checked::after {
-            content: "\2713"; /* Checkmark symbol */
+            content: "\2714"; /* Checkmark symbol */
             color: white; /* Color of the checkmark */
-            font-size: 14px;
+            font-size: 8px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        .tbl-btns{
+            display: flex;
+        }
+        .table-btn{
+            height: 25px;
+            width: 25px;
+            border-radius: 5px;
+            display: grid;
+            place-content: center;
+            font-size: 10px;
+            color: white;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .table-btn--blue{
+            background: #2196F3;
+        }
+        .table-btn--green{
+            background: #0F901B;
+        }
+
+        .user-img{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: auto;
+        }
+
+        .role{
+            background: var(--primary-color);
+            color:white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            border: 2px solid var(--stroke-color);
+        }
+
+        .status{
+            background: var(--tertiary-color);
+            color:white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            border: 2px solid var(--stroke-color);
+        }
+
+    .th-sort{
+     display: flex; 
+     align-items: center;
+     justify-content: center;
+     gap:10px;
+    }
+ 
+
+    
     </style>
 @endsection
 
@@ -155,55 +301,65 @@
 
     <div class="header">
         <form action="" class="search-form">
-            <input type="text" class="search-form__input inter" placeholder="Search User">
-            <button type="submit" class="search-form__button inter">Search</button>
+            <input type="text" class="search-form__input " placeholder="Search User">
+            <button type="submit" class="search-form__button ">Search</button>
         </form>
 
-        <button class="btn">Add User</button>
+        <button class="add-btn">Add User</button>
     </div>
 
     <table class="table">
         <thead>
+         <tr>
             <th><input type="checkbox" name="" id=""></th>
-            <th>Name</th>
-            <th>Employee Id</th>
-            <th>Email Address</th>
-            <th>Location</th>
-            <th>Role</th>
-            <th>Status</th>
+            <th></th>
+            <th>
+                <Button class="th-sort">Name
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button>
+            </th>
+            <th > <Button class="th-sort"> Employee Id
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button> 
+            </th>
+            <th > <Button class="th-sort">Email Address
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button> 
+            </th>
+            <th > <Button class="th-sort ">Location
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button> 
+            </th>
+            <th > <Button class="th-sort  mx-auto">Role
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button> 
+            </th>
+            <th > <Button class="th-sort mx-auto">Status
+                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
+                </Button> 
+            </th>
             <th>Action</th>
+         </tr>
         </thead>
 
         <tbody>
             @foreach ($users as $user)
                 <tr>
                     <td>
-                        <input id="terms" type="checkbox" value=""
-                            class="w-4 
-                            h-4 
-                            text-orange-500
-                            border 
-                            border-gray-300 
-                            rounded bg-gray-50 
-                            focus:ring-3 
-                            focus:ring-blue-300 
-                            dark:bg-gray-700 
-                            dark:border-gray-600 
-                            dark:focus:ring-blue-600 
-                            dark:ring-offset-gray-800 
-                            dark:focus:ring-offset-gray-800"
-                            required />
-                        </div>
+                        <input id="terms" type="checkbox" value=""  required />
                     </td>
+                    <td><img class="user-img" src="/images/navigation/user.png" width="40" alt="{{$user->name}} picture"></td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->employee_id }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->location }}</td>
-                    <td>Admin</td>
-                    <td>Active</td>
+                    <td><span class="role">Employee</span></td>
+                    <td><span class="status">Active</span></td>
                     <td>
-                        <button>Edit</button>
-                        <button>View</button>
+                       <div class="tbl-btns">
+                        <button class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></button>
+                        <button class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></button>
+                       </div>
 
                     </td>
 
@@ -213,5 +369,7 @@
 
 
     </table>
+    <div class="pagination">
     {{ $users->links() }}
+    </div>
 </section>

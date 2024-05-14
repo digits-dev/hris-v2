@@ -3,6 +3,7 @@
 <head>
     @livewire('plugins.frontend-header-plugins')
     @yield('css')
+    @vite(['resources/css/app.css'])
 </head>
 <body>
     @livewire('component.navigation.sidebar')
