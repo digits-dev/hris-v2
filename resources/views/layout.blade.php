@@ -10,6 +10,7 @@
         <p style="margin: 1rem 2.5rem;" class="header-title">{{ ucwords(str_replace('-', ' ', Request::segment(1))) }}</p>
         @yield('content')
     </div>
+    @livewire('plugins.frontend-script-plugins')
     @livewireScripts
 </body>
 </html>
