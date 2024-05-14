@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
 
+use App\Models\User;
 use Livewire\Component;
 
 class EmployeeAccountsContent extends Component
@@ -12,6 +13,7 @@ class EmployeeAccountsContent extends Component
 
     public function render()
     {
-        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content');
+        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', ['users' => User::paginate(10)
+        ]);
     }
 }

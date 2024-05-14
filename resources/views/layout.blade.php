@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/navigation/hris-logo.png') }}">
-    <title>{{ ucwords(str_replace('-', ' ', Request::segment(1))) }} | HRIS</title>
-    <link rel="stylesheet" href="{{ asset('css/navigation/layout.css') }}">
+    @livewire('plugins.frontend-header-plugins')
 </head>
 <body>
     @livewire('component.navigation.sidebar')
@@ -15,7 +10,6 @@
         <p style="margin: 1rem 2.5rem;" class="header-title">{{ ucwords(str_replace('-', ' ', Request::segment(1))) }}</p>
         @yield('content')
     </div>
-
     @livewireScripts
 </body>
 </html>
