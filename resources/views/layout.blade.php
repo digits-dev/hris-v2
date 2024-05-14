@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @livewire('plugins.frontend-header-plugins')
+    @yield('css')
 </head>
 <body>
     @livewire('component.navigation.sidebar')
