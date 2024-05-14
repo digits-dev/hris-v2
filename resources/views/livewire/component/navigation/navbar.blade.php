@@ -6,7 +6,7 @@
         <span class="view-line"></span>
     </div>
     <div class="settings-button">
-        <img src="{{asset('images/navigation/user.png')}}" class="settings-image">
+        <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
     </div>
     <div class="setting-popup" style="display: none">
         <div class="header-info">
