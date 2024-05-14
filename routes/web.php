@@ -3,6 +3,7 @@
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
+use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,6 @@ Route::get('logout', [LoginAuthController::class, 'logout'])->name('logout');
 Route::get('dashboard', [DashboardContent::class, 'index'])->name('dashboard');
 // Employee Accounts
 Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->name('employee-accounts');
+
+//Employee Attendance
+Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->name('employee-attendance');

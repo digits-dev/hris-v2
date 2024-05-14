@@ -14,5 +14,6 @@
     </div>
     @livewire('plugins.frontend-script-plugins')
     @livewireScripts
+    @yield('script')
 </body>
 </html>

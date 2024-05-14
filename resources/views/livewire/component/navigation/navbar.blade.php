@@ -6,8 +6,34 @@
         <span class="view-line"></span>
     </div>
     <div class="settings-button">
-        <a href="{{ route('logout') }}">
-            <img src="{{asset('images/navigation/settings-icon.png')}}" class="settings-image">
-        </a>
+        <img src="{{asset('images/navigation/user.png')}}" class="settings-image">
     </div>
+    <div class="setting-popup" style="display: none">
+        <div class="header-info">
+            <img src="{{asset('images/navigation/user.png')}}" class="profile-info-image">
+            <p>{{auth()->user()->name}}</p>
+        </div>
+        <a href="" class="logout-content">
+            <i class="fa-regular fa-user mx-2"></i>
+            <p>Profile</p>
+        </a>
+
+        <div class="footer-info">
+            <a href="{{ route('logout') }}" class="logout-content">
+                <i class="fa-solid fa-right-from-bracket mx-2"></i>
+                <p>Logout</p>
+            </a>
+        </div>
+    </div>
+    
 </div>
+
+@section('script')
+<script>
+     $(document).ready(function(){
+        $('.settings-button').on('click', () => {
+            $('.setting-popup').fadeToggle();
+        });
+    }); 
+</script>
+@endsection
