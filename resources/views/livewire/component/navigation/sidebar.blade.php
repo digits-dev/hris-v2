@@ -7,13 +7,6 @@
           class="nav-logo margin-auto"
         />
       </div>
-      <!-- PROFILE -->
-      <div id="profile-content">
-        <img src="{{ asset('images/navigation/user.png') }}" class="profile-img" />
-        <div class="profile-info-content">
-            <h4 class="profile-name">{{ auth()->user()->name }}</h4>
-            <h6 class="profile-role" style="color: #ddd">SUPER ADMIN</h6>
-        </div>
       </div>
       <!-- SCREENS -->
       <div id="navigation-content">

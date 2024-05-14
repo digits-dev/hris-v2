@@ -7,6 +7,7 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+
 }
 
 /* SIDEBAR */
@@ -15,23 +16,28 @@ body{
     display: flex;
 }
 
+.header-title{
+    font-weight: 800;
+}
+
 .sidebar-container {
-    height: 100dvh;
+    min-height: 100dvh;
     width: 4.375rem;
     background: linear-gradient(to bottom, #04272B, #1F6268);
-    transition: 0.3s width ease;
+    transition: 0.5s width ease;
     overflow: hidden;
 }
-.sidebar-container:hover {
+.sidebar-container:hover{
     width: 15.625rem;
 }
-.sidebar-container:hover .navigation li a span, .sidebar-container:hover .profile-info-content  {
+.sidebar-container:hover .navigation li a span, .sidebar-container:hover  {
     display: block;
 }
 
 .sidebar-container:hover .navigation {
     margin: 0 0.9375rem;
     scrollbar-width:initial;
+    overflow-x: hidden;
 }
 
 /* width */
@@ -60,41 +66,12 @@ width: 5px;
     height: 60px;
     width: 100%;
     display: flex;
+    margin-bottom: 40px;
 }
 
 .nav-logo {
     object-fit: contain;
     width: 45px;
-}
-
-/* PROFILE */
-
-#profile-content {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 0;
-    margin: auto;
-}
-
-.profile-img {
-    object-fit: contain;
-    max-width: 40px;
-    width: 100%;
-    margin: auto;
-}
-
-.profile-info-content{
-    text-align: center;
-    display: none;
-}
-
-.profile-info-content *{
-    color: white;
-    padding-top: 8px;
-    font-family: "Figtree", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
 }
 
 .sidebar-content-container {
@@ -116,7 +93,6 @@ width: 5px;
 .navigation {
     width: 100%;
     flex-direction: column;
-    margin-top: 20px;
     max-height: calc(100dvh - 230px);
     overflow-y: auto;
     scrollbar-width: none;
@@ -136,6 +112,7 @@ width: 5px;
 #navigation-content {
     display: flex;
     flex: 1;
+
 }
 
 .navigation li span {
@@ -157,6 +134,7 @@ width: 5px;
 .navigation li:hover {
     background-color: rgba(0, 255, 255, 0.092);
     border-radius: 5px;
+ 
 }
 
 .active {

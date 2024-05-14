@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Authentication\LoginAuthController;
-use App\Livewire\Component\Backend\DashboardContent;
-use App\Livewire\Component\Backend\EmployeeAccountsContent;
+use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
 use Illuminate\Support\Facades\Route;
 
 /*
