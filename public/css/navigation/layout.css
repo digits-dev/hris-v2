@@ -23,7 +23,7 @@ body{
 .sidebar-container {
     min-height: 100dvh;
     width: 4.375rem;
-    background: linear-gradient(to bottom, #04272B, #1F6268);
+    background: #0d3b3f;
     transition: 0.5s width ease;
     overflow: hidden;
 }
