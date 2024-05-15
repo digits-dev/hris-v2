@@ -349,7 +349,7 @@
                     <td>
                        <div class="tbl-btns">
                         <a role="button" href="{{route('employee.show', $user->id)}}" class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
-                        <a role="button" href="{{route('employee.show', $user->id)}}" class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
+                        <a role="button" href="{{route('employee.edit', $user->id)}}" class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
                        </div>
 
                     </td>
