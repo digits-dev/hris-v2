@@ -23,11 +23,13 @@ body{
 }
 
 .sidebar-container {
+    height: 100%;
     min-height: 100dvh;
     width: 4.375rem;
     background: #0d3b3f;
     transition: 0.5s width ease;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .sidebar-container:hover{
     width: 15.625rem;

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('id_ad_privileges')->length(11)->nullable()->after('biometric_register');
+            $table->integer('id_ad_privileges')->length(11)->nullable()->after('password');
         });
     }
 

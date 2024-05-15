@@ -6,7 +6,7 @@
         --title-color: #847272;
         --clocked-in-color: #2196F3;
         --not-clocked-in-color: #FF6174;
-        --clocked-out-color: #D114EB;
+        --clocked-out-color: #EFE30A;
         --on-vacation-leave-color: #FF6600;
         --on-sick-leave-color: #0F901B;
 
@@ -34,28 +34,45 @@
 
     .statistics-content{
         background: var(--content-color);
-        height: 230px;
-        width: 200px;
         padding: 16px;
         border-radius: 10px;
+       
+    }
 
+    .chart-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+    }
+    .chart-container{
+        width: 220px;
+    }
+
+    @media screen and (max-width: 700px) {
+        .statistics-content{
+        width: 100%;
+       
+    }
     }
 
     .attendance-content{
         background: var(--content-color);
         flex: 1;
-        padding: 16px;
+        padding: 20px 16px;
         border-radius: 10px;
 
-        .content-title {
+    
+    }
+    .content-title {
             margin-bottom: 10px;
             font-family: "Inter", sans-serif;
             font-optical-sizing: auto;
-            font-weight: 800;
-            color: black;
+            font-weight: 700;
+            color: rgb(72, 72, 72);
             font-size: 14px;
         }
-    }
 
     /* ATTENDANCE */
 
@@ -138,8 +155,13 @@
         <p class="date">Today: May 05, 2024</p>
     </div>
     <div class="employee-attendance-container">
-        <div class="statistics-content">
-            <p>Statistics</p>
+        <div class="statistics-content shadow-md shadow-slate-200">
+            <p class="content-title ml-4">Statistics</p>
+            <div class="chart-content">
+                <div class="chart-container">
+                    <canvas id="statistics-chart"></canvas>
+                </div>
+            </div>
         </div>
         <div class="attendance-content shadow-md shadow-slate-200">
             <div class="attendance-items-container">
@@ -192,3 +214,44 @@
         </div>
     </div>
 </div>
+
+@section('script')
+<script>
+   const ctx = document.getElementById('statistics-chart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Clocked In',
+                'Not Clocked In',
+                'Clocked Out',
+                'On Vacation Leave',
+                'On Sick Leave'
+            ],
+            datasets: [{
+                data: [1234, 250, 2346, 212, 252],
+                backgroundColor: [
+                    '#2196F3',
+                    '#FF6174',
+                    '#EFE30A',
+                    '#FF6600',
+                    '#0F901B'
+                ],
+                hoverOffset: 4
+            },]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRation: false,
+            context: '2d',
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+  </script>
+@endsection

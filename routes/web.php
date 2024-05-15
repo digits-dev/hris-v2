@@ -33,11 +33,11 @@ Route::group(['middleware' => ['web']], function() {
 
     // Backend
     
-// Dashboard
+    // Dashboard
     Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
     // Employee Accounts
     Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->middleware('auth')->name('employee-accounts');
-    Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
+        Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
     Route::get('employee-accounts/{userId}', [ShowEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
     Route::get('employee-accounts/{userId}/edit', [EditEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.edit');
     //Employee Attendance
