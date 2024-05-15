@@ -10,6 +10,8 @@ html {
 
 }
 
+[x-cloak] { display: none !important; }
+
 /* SIDEBAR */
 
 body{

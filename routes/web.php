@@ -27,11 +27,11 @@ Route::group(['middleware' => ['web']], function() {
     Route::get('logout', [LoginAuthController::class, 'logout'])->name('logout');
 
     // Backend
-    // Dashboard
+    
+// Dashboard
     Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
     // Employee Accounts
     Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->middleware('auth')->name('employee-accounts');
-
     //Employee Attendance
     Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->middleware('auth')->name('employee-attendance');
 });
