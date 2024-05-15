@@ -239,8 +239,8 @@
             border: 2px solid var(--secondary-color);
         }
 
-        .table-btn--blue{
-            background: #2196F3;
+        .table-btn--red{
+            background: #FF6174;
         }
         .table-btn--green{
             background: #0F901B;
@@ -282,7 +282,6 @@
 @endsection
 
 <section>
-    {{-- <h1 class="module inter">User Management</h1> --}}
 
     <div class="header">
         <form action="" class="search-form">
@@ -343,17 +342,13 @@
                     @endphp     
 
                     <td>{{ \Carbon\Carbon::parse($user->time_in)->format('Y-m-d') }}</td>
-                    {{-- <td>{{ $timeIn->diffInHours($timeOut)}} : {{$timeIn->diffInMinutes($timeOut) % 60 }}</td> --}}
                     <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
 
                     <td>
                        <div class="tbl-btns">
-                        <button class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></button>
                         <button class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></button>
-                       </div>
-
+                        <button class="table-btn table-btn--red"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
-
                 </tr>
             @endforeach
         </tbody>
