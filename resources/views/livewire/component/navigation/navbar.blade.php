@@ -13,7 +13,7 @@
     >
         <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
     </div>
-    <div class="setting-popup" 
+    <div class="setting-popup z-50" 
          x-show="isProfileOpen"
          x-transition
          x-cloak

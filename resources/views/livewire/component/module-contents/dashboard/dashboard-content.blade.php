@@ -72,6 +72,7 @@
             font-weight: 700;
             color: rgb(72, 72, 72);
             font-size: 14px;
+            padding: 10px
         }
 
     /* ATTENDANCE */
@@ -152,22 +153,22 @@
 @endsection
 <div class="main-container">
     <div class="date-container">
-        <p class="date">Today: May 05, 2024</p>
+        <p class="date" id="Date"></p>
     </div>
     <div class="employee-attendance-container">
-        <div class="statistics-content shadow-md shadow-slate-200">
-            <p class="content-title ml-4">Statistics</p>
+        <div class="statistics-content shadow-md shadow-slate-200 ">
+            <p class="content-title ">Statistics</p>
             <div class="chart-content">
                 <div class="chart-container">
-                    <canvas id="statistics-chart"></canvas>
+                    <canvas id="statistics-chart" ></canvas>
                 </div>
             </div>
         </div>
         <div class="attendance-content shadow-md shadow-slate-200">
+            <p class="content-title ">Attendance</p>
             <div class="attendance-items-container">
                 {{-- CLOCKED IN --}}
                 <div class="content-title-container">
-                    <p class="content-title">Attendance</p>
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
                         <p class="item-title"> Clocked In</p>
@@ -176,7 +177,6 @@
                 </div>
                 {{-- NOT CLOCKED IN --}}
                 <div class="content-title-container">
-                    <p class="content-title" style="visibility: hidden">Hidden</p>
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
                         <p class="item-title"> Not Clocked In</p>
@@ -185,7 +185,6 @@
                 </div>
                 {{-- CLOCKED OUT --}}
                 <div class="content-title-container">
-                    <p class="content-title" style="visibility: hidden">Hidden</p>
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
                         <p class="item-title"> Clocked Out</p>
@@ -194,7 +193,6 @@
                 </div>
                 {{-- ON VACATION LEAVE --}}
                 <div class="content-title-container">
-                    <p class="content-title" style="visibility: hidden">Hidden</p>
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
                         <p class="item-title"> On Vacation Leave</p>
@@ -203,7 +201,6 @@
                 </div>
                 {{-- ON SICK LEAVE --}}
                 <div class="content-title-container">
-                    <p class="content-title" style="visibility: hidden">Hidden</p>
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
                         <p class="item-title"> On Sick Leave</p>
@@ -216,42 +213,53 @@
 </div>
 
 @section('script')
-<script>
-   const ctx = document.getElementById('statistics-chart');
+<script >
+    $(document).ready(function(){
+        const ctx = document.getElementById('statistics-chart');
+     
+         new Chart(ctx, {
+             type: 'doughnut',
+             data: {
+                 labels: [
+                     'Clocked In',
+                     'Not Clocked In',
+                     'Clocked Out',
+                     'On Vacation Leave',
+                     'On Sick Leave'
+                 ],
+                 datasets: [{
+                     label: ' ',
+                     data: [1234, 250, 2346, 212, 252],
+                     backgroundColor: [
+                         '#2196F3',
+                         '#FF6174',
+                         '#EFE30A',
+                         '#FF6600',
+                         '#0F901B'
+                     ],
+                     hoverOffset: 5
+                 },]
+             },
+             options: {
+                 responsive: true,
+                 maintainAspectRation: false,
+                 context: '2d',
+                 plugins: {
+                     legend: {
+                         display: false
+                     }
+                 }
+                 
+             }
+         });
+     
+         var date = new Date();
+         var formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+         var fullDate = 'Today: ' + formattedDate;
+         document.getElementById('Date').innerText = fullDate;
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: [
-                'Clocked In',
-                'Not Clocked In',
-                'Clocked Out',
-                'On Vacation Leave',
-                'On Sick Leave'
-            ],
-            datasets: [{
-                data: [1234, 250, 2346, 212, 252],
-                backgroundColor: [
-                    '#2196F3',
-                    '#FF6174',
-                    '#EFE30A',
-                    '#FF6600',
-                    '#0F901B'
-                ],
-                hoverOffset: 4
-            },]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRation: false,
-            context: '2d',
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
+    })
+    
 
   </script>
 @endsection

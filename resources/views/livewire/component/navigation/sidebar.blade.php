@@ -23,7 +23,7 @@
     })
   }"
 >
-  <div class="fixed bottom-2 left-2 cursor-pointer hover:opacity-50  block sm:hidden"
+  <div class="fixed bottom-2 left-2 cursor-pointer hover:opacity-50  block sm:hidden" style="display: none"
     @click="isSidenavOpen=true"
   >
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -70,7 +70,7 @@
           <li class="!pl-2 pr-0 hover:!bg-transparent"><span>Admin</span></li>
           <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
             <a href="{{ route('ad-privilege') }}">
-              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+              <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
               <span>Privileges</span>
             </a>
           </li>
