@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
 
+use App\Models\Employee;
+use App\Models\User;
 use Livewire\Component;
 
 class EmployeeAttendanceContent extends Component
@@ -14,6 +16,7 @@ class EmployeeAttendanceContent extends Component
     
     public function render()
     {
-        return view('livewire.component.module-contents.employee-attendance.employee-attendance-content');
+        return view('livewire.component.module-contents.employee-attendance.employee-attendance-content', ['users' => Employee::paginate(10)
+    ]);
     }
 }

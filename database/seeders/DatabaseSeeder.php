@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
        $this->call([AdminAccount::class]);
 
-        \App\Models\User::factory(100)->create();
+        // \App\Models\User::factory(100)->create();
+        \App\Models\Employee::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

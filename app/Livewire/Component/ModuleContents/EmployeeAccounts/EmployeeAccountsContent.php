@@ -8,7 +8,7 @@ use Livewire\Component;
 class EmployeeAccountsContent extends Component
 {
     public function index(){
-        return view('modules.employee-accounts.employee-accounts-module');
+        return view('modules.employee-accounts.employee-accounts-module', ['routeName' => 'index']);
     }
 
     public function render()

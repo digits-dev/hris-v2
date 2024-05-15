@@ -296,7 +296,7 @@
             <button type="submit" class="search-form__button ">Search</button>
         </form>
 
-        <button class="add-btn">Add User</button>
+        <a href="{{route('employee.create')}}" class="add-btn" wire:navigate>Add User</a>
     </div>
 
     <table class="table">
