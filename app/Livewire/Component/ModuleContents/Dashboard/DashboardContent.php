@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Component\ModuleContents\Dashboard;
-
+use App\Helpers\CommonHelpers;
 use Livewire\Component;
 
 class DashboardContent extends Component

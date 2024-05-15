@@ -30,7 +30,25 @@
             <span>Employee Attendance</span>
           </a>
         </li>
+  
+        @if(App\Helpers\CommonHelpers::isSuperadmin())
+          <li><span>Admin</span></li>
+          <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
+            <a href="{{ route('ad-privilege') }}">
+              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+              <span>Privileges</span>
+            </a>
+          </li>
+          <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
+            <a href="{{ route('ad-privilege') }}">
+              <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
+              <span>Users Management</span>
+            </a>
+          </li>
+        @endif
       </ul>
     </div>
+
+
   </div>
 </div>

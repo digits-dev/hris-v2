@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('privileges', function (Blueprint $table) {
+        Schema::create('ad_privileges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->integer('is_superadmin')->nullable();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('privileges');
+        Schema::dropIfExists('ad_privileges');
     }
 };

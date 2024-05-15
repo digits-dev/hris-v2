@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Authentication\LoginAuthController;
+use App\Http\Controllers\Admin\AdPrivilegeController;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
@@ -36,4 +37,9 @@ Route::group(['middleware' => ['web']], function() {
 Route::get('employee-accounts/create', [Create::class, 'index'])->middleware('auth')->name('employee.create');
     //Employee Attendance
     Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->middleware('auth')->name('employee-attendance');
+
+    //Employee Attendance
+    Route::get('ad-privilege', [AdPrivilegeController::class, 'index'])->middleware('auth')->name('ad-privilege');
+
+
 });

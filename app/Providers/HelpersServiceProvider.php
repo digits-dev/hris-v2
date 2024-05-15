@@ -9,18 +9,20 @@ class HelpersServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
+    public function boot(): void
+    {
+        foreach (glob(app_path('Helpers/*.php')) as $filename) {
+            require_once $filename;
+        }
+    }
+    
     public function register(): void
     {
-        $this->app->singleton('helpers',function($app){
-            return require app_path('Helpers/CommonHelpers.php');
-        });
+       
     }
 
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        //
-    }
+   
 }

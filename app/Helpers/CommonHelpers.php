@@ -13,6 +13,11 @@ use Storage;
 use Validator;
 
 class CommonHelpers {
+
+    public static function isSuperadmin(){
+        return Session::get('admin_is_superadmin');
+    }
+
     public static function myPrivilegeId()
     {
         return Session::get('admin_privileges');
