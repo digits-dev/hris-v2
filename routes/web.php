@@ -3,8 +3,11 @@
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Http\Controllers\Admin\AdPrivilegeController;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Show as ShowEmployeeAccount;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Edit as EditEmployeeAccount;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
+
 use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +37,9 @@ Route::group(['middleware' => ['web']], function() {
     Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
     // Employee Accounts
     Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->middleware('auth')->name('employee-accounts');
-Route::get('employee-accounts/create', [Create::class, 'index'])->middleware('auth')->name('employee.create');
+    Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
+    Route::get('employee-accounts/{userId}', [ShowEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
+    Route::get('employee-accounts/{userId}', [EditEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
     //Employee Attendance
     Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->middleware('auth')->name('employee-attendance');
 
