@@ -107,6 +107,25 @@
             font-size: 14px;
         }
 
+        .table-btn {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 2px solid var(--stroke-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100px;
+            display: block;
+            text-align: center
+
+        }
+
+        .table-btn:hover{
+            opacity: 0.9;
+        }
+
 
     </style>
 @endsection
@@ -114,7 +133,7 @@
 
 <section>
 
-    <form action="" class="space-y-10">
+    <form action="" class="space-y-10" wire:submit.prevent="save">
 
         {{-- Personal  Information  --}}
         <fieldset>
@@ -182,5 +201,9 @@
             </div>
         </fieldset>
 
+        <div class="flex w-full justify-between">
+            <a role="button" href="{{route('employee-accounts')}}" class="table-btn" wire:navigate>Cancel</a>
+            <input  type="submit" value="Submit" class="table-btn">
+        </div>
     </form>
 </section>

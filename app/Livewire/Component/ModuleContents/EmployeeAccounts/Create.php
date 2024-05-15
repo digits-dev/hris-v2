@@ -10,6 +10,11 @@ class Create extends Component
         return view('modules.employee-accounts.employee-accounts-module', ['routeName'=>'create']);
     }
 
+    
+    public function save(){
+        return  $this->redirect('/employee-accounts', navigate:true);
+     }
+
     public function render()
     {
         return view('livewire.component.module-contents.employee-accounts.create', );
