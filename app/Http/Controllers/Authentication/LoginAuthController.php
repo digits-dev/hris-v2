@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Session;
 
 class LoginAuthController extends Controller
 {
     public function index()
     {
+        if(auth()->check()){
+            return redirect()->intended('dashboard');
+        }
         return view('authentication/login');
     }
 
@@ -24,7 +27,7 @@ class LoginAuthController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
+            Session::put("admin_privileges", 'test');
             return redirect()->intended('dashboard');
         }
  
@@ -43,5 +46,13 @@ class LoginAuthController extends Controller
         $request->session()->regenerateToken();
     
         return redirect('/login');
+    }
+
+    public function endSession(Request $request){
+
+        Auth::logout();
+    
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
     }
 }

@@ -17,18 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginAuthController::class, 'index']);
-// Login
-Route::get('login', [LoginAuthController::class, 'index']);
-Route::post('login-account', [LoginAuthController::class, 'authenticate'])->name('login');
-// Logout
-Route::get('logout', [LoginAuthController::class, 'logout'])->name('logout');
+Route::group(['middleware' => ['web']], function() {
 
-// Backend
-// Dashboard
-Route::get('dashboard', [DashboardContent::class, 'index'])->name('dashboard');
-// Employee Accounts
-Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->name('employee-accounts');
+    // Route::get('/', [LoginAuthController::class, 'index']);
+    // Login
+    Route::get('login', [LoginAuthController::class, 'index'])->name('login_page');
+    Route::post('login-account', [LoginAuthController::class, 'authenticate'])->name('login');
+    // Logout
+    Route::get('logout', [LoginAuthController::class, 'logout'])->name('logout');
 
-//Employee Attendance
-Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->name('employee-attendance');
+    // Backend
+    // Dashboard
+    Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
+    // Employee Accounts
+    Route::get('employee-accounts', [EmployeeAccountsContent::class, 'index'])->middleware('auth')->name('employee-accounts');
+
+    //Employee Attendance
+    Route::get('employee-attendance', [EmployeeAttendanceContent::class, 'index'])->middleware('auth')->name('employee-attendance');
+});

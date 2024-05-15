@@ -318,6 +318,11 @@
         </div>
         <script>
             $(document).ready(function(){
+                window.onpageshow = function(event) {
+                    if (event.persisted) {
+                        location.reload();
+                    }
+                };
                 $('#checkbox').change(function(){
                     var isChecked = $(this).is(':checked');
                     if(isChecked){
