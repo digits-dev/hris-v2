@@ -339,8 +339,8 @@
                     <td>
                         <input id="terms" type="checkbox" value=""  required />
                     </td>
-                    <td><img class="user-img" src="/images/navigation/user.png" width="40" alt="{{$user->name}} picture"></td>
-                    <td>{{ $user->name }}</td>
+                    <td><img class="user-img" src="/images/navigation/user.png" width="40" alt="{{$user->last_name}} picture"></td>
+                    <td>{{ $user->first_name }} {{$user->last_name}}</td>
                     <td>{{ $user->employee_id }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->location }}</td>
@@ -348,8 +348,8 @@
                     <td><span class="status">Active</span></td>
                     <td>
                        <div class="tbl-btns">
-                        <button class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></button>
-                        <button class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></button>
+                        <a role="button" href="{{route('employee.show', $user->id)}}" class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
+                        <a role="button" href="{{route('employee.show', $user->id)}}" class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
                        </div>
 
                     </td>

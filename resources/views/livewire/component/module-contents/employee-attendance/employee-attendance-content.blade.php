@@ -194,21 +194,6 @@
             font-weight: 500;
         }
 
-        .add-btn {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 12px;
-            border: 2px solid var(--stroke-color);
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .add-btn:hover{
-            opacity: 0.9;
-        }
-
         input[type="checkbox"] {
             -webkit-appearance: none; /* Remove default appearance */
             -moz-appearance: none;
@@ -305,7 +290,6 @@
             <button type="submit" class="search-form__button ">Search</button>
         </form>
 
-        <button class="add-btn">Add User</button>
     </div>
 
     <table class="table">

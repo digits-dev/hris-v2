@@ -15,7 +15,8 @@ class AdminAccount extends Seeder
     {
         User::updateOrInsert(['email' => 'markanthonyaguilar@digits.ph'],
         [
-            'name' => 'Mark Anthony',
+            'first_name' => 'Mark Anthony',
+            'last_name' => 'Aguilar',
             'employee_id' => fake()->numerify("#######"),
             'email' => 'markanthonyaguilar@digits.ph',
              'location' => fake()->city(),
@@ -24,7 +25,8 @@ class AdminAccount extends Seeder
 
         User::updateOrInsert(['email' => 'joelricmisa@digits.ph'],
         [
-            'name' => 'Joel Ric',
+            'first_name' => 'Joel',
+            'last_name' => 'Ric',
             'employee_id' => fake()->numerify("#######"),
             'email' => 'joelricmisa@digits.ph',
              'location' => fake()->city(),

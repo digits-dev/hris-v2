@@ -15,7 +15,10 @@
 <p style="margin: 1rem 2.5rem;" class="header-title">Add User</p>
 
         @livewire('component.module-contents.employee-accounts.create')
-            
+        @case('show')
+        <p style="margin: 1rem 2.5rem;" class="header-title">User Information</p>
+        @livewire('component.module-contents.employee-accounts.show', ['userId' => $userId])
+        @break
             @break
         @default
     @endswitch
