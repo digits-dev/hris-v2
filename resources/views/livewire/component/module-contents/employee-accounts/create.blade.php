@@ -68,7 +68,7 @@
         .personal-content input[type="text"] {
             border: 1px solid var(--stroke-color);
             border-radius: 8px;
-            padding: 5px 10px;
+            padding: 8px 16px;
             outline: none;
             margin-top: 5px;
             font-weight: 400;
@@ -101,6 +101,8 @@
             outline: none;
             margin-top: 5px;
             font-weight: 400;
+            padding: 8px 16px;
+
         }
         .account-content label{
             font-weight: 500;
