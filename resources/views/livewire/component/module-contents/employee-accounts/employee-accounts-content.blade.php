@@ -304,23 +304,19 @@
          <tr>
             <th><input type="checkbox" name="" id=""></th>
             <th></th>
-            <th>
-                <Button class="th-sort">Name
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button>
-            </th>
-            <th > <Button class="th-sort"> Employee Id
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort">Email Address
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort ">Location
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'first_name', 'displayName' => 'Name' ])
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'employee_id', 'displayName' => 'Employee Id' ])
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'email', 'displayName' => 'Email' ])
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'location', 'displayName' => 'Location' ])
+
             <th > <Button class="th-sort  mx-auto">Role
                    <img src="/images/table/sort.png" width="10" alt="sorting icons">
                 </Button> 
