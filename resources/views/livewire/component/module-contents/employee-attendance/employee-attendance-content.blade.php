@@ -91,22 +91,26 @@
         /* Adjust Table Column Text Alignment  */
 
         /* Time In */
-        .table th:nth-child(4) .th-sort, .table td:nth-child(4){
+        .table th:nth-child(4) button, .table td:nth-child(4){
             text-align: center;
             margin: auto
         }
         /* Time Out */
-        .table th:nth-child(5) .th-sort, .table td:nth-child(5){
+        .table th:nth-child(5) button, .table td:nth-child(5){
             text-align: center;
             margin: auto
         }
         /* Date */
-        .table th:nth-child(6), .table td:nth-child(6){
+        .table th:nth-child(6) button, .table td:nth-child(6){
             text-align: center;
+            margin: auto
+
         }
         /* Duration */
-        .table th:nth-child(7), .table td:nth-child(7){
+        .table th:nth-child(7) button, .table td:nth-child(7){
             text-align: center;
+            margin: auto
+
         }
       
         /* End of Table Column Text Alignment  */
@@ -295,31 +299,25 @@
         <thead>
          <tr>
             <th><input type="checkbox" name="" id=""></th>
-            <th>
-                <Button class="th-sort">First Name
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button>
-            </th>
-            <th > <Button class="th-sort">Last Name
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort">Time In
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort ">Time Out
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort  mx-auto">Date
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
-            <th > <Button class="th-sort mx-auto">Duration
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'first_name', 'displayName' => 'First Name' ])
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'last_name', 'displayName' => 'Last Name' ])
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'time_in', 'displayName' => 'Time In' ])
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'time_out', 'displayName' => 'Time Out' ])
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'created_at', 'displayName' => 'Date' ])
+
+            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+            ['colName'=>'time_out', 'displayName' => 'Duration' ])
+
             <th>Action</th>
          </tr>
         </thead>
