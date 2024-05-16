@@ -17,9 +17,11 @@ class AdminAccount extends Seeder
         [
             'first_name' => 'Mark Anthony',
             'last_name' => 'Aguilar',
+            'full_name' => 'Mark Anthony Aguilar',
             'employee_id' => fake()->numerify("#######"),
             'email' => 'markanthonyaguilar@digits.ph',
              'location' => fake()->city(),
+             'company' => fake()->company(),
             'password' => bcrypt('qwerty')
         ]);
 
@@ -27,9 +29,11 @@ class AdminAccount extends Seeder
         [
             'first_name' => 'Joel',
             'last_name' => 'Ric',
+            'full_name' => 'Joel Ric',
             'employee_id' => fake()->numerify("#######"),
             'email' => 'joelricmisa@digits.ph',
              'location' => fake()->city(),
+             'company' => fake()->company(),
             'password' => bcrypt('qwerty')
         ]);
     }

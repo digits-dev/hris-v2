@@ -42,8 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
+
+    public function scopeSearch($query, $value){
+
+        $cleanVal = trim($value);
+
+        return $query->where('full_name', 'like', "%$cleanVal%")
+                     ->orWhere('employee_id', 'like', "%$cleanVal%")
+                     ->orWhere('email', 'like', "%$cleanVal%")
+                     ->orWhere('location', 'like', "%$cleanVal%")
+                     ->orWhere('company', 'like', "%$cleanVal%");
     }
 }

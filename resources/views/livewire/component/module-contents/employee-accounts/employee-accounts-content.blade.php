@@ -49,29 +49,31 @@
             border-radius: 8px;
             display: flex;
             gap: 5px;
-            padding:5px 4px;
-            border: 2px solid var(--stroke-color);
+            border: 1px solid var(--stroke-color);
             width: 500px;
+            overflow: hidden;
+
         }
 
-        .search-form__button {
+        .search-form__label {
             background: var(--primary-color);
             color: white;
             font-size: 12px;
             padding: 6px 12px;
-            border-radius: 8px;
-            border: 2px solid var(--stroke-color);
-            cursor: pointer;
+            border-radius: 3px;
+            border-top-right-radius: unset;
+            border-bottom-right-radius: unset;
+            border: 1px solid var(--stroke-color);
+            border-right: 2px solid var(--stroke-color);
             font-weight: 500;
             font-family: "Inter", sans-serif;
+            display: grid;
+            place-content: center;
 
         }
-        .search-form__button:hover{
-            opacity: 0.9;
-        }
-
+ 
         .search-form__input {
-            padding: 3px 10px;
+            padding: 10px;
             outline: none;
             border: none;
             font-weight: normal;
@@ -89,11 +91,11 @@
         }
         /* role */
         
-        .table th:nth-child(7), .table td:nth-child(7){
+        .table th:nth-child(8), .table td:nth-child(8){
             text-align: center;
         }
         /* status */
-        .table th:nth-child(8), .table td:nth-child(8){
+        .table th:nth-child(9), .table td:nth-child(9){
             text-align: center;
 
         }
@@ -147,7 +149,7 @@
         }
         /* name */
         .table th:nth-child(3), .table td:nth-child(3){
-            width:15%;
+            width:10%;
         }
         /* employee id */
         .table th:nth-child(4), .table td:nth-child(4){
@@ -155,22 +157,25 @@
         }
         /* email address */
         .table th:nth-child(5), .table td:nth-child(5){
-            width:20%;
+            width:15%;
         }
         /* location */
         .table th:nth-child(6), .table td:nth-child(6){
-            width:20%;
-        }
-        /* role */
-        .table th:nth-child(7), .table td:nth-child(7){
             width:10%;
         }
-        /* status */
+        .table th:nth-child(7), .table td:nth-child(7){
+            width:15%;
+        }
+        /* role */
         .table th:nth-child(8), .table td:nth-child(8){
             width:10%;
         }
-        /* action */
+        /* status */
         .table th:nth-child(9), .table td:nth-child(9){
+            width:10%;
+        }
+        /* action */
+        .table th:nth-child(10), .table td:nth-child(10){
             width:4%;
         }
 
@@ -196,7 +201,24 @@
             cursor: pointer;
         }
 
+        
         .add-btn:hover{
+            opacity: 0.9;
+        }
+
+        .bulk-btn {
+            background-color:white;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid var(--stroke-color);
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .bulk-btn:hover{
+            background: var(--primary-hover);
             opacity: 0.9;
         }
 
@@ -275,12 +297,12 @@
             border: 2px solid var(--stroke-color);
         }
 
-    .th-sort{
-     display: flex; 
-     align-items: center;
-     justify-content: center;
-     gap:10px;
-    }
+        .th-sort{
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            gap:10px;
+        }
  
 
     
@@ -291,12 +313,17 @@
     {{-- <h1 class="module inter">User Management</h1> --}}
 
     <div class="header">
-        <form action="" class="search-form">
-            <input type="text" class="search-form__input " placeholder="Search User">
-            <button type="submit" class="search-form__button ">Search</button>
-        </form>
+        <div  class="search-form">
+            <label for="search-input" class="search-form__label ">Search</label>
+            <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input " placeholder="Search User" id="search-input">
+        </div>
 
+
+        <div class="flex gap-2 ">
         <a href="{{route('employee.create')}}" class="add-btn" wire:navigate>Add User</a>
+        <button  class="bulk-btn" >Bulk Actions</button>
+
+        </div>
     </div>
 
     <table class="table">
@@ -306,7 +333,7 @@
             <th></th>
 
             @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
-            ['colName'=>'first_name', 'displayName' => 'Name' ])
+            ['colName'=>'full_name', 'displayName' => 'Name' ])
 
             @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
             ['colName'=>'employee_id', 'displayName' => 'Employee Id' ])
@@ -316,6 +343,9 @@
 
             @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
             ['colName'=>'location', 'displayName' => 'Location' ])
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'company', 'displayName' => 'Company' ])
 
             <th > <Button class="th-sort  mx-auto">Role
                    <img src="/images/table/sort.png" width="10" alt="sorting icons">
@@ -329,17 +359,20 @@
          </tr>
         </thead>
 
+      
+        
         <tbody>
             @foreach ($users as $user)
-                <tr>
+                <tr wire:key="{{$user->id}}">
                     <td>
                         <input id="terms" type="checkbox" value=""  required />
                     </td>
                     <td><img class="user-img" src="/images/navigation/user.png" width="40" alt="{{$user->last_name}} picture"></td>
-                    <td>{{ $user->first_name }} {{$user->last_name}}</td>
+                    <td>{{ $user->full_name}}</td>
                     <td>{{ $user->employee_id }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->location }}</td>
+                    <td>{{ $user->company }}</td>
                     <td><span class="role">Employee</span></td>
                     <td><span class="status">Active</span></td>
                     <td>
@@ -356,7 +389,9 @@
 
 
     </table>
+
     <div class="pagination">
     {{ $users->links() }}
+
     </div>
 </section>
