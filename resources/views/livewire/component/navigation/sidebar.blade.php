@@ -66,21 +66,28 @@
             </a>
           </li>
   
-        @if(App\Helpers\CommonHelpers::isSuperadmin())
+          {{-- IS ADMIN --}}
+          @if(App\Helpers\CommonHelpers::isSuperadmin())
           <li class="!pl-2 pr-0 hover:!bg-transparent"><span>Admin</span></li>
           <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
-            <a href="{{ route('ad-privilege') }}">
+            <a href="{{ route('ad-privilege') }}" wire:navigate>
               <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
               <span>Privileges</span>
             </a>
           </li>
           <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
-            <a href="{{ route('ad-privilege') }}">
+            <a href="{{ route('ad-privilege') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
               <span>Users Management</span>
             </a>
           </li>
-        @endif
+          <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
+            <a href="{{ route('log-user-access') }}" wire:navigate>
+              <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
+              <span>Log User Access</span>
+            </a>
+          </li>
+          @endif
         </ul>
       </div>
 

@@ -42,7 +42,6 @@
             border-radius: 10px;
             background-color: white;
             display: flex;
-            /* overflow: hidden; */
             margin: auto;
         }
 
@@ -252,8 +251,6 @@
             }
         }
 
-     
-
 
     </style>
     <body>
@@ -309,7 +306,7 @@
                             @endif
                         </div>
                         <div class="forgot-password-container">
-                            <span class="forgot_text">Forgot Password? <a class="register_links" href="{{ url('/contact_hr') }}" style="color:#429DA6; text-decoration: none; ">Contact HR.</a></span>
+                            <span class="forgot_text">Forgot Password? <a class="register_links" href="{{ url('contact-us') }}" style="color:#429DA6; text-decoration: none; ">Contact HR.</a></span>
                         </div>
                     </div>
                 </form>

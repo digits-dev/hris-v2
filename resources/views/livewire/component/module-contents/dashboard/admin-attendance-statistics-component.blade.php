@@ -156,11 +156,11 @@
         <p class="date" id="Date"></p>
     </div>
     <div class="employee-attendance-container">
-        <div class="statistics-content shadow-md shadow-slate-200 ">
+        <div class="statistics-content shadow-md shadow-slate-200">
             <p class="content-title ">Statistics</p>
             <div class="chart-content">
                 <div class="chart-container">
-                    <canvas id="statistics-chart" ></canvas>
+                    <canvas id="statistics-chart" m></canvas>
                 </div>
             </div>
         </div>
@@ -214,7 +214,7 @@
 
 @section('script')
 <script >
-    $(document).ready(function(){
+    document.addEventListener('livewire:navigated', () => {
         const ctx = document.getElementById('statistics-chart');
      
          new Chart(ctx, {
@@ -237,7 +237,7 @@
                          '#FF6600',
                          '#0F901B'
                      ],
-                     hoverOffset: 5
+                     hoverOffset: 10
                  },]
              },
              options: {
