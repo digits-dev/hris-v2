@@ -45,39 +45,43 @@
             align-items: center;
         }
 
+
         .search-form {
             border-radius: 8px;
             display: flex;
             gap: 5px;
-            padding:5px 4px;
-            border: 2px solid var(--stroke-color);
+            border: 1px solid var(--stroke-color);
             width: 500px;
+            overflow: hidden;
+
         }
 
-        .search-form__button {
+        .search-form__label {
             background: var(--primary-color);
             color: white;
             font-size: 12px;
             padding: 6px 12px;
-            border-radius: 8px;
-            border: 2px solid var(--stroke-color);
-            cursor: pointer;
+            border-radius: 3px;
+            border-top-right-radius: unset;
+            border-bottom-right-radius: unset;
+            border: 1px solid var(--stroke-color);
+            border-right: 2px solid var(--stroke-color);
             font-weight: 500;
             font-family: "Inter", sans-serif;
+            display: grid;
+            place-content: center;
 
         }
-        .search-form__button:hover{
-            opacity: 0.9;
-        }
-
+ 
         .search-form__input {
-            padding: 3px 10px;
+            padding: 10px;
             outline: none;
             border: none;
             font-weight: normal;
             font-size: 14px;
             flex: 1;
         }
+
 
         .table {
             width: 100%;
@@ -288,11 +292,10 @@
 <section>
 
     <div class="header">
-        <form action="" class="search-form">
-            <input type="text" class="search-form__input " placeholder="Search User">
-            <button type="submit" class="search-form__button ">Search</button>
-        </form>
-
+          <div  class="search-form">
+            <label for="search-input" class="search-form__label ">Search</label>
+            <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input " placeholder="Search User" id="search-input">
+        </div>
     </div>
 
     <table class="table">

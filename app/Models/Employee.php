@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+
+    public function scopeSearch($query, $value){
+
+        $cleanVal = trim($value);
+
+        return $query->where('first_name', 'like', "%$cleanVal%")
+                     ->orWhere('last_name', 'like', "%$cleanVal%")
+                     ->orWhere('time_in', 'like', "%$cleanVal%")
+                     ->orWhere('time_out', 'like', "%$cleanVal%");
+    }
 }

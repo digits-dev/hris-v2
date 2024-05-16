@@ -2,16 +2,25 @@
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
 
-use App\Models\Employee;
 use App\Models\User;
 use Livewire\Component;
+use App\Models\Employee;
+use Livewire\WithPagination;
 
 class EmployeeAttendanceContent extends Component
 {
 
-    
+    use WithPagination;
+
+    // #[Url(history:true)]
     public $sortBy = "created_at";
+    // #[Url(history:true)]
     public $sortDir = 'DESC';
+    // #[Url(history:true)]
+    public $search = ''; 
+    // #[Url()]
+    public $perPage = 10;
+
 
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
@@ -31,7 +40,7 @@ class EmployeeAttendanceContent extends Component
     public function render()
     {
         return view('livewire.component.module-contents.employee-attendance.employee-attendance-content', 
-        ['users' => Employee::orderBy($this->sortBy,$this->sortDir)->paginate(10)
+        ['users' => Employee::search($this->search)->orderBy($this->sortBy,$this->sortDir)->paginate($this->perPage)
     ]);
  
     }
