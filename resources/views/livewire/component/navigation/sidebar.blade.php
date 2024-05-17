@@ -47,36 +47,48 @@
       <!-- SCREENS -->
       <div id="navigation-content">
         <ul class="navigation">
-          <li class="{{ Request::segment(1) == 'dashboard' ? 'active' : '' }}">
-            <a href="{{ route('dashboard') }}" wire:navigate>
-              <img src="{{asset('images/navigation/dashboard-icon.png')}}" class="nav-icon" />
-              <span>Dashboard</span>
+          <?php $dashboard = App\Helpers\CommonHelpers::sidebarDashboard();?>
+          @if($dashboard)
+            <li class="{{ Request::segment(1) == $dashboard->path ? 'active' : '' }}">
+              <a href="{{ $dashboard->url }}" wire:navigate>
+                <img src="{{asset($dashboard->icon)}}" class="nav-icon" />
+                <span>Dashboard</span>
             </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'employee-accounts' ? 'active' : '' }}">
-            <a href="{{ route('employee-accounts') }}" wire:navigate>
-              <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
-              <span>Employee Accounts</span>
-            </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'employee-attendance' ? 'active' : '' }}">
-            <a href="{{ route('employee-attendance') }}" wire:navigate>
-              <img src="{{asset('images/navigation/employee-attendance-icon.png')}}" class="nav-icon" />
-              <span>Employee Attendance</span>
-            </a>
-          </li>
+          @endif
+
+          @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
+            <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}">
+              <a href="{{ $menu->url }}" wire:navigate>
+                <img src="{{asset($menu->icon)}}" class="nav-icon" />
+                <span>{{$menu->name}}</span>
+              </a>
+              @if(!empty($menu->children))
+                <ul class="treeview-menu">
+                    @foreach($menu->children as $child)
+                        <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : ""))?"active":""}}'>
+                            <a href='{{ ($child->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$child->url}}'
+                              class='{{($child->color)?"text-".$child->color:""}}'>
+                                <i class='{{$child->icon}}'></i> <span>{{$child->name}}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+            </li>
+          @endforeach
+         
   
-          {{-- IS ADMIN --}}
-          @if(App\Helpers\CommonHelpers::isSuperadmin())
-          <li class="!pl-2 pr-0 hover:!bg-transparent"><span>Admin</span></li>
-          <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
-            <a href="{{ route('ad-privilege') }}" wire:navigate>
+        {{-- IS ADMIN --}}
+        @if(App\Helpers\CommonHelpers::isSuperadmin())
+        <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold">Admin</span></li>
+          <li class="{{ Request::segment(2) == 'privilege' ? 'active' : '' }}">
+            <a href="{{ route('PrivilegesControllerGetIndex') }}">
               <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
               <span>Privileges</span>
             </a>
           </li>
-          <li class="{{ Request::segment(1) == 'ad-privilege' ? 'active' : '' }}">
-            <a href="{{ route('ad-privilege') }}" wire:navigate>
+          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
+            <a href="{{ route('AdminUsersControllerGetIndex') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
               <span>Users Management</span>
             </a>

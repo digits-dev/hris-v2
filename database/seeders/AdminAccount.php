@@ -22,7 +22,8 @@ class AdminAccount extends Seeder
             'email' => 'markanthonyaguilar@digits.ph',
              'location' => fake()->city(),
              'company' => fake()->company(),
-            'password' => bcrypt('qwerty')
+            'password' => bcrypt('qwerty'),
+            'id_ad_privileges' => 1,
         ]);
 
         User::updateOrInsert(['email' => 'joelricmisa@digits.ph'],
@@ -34,7 +35,21 @@ class AdminAccount extends Seeder
             'email' => 'joelricmisa@digits.ph',
              'location' => fake()->city(),
              'company' => fake()->company(),
-            'password' => bcrypt('qwerty')
+            'password' => bcrypt('qwerty'),
+            'id_ad_privileges' => 1,
+        ]);
+
+        User::updateOrInsert(['email' => 'marvinmosico@digits.ph'],
+        [
+            'first_name' => 'Marvin',
+            'last_name' => 'Mosico',
+            'full_name' => 'Marvin Mosico',
+            'employee_id' => fake()->numerify("#######"),
+            'email' => 'marvinmosico@digits.ph',
+             'location' => fake()->city(),
+             'company' => fake()->company(),
+            'password' => bcrypt('qwerty'),
+            'id_ad_privileges' => 1,
         ]);
     }
 }

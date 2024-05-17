@@ -294,6 +294,9 @@
                             @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
+                            @if ($errors->has('no_priv'))
+                                <span class="text-danger">{{ $errors->first('no_priv') }}</span>
+                            @endif
                             @if(session('rejected'))
                                 <span class="text-danger">
                                     {{ session('rejected') }}

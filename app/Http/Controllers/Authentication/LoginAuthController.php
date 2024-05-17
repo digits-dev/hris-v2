@@ -28,6 +28,10 @@ class LoginAuthController extends Controller
         $users = DB::table("users")->where("email", $credentials['email'])->first();
         $session_details = self::getOtherSessionDetails($users->id_ad_privileges);
 
+        if(!$users->id_ad_privileges){
+            $error = 'No privilege set, Please contact administrator!';
+            return redirect('login')->withErrors(['no_priv' => $error]);
+        }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Session::put('admin_is_superadmin', $session_details['priv']->is_superadmin);

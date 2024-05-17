@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use DB;
 
-class AdPrivilegeController extends Controller{
+class PrivilegesController extends Controller{
     
-    public function index(){
+    public function getIndex(){
         return view('admin/ad-privilege');
     }
 }
