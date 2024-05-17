@@ -227,4 +227,129 @@ class CommonHelpers {
 
         }
     }
+
+    public static function isCreate(){
+        if (self::isSuperadmin()) {
+            return true;
+        }
+
+        $session = Session::get('admin_privileges_roles');
+        foreach ($session as $v) {
+            if ($v->path == self::getModulePath()) {
+                return (bool) $v->is_create;
+            }
+        }
+    }
+
+    public static function isView(){
+        if (self::isSuperadmin()) {
+            return true;
+        }
+
+        $session = Session::get('admin_privileges_roles');
+        foreach ($session as $v) {
+            if ($v->path == self::getModulePath()) {
+                return (bool) $v->is_visible;
+            }
+        }
+    }
+
+    public static function isUpdate(){
+        if (self::isSuperadmin()) {
+            return true;
+        }
+
+        $session = Session::get('admin_privileges_roles');
+        foreach ($session as $v) {
+            if ($v->path == self::getModulePath()) {
+                return (bool) $v->is_edit;
+            }
+        }
+    }
+
+    public static function isRead(){
+        if (self::isSuperadmin()) {
+            return true;
+        }
+
+        $session = Session::get('admin_privileges_roles');
+        foreach ($session as $v) {
+            if ($v->path == self::getModulePath()) {
+                return (bool) $v->is_read;
+            }
+        }
+    }
+
+    public static function isDelete(){
+        if (self::isSuperadmin()) {
+            return true;
+        }
+
+        $session = Session::get('admin_privileges_roles');
+        foreach ($session as $v) {
+            if ($v->path == self::getModulePath()) {
+                return (bool) $v->is_delete;
+            }
+        }
+    }
+
+    public static function getModulePath(){
+        // Check to position of admin_path
+        if(config("ad.ADMIN_PATH")) {
+            $adminPathSegments = explode('/', Request::path());
+            $no = 1;
+            foreach($adminPathSegments as $path) {
+                if($path == config("ad.ADMIN_PATH")) {
+                    $segment = $no+1;
+                    break;
+                }
+                $no++;
+            }
+        } else {
+            $segment = 1;
+        }
+
+        return Request::segment($segment);
+    }
+
+    public static function getCurrentModule()
+    {
+        $modulepath = self::getModulePath();
+
+        if (Cache::has('moduls_'.$modulepath)) {
+            return Cache::get('moduls_'.$modulepath);
+        } else {
+
+            $module = DB::table('ad_modules')->where('path', self::getModulePath())->first();
+
+            //supply modulpath instead of $module incase where user decides to create form and custom url that does not exist in cms_moduls table.
+            return ($module)?:$modulepath;
+        }
+    }
+
+    public static function getCurrentMethod()
+    {
+        $action = str_replace("App\Http\Controllers\Admin", "", Route::currentRouteAction());
+        $atloc = strpos($action, '@') + 1;
+        $method = substr($action, $atloc);
+
+        return $method;
+    }
+
+    public static function mainpath($path = null)
+    {
+
+        $controllername = str_replace(["\app\Http\Controllers\Admin\\", "App\Http\Controllers\Admin\\"], "", strtok(Route::currentRouteAction(), '@'));
+        $route_url = route($controllername.'GetIndex');
+
+        if ($path) {
+            if (substr($path, 0, 1) == '?') {
+                return trim($route_url, '/').$path;
+            } else {
+                return $route_url.'/'.$path;
+            }
+        } else {
+            return trim($route_url, '/');
+        }
+    }
 }

@@ -36,6 +36,7 @@ class LoginAuthController extends Controller
             $request->session()->regenerate();
             Session::put('admin_is_superadmin', $session_details['priv']->is_superadmin);
             Session::put("admin_privileges", $session_details['priv']->id);
+            Session::put('admin_privileges_roles', $session_details['roles']);
             return redirect()->intended('dashboard');
         }
         return back()->withErrors([
@@ -47,6 +48,7 @@ class LoginAuthController extends Controller
     public function getOtherSessionDetails($id){
         $data = [];
         $data['priv'] = DB::table("ad_privileges")->where("id", $id)->first();
+        $data['roles'] = DB::table('ad_privileges_roles')->where('id_ad_privileges', $id)->join('ad_modules', 'ad_modules.id', '=', 'id_ad_modules')->select('ad_modules.name', 'ad_modules.path', 'is_visible', 'is_create', 'is_read', 'is_edit', 'is_delete')->get();
 		return $data;
     }
 

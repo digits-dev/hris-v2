@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Authentication\LoginAuthController;
-use App\Http\Controllers\Admin\AdPrivilegeController;
+use App\Http\Controllers\Admin\PrivilegesController;
 use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
@@ -47,7 +47,8 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::get('log-user-access', [LogUserAccessContent::class, 'index'])->middleware('auth')->name('log-user-access');
 
-
+    //ADMIN
+    Route::get(config('ad_url.ADMIN_PATH').'/create-privilege', [PrivilegesController::class, 'getCreate'])->middleware('auth')->name('create-privilege');
 });
 
     //ADMIN ROUTE

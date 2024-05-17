@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdModules extends Model
+class AdPrivilegesRoles extends Model
 {
     use HasFactory;
-    
 }

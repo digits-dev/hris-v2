@@ -8,11 +8,33 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use DB;
+use App\Models\Privileges;
 
 class PrivilegesController extends Controller{
     
     public function getIndex(){
-        return view('admin/ad-privilege');
+        $data = [];
+        $data['privileges'] = Privileges::getData();
+        return view('admin/ad-privilege',$data);
+    }
+
+    public function getCreate(){
+        if(!CommonHelpers::isCreate()) {
+            echo 'error!';
+        }
+        $id = 0;
+        $data = [];
+        $data['page_title'] = "Add Data";
+        $data['modules'] = DB::table("ad_modules")->where('is_protected', 0)->whereNull('deleted_at')
+         ->select("ad_modules.*", 
+                DB::raw("(select is_visible from ad_privileges_roles where id_ad_modules = ad_modules.id and id_ad_privileges = '$id') as is_visible"), 
+                DB::raw("(select is_create from ad_privileges_roles where id_ad_modules  = ad_modules.id and id_ad_privileges = '$id') as is_create"), 
+                DB::raw("(select is_read from ad_privileges_roles where id_ad_modules    = ad_modules.id and id_ad_privileges = '$id') as is_read"), 
+                DB::raw("(select is_edit from ad_privileges_roles where id_ad_modules    = ad_modules.id and id_ad_privileges = '$id') as is_edit"), 
+                DB::raw("(select is_delete from ad_privileges_roles where id_ad_modules  = ad_modules.id and id_ad_privileges = '$id') as is_delete")
+                )
+         ->orderby("name", "asc")->get();
+        return view('admin/create-privilege',$data);
     }
 }
 
