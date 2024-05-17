@@ -84,6 +84,7 @@
          
   
         {{-- IS ADMIN --}}
+        {{-- @dump(App\Helpers\CommonHelpers::myThemeColor()) --}}
         @if(App\Helpers\CommonHelpers::isSuperadmin())
         <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold">Admin</span></li>
           <li class="{{ Request::segment(2) == 'privilege' ? 'active' : '' }}">

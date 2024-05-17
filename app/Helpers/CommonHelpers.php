@@ -54,6 +54,11 @@ class CommonHelpers {
         return Session::get('admin_privileges');
     }
 
+    public static function myThemeColor()
+    {
+        return Session::get('theme_color');
+    }
+
     public static function sidebarDashboard(){
         $menu = DB::table('ad_menuses')->whereRaw("ad_menuses.id IN (select id_ad_menus from ad_menus_privileges where id_ad_privileges = '".self::myPrivilegeId()."')")->where('is_dashboard', 1)->where('is_active', 1)->first();
         if($menu){
