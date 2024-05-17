@@ -20,10 +20,62 @@ class EmployeeAccountsContent extends Component
     // #[Url()]
     public $perPage = 10;
 
+    public $userIds = [];
+
+    public $selectedAll = false;
+
+    public $isModalOpen = false;
+
+    public $setTo = '';
+
+    public $statusFnc = '';
+
     
     public function index(){
         return view('modules.employee-accounts.employee-accounts-module', ['routeName' => 'index']);
     }
+
+  
+    public function setToActive(){
+
+        User::whereIn('id', $this->userIds)->update(['status' => 1]);
+        $this->isModalOpen = false;
+        $this->selectedAll = false;
+        $this->userIds = [];
+
+        // dd($this->userIds);
+        
+    }
+    public function setToInactive(){
+        User::whereIn('id', $this->userIds)->update(['status' => 0]);
+        $this->isModalOpen = false;
+        $this->selectedAll = false;
+        $this->userIds = [];
+
+        // dd($this->userIds);
+
+    }
+
+
+    public function openModal($status)
+    {
+        if($status == 'active'){
+            $this->setTo = 'active';
+            $this->statusFnc = 'setToActive';
+        } else {
+            $this->setTo = 'inactive';    
+            $this->statusFnc = 'setToInactive';
+
+        }
+
+        $this->isModalOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isModalOpen = false;
+    }
+
     
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
@@ -35,11 +87,44 @@ class EmployeeAccountsContent extends Component
         $this->sortDir = "DESC";
     }
 
+    public function updatedSelectedAll()
+    {
+        if ($this->selectedAll) {
+            $this->userIds = User::search($this->search)
+                ->orderBy($this->sortBy, $this->sortDir)
+                ->pluck('id')
+                ->take($this->perPage)
+                ->toArray(); // Select all user IDs
+        } else {
+            $this->userIds = []; // Deselect all user IDs
+        }
+    }
+
+    public function updatedPage()
+    {
+        // Reset $selectedAll when navigating to a new page
+        $this->selectedAll = false;
+        $this->userIds = [];
+    }
+
+    public function resetUserIds($users)
+    {
+        $this->userIds = [];
+    }
+
+
   
     public function render()
     {
-        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', 
-        ['users' => User::search($this->search)->orderBy($this->sortBy,$this->sortDir)->paginate($this->perPage)]);
+
+     $users = User::search($this->search)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+   
+        if ($this->selectedAll) {
+            $this->userIds = $users->pluck('id')->toArray();
+     
+        }
+
+        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', ['users' => $users]);
     }
 
 }

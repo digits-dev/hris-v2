@@ -12,10 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-    //    $this->call([AdminAccount::class]);
-    //    $this->call([AdModules::class]);
-    //    $this->call([AdMenus::class]);
-    //    $this->call([AdPrivileges::class]);
+       $this->call([AdminAccount::class]);
+       $this->call([AdModules::class]);
+       $this->call([AdMenus::class]);
+       $this->call([AdPrivileges::class]);
        $this->call([AdMenuPrivileges::class]);
 
         \App\Models\User::factory(3)->create();

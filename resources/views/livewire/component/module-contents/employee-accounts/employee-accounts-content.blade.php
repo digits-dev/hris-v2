@@ -95,9 +95,9 @@
             text-align: center;
         }
         /* status */
-        .table th:nth-child(9), .table td:nth-child(9){
+        .table th:nth-child(9) button, .table td:nth-child(9){
             text-align: center;
-
+            margin:auto;
         }
 
         
@@ -190,7 +190,7 @@
             font-weight: 500;
         }
 
-        .add-btn {
+        .primary-btn {
             background-color: var(--primary-color);
             color: white;
             font-weight: 600;
@@ -202,11 +202,11 @@
         }
 
         
-        .add-btn:hover{
+        .primary-btn:hover{
             opacity: 0.9;
         }
 
-        .bulk-btn {
+        .secondary-btn {
             background-color:white;
             color: var(--primary-color);
             font-weight: 600;
@@ -217,20 +217,20 @@
             cursor: pointer;
         }
 
-        .bulk-btn:hover{
+        .secondary-btn:hover{
             background: var(--primary-hover);
             opacity: 0.9;
         }
 
         input[type="checkbox"] {
-            -webkit-appearance: none; /* Remove default appearance */
+            -webkit-appearance: none;
             -moz-appearance: none;
-            background-color: white; /* Background color when checked */
+            background-color: white; 
             appearance: none;
             margin-top: 5px;
             width: 15px;
             height: 15px;
-            border: 2px solid var(--stroke-color); /* Default border color */
+            border: 2px solid var(--stroke-color); 
             border-radius: 4px;
             outline: none;
             cursor: pointer;
@@ -238,19 +238,24 @@
         }
         /* Custom checkbox when checked */
         input[type="checkbox"]:checked {
-            background-color:var(--primary-color); /* Background color when checked */
+            background-color:var(--primary-color); 
             padding: 5px;
 
         }
         /* Custom checkbox when checked - checkmark */
         input[type="checkbox"]:checked::after {
-            content: "\2714"; /* Checkmark symbol */
-            color: white; /* Color of the checkmark */
+            content: "\2714";
+            color: white; 
             font-size: 8px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            visibility: hidden;
+        }
+
+        input[type="checkbox"]:checked::after {
+            visibility: visible;
         }
 
         .tbl-btns{
@@ -290,7 +295,6 @@
         }
 
         .status{
-            background: var(--tertiary-color);
             color:white;
             padding: 5px 20px;
             border-radius: 15px;
@@ -303,7 +307,106 @@
             justify-content: center;
             gap:10px;
         }
- 
+
+        .bulk-popup{
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            width: 200px;
+            background-color: white;
+            top:100;
+            right: 0;
+            border-radius: 8px;
+            margin-top: 60px; 
+            margin-right: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .bulk-content{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            text-decoration: none;
+            color: #1F6268;
+        }
+
+        .bulk-content:hover{
+            background-color: #cbfaff;
+        }
+
+        .bulk-content p {
+            font-size: 13px;
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+        }
+
+
+    /* Modal Style  */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .modal-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding:  20px 0;
+        z-index: 10000;
+        width: 500px;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-body {
+        padding:20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .modal-body p{
+        font-size:18px;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        width: 90%;
+        text-align: center
+
+    }
+
+    .modal-footer {
+        text-align: center;
+    }
+
+    .modal-footer button {
+        margin-left: 10px;
+    }
+
+    .close {
+        cursor: pointer;
+        margin-left: auto;
+    }
+
 
     
     </style>
@@ -319,17 +422,65 @@
         </div>
 
 
-        <div class="flex gap-2 ">
-        <a href="{{route('employee.create')}}" class="add-btn" wire:navigate>Add User</a>
-        <button  class="bulk-btn" >Bulk Actions</button>
-
+        <div class="flex gap-2 relative " x-data="{ isBulkOpen: false }">
+            <a href="{{route('employee.create')}}" class="primary-btn" wire:navigate>Add User</a>
+            <button  @click="isBulkOpen=!isBulkOpen"
+            @click.outside="isBulkOpen=false"
+              class="secondary-btn" >Bulk Actions</button>
+                <div class="bulk-popup z-50" 
+                    x-show="isBulkOpen"
+                    x-transition
+                    x-cloak
+                >
+             
+                    <button class="bulk-content"  wire:click="openModal('active')">
+                        <i class="fa-solid fa-user-check mx-2"></i>
+                        <p>Set to Active </p>
+                    </button>
+                    <button class="bulk-content"  wire:click="openModal('inactive')">
+                        <i class="fa-solid fa-user-xmark mx-2"></i>
+                        <p>Set to Inactive </p>
+                    </button>
+               
+                </div>
         </div>
     </div>
+
+
+    <div>
+    
+        @if($isModalOpen)
+            <div>
+                <!-- Modal backdrop -->
+                <div class="modal-backdrop" wire:click="closeModal"></div>
+    
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal content goes here -->
+                        <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <p>Are you sure that you want to set the selected @if(count($userIds) > 1) users @else user @endif  to {{$setTo}}?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="primary-btn" wire:click="{{$statusFnc}}">Confirm</button>
+                        <button type="button" class="secondary-btn" wire:click="closeModal">Cancel</button>
+                        <!-- Additional buttons or actions -->
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+
 
     <table class="table">
         <thead>
          <tr>
-            <th><input type="checkbox" name="" id=""></th>
+            <th><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
             <th></th>
 
             @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
@@ -351,10 +502,11 @@
                    <img src="/images/table/sort.png" width="10" alt="sorting icons">
                 </Button> 
             </th>
-            <th > <Button class="th-sort mx-auto">Status
-                   <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                </Button> 
-            </th>
+
+            @include('livewire.component.module-contents.employee-accounts.includes.th-sort', 
+            ['colName'=>'status', 'displayName' => 'Status' ])
+
+         
             <th>Action</th>
          </tr>
         </thead>
@@ -364,9 +516,17 @@
         <tbody>
             @foreach ($users as $user)
                 <tr wire:key="{{$user->id}}">
-                    <td>
-                        <input id="terms" type="checkbox" value=""  required />
-                    </td>
+                  
+                    @if($selectedAll)
+                        <td>
+                            <input type="checkbox"  value="{{ $user->id }}" checked>
+                        </td>
+                    @else
+                        <td>
+                            <input type="checkbox" wire:model="userIds" value="{{$user->id}}" >
+                        </td>
+                    @endif
+
                     <td><img class="user-img" src="/images/navigation/user.png" width="40" alt="{{$user->last_name}} picture"></td>
                     <td>{{ $user->full_name}}</td>
                     <td>{{ $user->employee_id }}</td>
@@ -374,7 +534,7 @@
                     <td>{{ $user->location }}</td>
                     <td>{{ $user->company }}</td>
                     <td><span class="role">Employee</span></td>
-                    <td><span class="status">Active</span></td>
+                    <td><span class="status" @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174']) >{{$user->status ? 'Active' : 'Inactive'}}</span></td>
                     <td>
                        <div class="tbl-btns">
                         <a role="button" href="{{route('employee.show', $user->id)}}" class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
@@ -394,4 +554,5 @@
     {{ $users->links() }}
 
     </div>
+
 </section>
