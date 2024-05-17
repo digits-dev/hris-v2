@@ -45,7 +45,7 @@
       </div>
       </div>
       <!-- SCREENS -->
-      <div id="navigation-content">
+      <div id="navigation-content" x-data="{ selected: null }">
         <ul class="navigation">
           <?php $dashboard = App\Helpers\CommonHelpers::sidebarDashboard();?>
           @if($dashboard)
@@ -53,17 +53,22 @@
               <a href="{{ $dashboard->url }}" wire:navigate>
                 <img src="{{asset($dashboard->icon)}}" class="nav-icon" />
                 <span>Dashboard</span>
-            </a>
+              </a>
+            </li>
           @endif
 
           @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
-            <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}">
-              <a href="{{ $menu->url }}" wire:navigate>
-                <img src="{{asset($menu->icon)}}" class="nav-icon" />
-                <span>{{$menu->name}}</span>
-              </a>
-              @if(!empty($menu->children))
-                <ul class="treeview-menu">
+              {{-- PARENT --}}
+              <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}"  @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null">
+                <a href="{{ $menu->url }}" {{ $menu->type == "URL" ? '' : 'wire:navigate' }}>
+                  <img src="{{asset($menu->icon)}}" class="nav-icon" />
+                  <span>{{$menu->name}}</span>
+                </a>
+              </li>
+              {{--  --}}
+              <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
+                @if(!empty($menu->children))
+                <ul x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
                     @foreach($menu->children as $child)
                         <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : ""))?"active":""}}'>
                             <a href='{{ ($child->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$child->url}}'
@@ -73,8 +78,8 @@
                         </li>
                     @endforeach
                 </ul>
-            @endif
-            </li>
+                @endif
+              </div>
           @endforeach
          
   

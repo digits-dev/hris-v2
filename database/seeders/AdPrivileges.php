@@ -21,7 +21,6 @@ class AdPrivileges extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'name' => 'Super Administrator',
                 'is_superadmin' => 1,
-                'theme_color' => 'skin-red',
             ],
         ];
 

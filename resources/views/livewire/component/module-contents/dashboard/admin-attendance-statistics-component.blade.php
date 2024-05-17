@@ -12,7 +12,7 @@
 
     }
     .main-container{
-        margin:  1rem 2.5rem;
+        margin:  0 2.5rem;
         height: 100%;
     }
 
@@ -152,9 +152,6 @@
 </style>
 @endsection
 <div class="main-container">
-    <div class="date-container">
-        <p class="date" id="Date"></p>
-    </div>
     <div class="employee-attendance-container">
         <div class="statistics-content shadow-md shadow-slate-200">
             <p class="content-title ">Statistics</p>
@@ -210,6 +207,7 @@
             </div>
         </div>
     </div>
+    <br>
 </div>
 
 @section('script')
@@ -228,7 +226,7 @@
                      'On Sick Leave'
                  ],
                  datasets: [{
-                     label: ' ',
+                     label: 'Employees',
                      data: [1234, 250, 2346, 212, 252],
                      backgroundColor: [
                          '#2196F3',
