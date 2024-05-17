@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
+use App\Helpers\CommonHelpers;
 
 class EmployeeAccountsContent extends Component
 {
@@ -32,6 +33,9 @@ class EmployeeAccountsContent extends Component
 
     
     public function index(){
+        if (!CommonHelpers::isView()) {
+            CommonHelpers::redirect(CommonHelpers::mainpath(), "You don't have privileges to access this area", 'error');
+        }
         return view('modules.employee-accounts.employee-accounts-module', ['routeName' => 'index']);
     }
 

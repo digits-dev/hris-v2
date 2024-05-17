@@ -204,7 +204,7 @@
         </fieldset>
 
         <div class="flex w-full justify-between">
-            <a role="button" href="{{route('employee-accounts')}}" class="table-btn" wire:navigate>Cancel</a>
+            <a role="button" href="{{url('/employee-accounts')}}" class="table-btn" wire:navigate>Cancel</a>
             <input  type="submit" value="Submit" class="table-btn">
         </div>
     </form>

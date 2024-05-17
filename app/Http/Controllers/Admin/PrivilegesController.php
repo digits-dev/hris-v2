@@ -43,7 +43,7 @@ class PrivilegesController extends Controller{
 
     public function postAddSave(Request $request){
     
-        if (! CommonHelpers::isCreate()) {
+        if (!CommonHelpers::isCreate()) {
             echo 'error';
         }
 
