@@ -127,14 +127,14 @@
                         <table class='table table-striped table-hover table-bordered'>
                             <thead>
                             <tr class='active'>
-                                <th width='3%'>privileges_module_list_no</th>
-                                <th width='60%'>privileges_module_list_mod_names</th>
+                                <th width='3%'> list</th>
+                                <th width='60%'> Modules Name's</th>
                                 <th>&nbsp;</th>
-                                <th>privileges_module_list_view</th>
-                                <th>privileges_module_list_create</th>
-                                <th>privileges_module_list_read</th>
-                                <th>privileges_module_list_update</th>
-                                <th>privileges_module_list_delete</th>
+                                <th>View</th>
+                                <th>Create</th>
+                                <th>Read</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                             <tr class='info'>
                                 <th>&nbsp;</th>
