@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web']], function() {
 
     //ADMIN
     Route::get(config('ad_url.ADMIN_PATH').'/create-privilege', [PrivilegesController::class, 'getCreate'])->middleware('auth')->name('create-privilege');
+    Route::post(config('ad_url.ADMIN_PATH').'/save-privilege', [PrivilegesController::class, 'postAddSave'])->middleware('auth')->name('save-privilege');
 });
 
     //ADMIN ROUTE

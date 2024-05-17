@@ -16,7 +16,7 @@
 
                 </div>
             </div>
-            <form method='post'>
+            <form method='post' action="{{ route('save-privilege') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body">
                     <div class="alert alert-info">
@@ -64,7 +64,7 @@
                             <?php endforeach;?>
                         </select>
                         <div class="text-danger">{{ $errors->first('theme_color') }}</div>
-                        @push('bottom')
+                        @section('script')
                             <script type="text/javascript">
                                 $(function () {
                                     $("select[name=theme_color]").change(function () {
@@ -84,12 +84,12 @@
                                     $('#set_as_superadmin input:checked').trigger('click');
                                 })
                             </script>
-                        @endpush
+                        @endsection
                     </div>
 
                     <div id='privileges_configuration' class='form-group'>
                         <label>privileges_configuration</label>
-                        @push('bottom')
+                        @section('script')
                             <script>
                                 $(function () {
                                     $("#is_visible").click(function () {
@@ -123,11 +123,11 @@
                                     })
                                 })
                             </script>
-                        @endpush
+                        @endsection
                         <table class='table table-striped table-hover table-bordered'>
                             <thead>
                             <tr class='active'>
-                                <th width='3%'> list</th>
+                                <th width='3%'> No.</th>
                                 <th width='60%'> Modules Name's</th>
                                 <th>&nbsp;</th>
                                 <th>View</th>

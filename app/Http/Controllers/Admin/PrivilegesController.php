@@ -11,7 +11,11 @@ use DB;
 use App\Models\Privileges;
 
 class PrivilegesController extends Controller{
-    
+    private $table_name;
+    public function __construct() {
+        $this->table_name  =  'ad_privileges';
+    }
+
     public function getIndex(){
         $data = [];
         $data['privileges'] = Privileges::getData();
@@ -35,6 +39,49 @@ class PrivilegesController extends Controller{
                 )
          ->orderby("name", "asc")->get();
         return view('admin/create-privilege',$data);
+    }
+
+    public function postAddSave(Request $request){
+    
+        if (! CommonHelpers::isCreate()) {
+            echo 'error';
+        }
+
+        $savePriv = [
+            "name" => $request->name,
+            "is_superadmin" => $request->is_superadmin,
+            "theme_color" => $request->theme_color
+        ];
+
+      
+        $id = DB::table($this->table_name)->insertGetId($savePriv);
+
+        //set theme
+        Session::put('theme_color', $request->theme_color);
+
+        $priv = $request->privileges;
+  
+        if ($priv) {
+            foreach ($priv as $id_modul => $data) {
+                $arrs = [];
+                $arrs['is_visible'] = @$data['is_visible'] ?: 0;
+                $arrs['is_create'] = @$data['is_create'] ?: 0;
+                $arrs['is_read'] = @$data['is_read'] ?: 0;
+                $arrs['is_edit'] = @$data['is_edit'] ?: 0;
+                $arrs['is_delete'] = @$data['is_delete'] ?: 0;
+                $arrs['id_ad_privileges'] = $id;
+                $arrs['id_ad_modules'] = $id_modul;
+                DB::table("ad_privileges_roles")->insert($arrs);
+
+                $module = DB::table('ad_modules')->where('id', $id_modul)->first();
+            }
+        }
+
+        //Refresh Session Roles
+        $roles = DB::table('ad_privileges_roles')->where('id_ad_privileges', CommonHelpers::myPrivilegeId())->join('ad_modules', 'ad_modules.id', '=', 'id_ad_modules')->select('ad_modules.name', 'ad_modules.path', 'is_visible', 'is_create', 'is_read', 'is_edit', 'is_delete')->get();
+        Session::put('admin_privileges_roles', $roles);
+
+        CommonHelpers::redirect(CommonHelpers::mainpath(), "Created Succefully", 'success');
     }
 }
 
