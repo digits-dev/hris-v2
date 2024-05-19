@@ -24,6 +24,10 @@ body{
     font-weight: 800;
 }
 
+
+
+
+
 .sidebar-container {
     height: 100%;
     min-height: 100dvh;
@@ -32,6 +36,15 @@ body{
     transition: 0.5s width ease;
     overflow: hidden;
     flex-shrink: 0;
+
+    .menu-name, .menu-arrow-icon{
+        display: none;
+    }
+
+    .menu-child-name{
+        font-size: 11px !important;
+    }
+    
 }
 .sidebar-container:hover{
     width: 15.625rem;
@@ -106,13 +119,33 @@ width: 5px;
 
 .navigation li {
     list-style-type: none;
-    padding: 0.5rem 1.35rem;
+    padding: 0.5rem 1.4rem;
     margin-bottom: 0.5rem;
 }
 
 .nav-icon {
     object-fit: contain;
     width: 1.5625rem;
+}
+
+.nav-icon-name-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.child-nav-icon{
+    object-fit: contain;
+    width: 1.2rem;
+    margin-left: 3px;
+}
+
+.menu-child-arrow-icon{
+    width: 7px;
+}
+
+.child-menu-container{
+    align-items: center;
 }
 
 #navigation-content {

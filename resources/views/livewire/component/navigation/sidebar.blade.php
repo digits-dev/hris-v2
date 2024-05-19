@@ -52,7 +52,7 @@
             <li class="{{ Request::segment(1) == $dashboard->path ? 'active' : '' }}">
               <a href="{{ $dashboard->url }}" wire:navigate>
                 <img src="{{asset($dashboard->icon)}}" class="nav-icon" />
-                <span>Dashboard</span>
+                <span class="menu-name">Dashboard</span>
               </a>
             </li>
           @endif
@@ -60,20 +60,25 @@
           @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
               {{-- PARENT --}}
               <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}"  @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null">
-                <a href="{{ $menu->url }}" {{ $menu->type == "URL" ? '' : 'wire:navigate' }}>
-                  <img src="{{asset($menu->icon)}}" class="nav-icon" />
-                  <span>{{$menu->name}}</span>
+                <a href="{{ $menu->url }}" {{ $menu->type == "URL" ? '' : 'wire:navigate' }} style="justify-content: space-between">
+                  <div class="nav-icon-name-container">
+                    <img src="{{asset($menu->icon)}}" class="nav-icon" />
+                    <span class="menu-name">{{$menu->name}}</span>
+                  </div>
+                  @if(!empty($menu->children))
+                  <span class="menu-arrow-icon" x-html="selected === {{$menu->id}} ? `<img src='{{ asset('images/navigation/nav-up.png') }}' class='menu-child-arrow-icon'>` : `<img src='{{ asset('images/navigation/nav-down.png') }}' class='menu-child-arrow-icon'>`"></span>
+                  @endif
                 </a>
               </li>
-              {{--  --}}
+              {{-- CHILDREN  --}}
               <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
                 @if(!empty($menu->children))
                 <ul x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
                     @foreach($menu->children as $child)
-                        <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : ""))?"active":""}}'>
+                        <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : "")) ? "active" : ""}}' class="child-menu-container">
                             <a href='{{ ($child->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$child->url}}'
                               class='{{($child->color)?"text-".$child->color:""}}'>
-                                <i class='{{$child->icon}}'></i> <span>{{$child->name}}</span>
+                              <img src="{{asset($child->icon)}}" class="child-nav-icon" /><span class="menu-child-name">{{$child->name}}</span>
                             </a>
                         </li>
                     @endforeach
@@ -86,23 +91,23 @@
         {{-- IS ADMIN --}}
         {{-- @dump(App\Helpers\CommonHelpers::myThemeColor()) --}}
         @if(App\Helpers\CommonHelpers::isSuperadmin())
-        <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold">Admin</span></li>
+        <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold pt-2">Admin</span></li>
           <li class="{{ Request::segment(2) == 'privilege' ? 'active' : '' }}">
             <a href="{{ route('PrivilegesControllerGetIndex') }}">
               <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
-              <span>Privileges</span>
+              <span class="menu-name">Privileges</span>
             </a>
           </li>
           <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
             <a href="{{ route('AdminUsersControllerGetIndex') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
-              <span>Users Management</span>
+              <span class="menu-name">Users Management</span>
             </a>
           </li>
           <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
             <a href="{{ route('log-user-access') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
-              <span>Log User Access</span>
+              <span class="menu-name">Log User Access</span>
             </a>
           </li>
           @endif
@@ -110,7 +115,6 @@
       </div>
 
     </div>
-
 
   </div>
 </div>
