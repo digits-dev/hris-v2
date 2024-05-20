@@ -94,6 +94,43 @@
             flex: 1;
         }
 
+        .custom-select {
+            position: relative;
+            width: 65px;
+            min-width: 65px;
+            height: 40px;
+        }
+
+        .custom-select select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 9px;
+            font-size: 14px;
+            outline: none;
+            font-family: "Inter", sans-serif;
+            border: 1px solid var(--stroke-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .arrow-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-20%);
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+
+
+
+
+
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -475,38 +512,7 @@
             margin-left: auto;
         }
 
-        .custom-select {
-            position: relative;
-            width: 65px;
-            min-width: 65px;
-            height: 40px;
-        }
-
-        .custom-select select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding: 8px 10px;
-            font-size: 16px;
-            outline: none;
-            font-family: "Inter", sans-serif;
-            border: 1px solid var(--stroke-color);
-            color: var(--primary-color);
-            border-radius: 8px;
-            background-color: #fff;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .arrow-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-20%);
-            width: 10px;
-            height: 10px;
-            pointer-events: none;
-        }
+       
 
         .no-data-container {
             width: 100%;
@@ -532,7 +538,6 @@
             </div>
             <div class="custom-select">
                 <select wire:model.live="perPage" id="per-page">
-                    <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
@@ -546,7 +551,7 @@
 
         </div>
 
-        <div class="flex items-center gap-4 relative " x-data="{ isBulkOpen: false }">
+        <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false }">
             <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
 
             <button @click="isBulkOpen=!isBulkOpen" @click.outside="isBulkOpen=false" class="secondary-btn">Bulk

@@ -38,22 +38,37 @@
                 "slnt" 0;
         }
 
-
         .header {
             display: flex;
+            flex-direction: column;
+            gap: 20px;
             justify-content: space-between;
             align-items: center;
         }
 
+        @media screen and (min-width: 1100px) {
+            .header {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .header__left-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            max-width: 550px;
+        }
 
         .search-form {
             border-radius: 8px;
             display: flex;
             gap: 5px;
             border: 1px solid var(--stroke-color);
-            width: 500px;
+            width: 100%;
             overflow: hidden;
-
         }
 
         .search-form__label {
@@ -72,7 +87,7 @@
             place-content: center;
 
         }
- 
+
         .search-form__input {
             padding: 10px;
             outline: none;
@@ -82,46 +97,93 @@
             flex: 1;
         }
 
+        .custom-select {
+            position: relative;
+            width: 65px;
+            min-width: 65px;
+            height: 40px;
+        }
+
+        .custom-select select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 9px;
+            font-size: 14px;
+            outline: none;
+            font-family: "Inter", sans-serif;
+            border: 1px solid var(--stroke-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .arrow-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-20%);
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+
+
+        .table-container {
+            width:100%;
+            max-width: 1500px;
+            overflow-y: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 30px;
+        }
 
         .table {
-            width: 100%;
+            width: 1500px;
             margin: 30px 0;
-            gap: 0;
-            /* border: 1px solid black; */
             border-collapse: collapse;
-            text-align: left;
         }
 
-        /* Adjust Table Column Text Alignment  */
+        /* table column alignment */
 
-        /* Time In */
-        .table th:nth-child(4) button, .table td:nth-child(4){
+        /* time in */
+
+        .table th:nth-child(6) button,
+        .table td:nth-child(6) {
             text-align: center;
-            margin: auto
-        }
-        /* Time Out */
-        .table th:nth-child(5) button, .table td:nth-child(5){
-            text-align: center;
-            margin: auto
-        }
-        /* Date */
-        .table th:nth-child(6) button, .table td:nth-child(6){
-            text-align: center;
-            margin: auto
+            margin: auto;
 
         }
-        /* Duration */
-        .table th:nth-child(7) button, .table td:nth-child(7){
+
+        /* time out */
+
+        .table th:nth-child(7) button,
+        .table td:nth-child(7) {
             text-align: center;
-            margin: auto
+            margin: auto;
 
         }
-      
-        /* End of Table Column Text Alignment  */
-        
+
+        /* date */
+        .table th:nth-child(8) button,
+        .table td:nth-child(8) {
+            text-align: center;
+            margin: auto;
+        }
+
+        /* bio duration */
+        .table th:nth-child(9) button,
+        .table td:nth-child(9) {
+            text-align: center;
+            margin: auto;
+        }
+
+        /* end of table column alignment */
+
         .table thead {
             background: var(--secondary-color);
-            
         }
 
         .table th {
@@ -157,38 +219,42 @@
 
         /* Table Column Widths  */
 
-        /* Checkbox  */
+        /* first name  */
         .table th:nth-child(1), .table td:nth-child(1){
-            width:5%;
+           width: 150px;
         }
     
-        /* First Name */
+        /* middle name  */
         .table th:nth-child(2), .table td:nth-child(2){
-            width:15%;
+            width: 150px;
         }
-        /* Last Name */
+        /* last name  */
         .table th:nth-child(3), .table td:nth-child(3){
-            width:15%;
+            width: 150px;
         }
-        /* Time In */
+        /* location  */
         .table th:nth-child(4), .table td:nth-child(4){
-            width:15%;
+            width: 180px;
         }
-        /* Time Out */
+        /* current location  */
         .table th:nth-child(5), .table td:nth-child(5){
-            width:15%;
+            width: 180px;
         }
-        /*   Date   */
+        /* time in  */
         .table th:nth-child(6), .table td:nth-child(6){
-            width:15%;
+            width: 180px;
         }
-        /*  Duration  */
+        /* time out  */
         .table th:nth-child(7), .table td:nth-child(7){
-            width:10%;
+            width: 180px;
         }
-        /*  Action  */
+        /* date  */
         .table th:nth-child(8), .table td:nth-child(8){
-            width:10%;
+            width: 150px;
+        }
+        /* bio duration  */
+        .table th:nth-child(9), .table td:nth-child(8){
+            width: 120px;
         }
 
         /* End of Table Column Widths  */
@@ -284,78 +350,137 @@
      gap:10px;
     }
  
+    .no-data-container {
+            width: 100%;
+            padding: 50px 0;
+            text-align: center;
+            margin-top: 40px;
+            background-color: rgb(243 244 246);
+            font-weight: 600;
+            border-radius: 5px;
+            color: var(--primary-color);
+            font-family: "Inter", sans-serif;
+    }
 
+    .primary-btn {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        font-size: 12px;
+        border: 2px solid var(--stroke-color);
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .primary-btn:hover {
+        opacity: 0.9;
+    }
     
     </style>
 @endsection
 
 <section>
 
-    <div class="header">
-          <div  class="search-form">
-            <label for="search-input" class="search-form__label ">Search</label>
-            <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input " placeholder="Search User" id="search-input">
+    <div class="header ">
+        <div class="header__left-container">
+            <div class="search-form">
+                <label for="search-input" class="search-form__label ">Search</label>
+                <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input "
+                    placeholder="Search User" id="search-input">
+            </div>
+            <div class="custom-select">
+                <select wire:model.live="perPage" id="per-page">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+
+                <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
+            </div>
+            <button class="primary-btn">Filters</button>
+
+        </div>
+
+        <div class="flex items-center gap-2 relative ">
+            <a href="#" class="primary-btn" wire:navigate>Go to Summary</a>
+
+            <button class="primary-btn">Export</button>
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-         <tr>
-            <th><input type="checkbox" name="" id=""></th>
 
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'first_name', 'displayName' => 'First Name' ])
-
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'last_name', 'displayName' => 'Last Name' ])
-
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'time_in', 'displayName' => 'Time In' ])
-
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'time_out', 'displayName' => 'Time Out' ])
-
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'created_at', 'displayName' => 'Date' ])
-
-            @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-            ['colName'=>'time_out', 'displayName' => 'Duration' ])
-
-            <th>Action</th>
-         </tr>
-        </thead>
-
-        <tbody>
-            @foreach ($users as $user)
-                <tr>
-                    <td>
-                        <input id="terms" type="checkbox" value=""  required />
-                    </td>
-                    <td>{{ $user->first_name }}</td>
-                    <td>{{ $user->last_name }}</td>
-                    <td>{{ $user->time_in }}</td>
-                    <td>{{ $user->time_out }}</td>
-
-                    @php
-                        $timeIn = \Carbon\Carbon::parse($user->time_in);
-                        $timeOut = \Carbon\Carbon::parse($user->time_out);
-
-                    @endphp     
-
-                    <td>{{ \Carbon\Carbon::parse($user->time_in)->format('Y-m-d') }}</td>
-                    <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
-
-                    <td>
-                       <div class="tbl-btns">
-                        <button class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="table-btn table-btn--red"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-
-
-    </table>
+ 
+    @if (count($users) == 0)
+        <div class="no-data-container">
+            <p>No data available in table</p>
+        </div>
+    @else
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                 <tr>
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'first_name', 'displayName' => 'First Name' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'middle_name', 'displayName' => 'Middle Name' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'last_name', 'displayName' => 'Last Name' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'location', 'displayName' => 'Location' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'current_location', 'displayName' => 'Current Location' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'time_in', 'displayName' => 'Time In' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'time_out', 'displayName' => 'Time Out' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'created_at', 'displayName' => 'Date' ])
+        
+                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'time_out', 'displayName' => 'Bio Duration' ])
+        
+                 </tr>
+                </thead>
+        
+                <tbody wire:loading.class="opacity-50">
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->first_name }}</td>
+                            <td>{{ $user->middle_name }}</td>
+                            <td>{{ $user->last_name }}</td>
+                            <td>{{ $user->location }}</td>
+                            <td>{{ $user->current_location }}</td>
+                            <td>{{ $user->time_in }}</td>
+                            <td>{{ $user->time_out }}</td>
+        
+                            @php
+                                $timeIn = \Carbon\Carbon::parse($user->time_in);
+                                $timeOut = \Carbon\Carbon::parse($user->time_out);
+        
+                            @endphp     
+        
+                            <td>{{ \Carbon\Carbon::parse($user->time_in)->format('Y-m-d') }}</td>
+                            <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
+        
+                        </tr>
+                    @endforeach
+                </tbody>
+        
+        
+            </table>
+        </div>
+    @endif
     <div class="pagination">
     {{ $users->links() }}
     </div>

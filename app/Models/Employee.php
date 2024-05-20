@@ -14,7 +14,10 @@ class Employee extends Model
         $cleanVal = trim($value);
 
         return $query->where('first_name', 'like', "%$cleanVal%")
+                     ->orWhere('middle_name', 'like', "%$cleanVal%")
                      ->orWhere('last_name', 'like', "%$cleanVal%")
+                     ->orWhere('location', 'like', "%$cleanVal%")
+                     ->orWhere('current_location', 'like', "%$cleanVal%")
                      ->orWhere('time_in', 'like', "%$cleanVal%")
                      ->orWhere('time_out', 'like', "%$cleanVal%");
     }

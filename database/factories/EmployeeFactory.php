@@ -18,7 +18,10 @@ class EmployeeFactory extends Factory
     {
         return [
             'first_name' => $this->faker->firstName,
+            'middle_name' => $this->faker->lastName,
             'last_name'=> $this->faker->lastName,
+            'location' => $this->faker->city,
+            'current_location' => $this->faker->city(),
             'time_in' => now(),
             'time_out' => now()->addHours(rand(7,12))->addMinutes(rand(0,59)),
         ];
