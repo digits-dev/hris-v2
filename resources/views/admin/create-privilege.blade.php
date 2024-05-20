@@ -16,25 +16,26 @@
 
                 </div>
             </div>
-            <form method='post' action="{{ route('save-privilege') }}">
+
+            <form method='post' action='{{ (@$row->id) ? url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save')."/$row->id" : route("save-privilege") }}'>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body">
                     <div class="alert alert-info">
                         <strong>Note:</strong> To show the menu you have to create a menu at Menu Management
                     </div>
                     <div class='form-group'>
-                        <label>privileges_name</label>
-                        <input type='text' class='form-control' name='name' required/>
+                        <label>Privileges Name</label>
+                        <input type='text' class='form-control' name='name' required value='{{ @$row->name }}' />
                         <div class="text-danger">{{ $errors->first('name') }}</div>
                     </div>
 
                     <div class='form-group'>
-                        <label>set_as_superadmin</label>
+                        <label>Set As Superadmin</label>
                         <div id='set_as_superadmin' class='radio'>
-                            <label><input required type='radio' name='is_superadmin'
-                                          value='1'/> confirmation_yes</label> &nbsp;&nbsp;
-                            <label><input type='radio' name='is_superadmin'
-                                          value='0'/> confirmation_no</label>
+                            <label><input required {{ (@$row->is_superadmin==1)?'checked':'' }} type='radio' name='is_superadmin'
+                                value='1'/> Yes</label> &nbsp;&nbsp;
+                            <label><input {{ (@$row->is_superadmin==0)?'checked':'' }} type='radio' name='is_superadmin'
+                                value='0'/> No</label>
                         </div>
                         <div class="text-danger">{{ $errors->first('is_superadmin') }}</div>
                     </div>
@@ -60,7 +61,7 @@
                             );
                             foreach($skins as $skin):
                             ?>
-                            <option value='<?=$skin?>'><?=ucwords(str_replace('-', ' ', $skin))?></option>
+                            <option <?=(@$row->theme_color == $skin) ? "selected" : ""?> value='<?=$skin?>'><?=ucwords(str_replace('-', ' ', $skin))?></option>
                             <?php endforeach;?>
                         </select>
                         <div class="text-danger">{{ $errors->first('theme_color') }}</div>
@@ -148,25 +149,30 @@
                             </tr>
                             </thead>
                             <tbody>
+    
                             <?php $no = 1;?>
                             @foreach($modules as $modul)
-                             
+                        
+                                <?php
+                                    $roles = DB::table('ad_privileges_roles')->where('id_ad_modules', $modul->id)->where('id_ad_privileges', @$row->id)->first();
+                                ?>
+                       
                                 <tr>
                                     <td><?php echo $no++;?></td>
                                     <td>{{$modul->name}}</td>
                                     <td class='info' align="center"><input type='checkbox' title='Check All Horizontal'
-                                                                          class='select_horizontal'/>
+                                                                           <?=( @$roles->is_create && @$roles->is_read && @$roles->is_edit && @$roles->is_delete) ? "checked" : ""?> class='select_horizontal'/>
                                     </td>
                                     <td class='active' align="center"><input type='checkbox' class='is_visible' name='privileges[<?=$modul->id?>][is_visible]'
-                                                                             value='1'/></td>
+                                                                             <?=@$roles->is_visible ? "checked" : ""?> value='1'/></td>
                                     <td class='warning' align="center"><input type='checkbox' class='is_create' name='privileges[<?=$modul->id?>][is_create]'
-                                                                             value='1'/></td>
+                                                                              <?=@$roles->is_create ? "checked" : ""?> value='1'/></td>
                                     <td class='info' align="center"><input type='checkbox' class='is_read' name='privileges[<?=$modul->id?>][is_read]'
-                                                                            value='1'/></td>
+                                                                           <?=@$roles->is_read ? "checked" : ""?> value='1'/></td>
                                     <td class='success' align="center"><input type='checkbox' class='is_edit' name='privileges[<?=$modul->id?>][is_edit]'
-                                                                               value='1'/></td>
+                                                                              <?=@$roles->is_edit ? "checked" : ""?> value='1'/></td>
                                     <td class='danger' align="center"><input type='checkbox' class='is_delete' name='privileges[<?=$modul->id?>][is_delete]'
-                                                                             value='1'/></td>
+                                                                             <?=@$roles->is_delete ? "checked" : ""?> value='1'/></td>
                                 </tr>
                             @endforeach
                             </tbody>

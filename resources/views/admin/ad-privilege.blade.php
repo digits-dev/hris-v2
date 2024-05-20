@@ -24,7 +24,7 @@
             <tbody>
                 @foreach ($privileges as $priv)
                     <tr>
-                        <td><a cla href=""> <i class="fa fa-edit"></i> Edit</a></td>
+                        <td><a class="" href="{{url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege')."/$priv->id"}}"> <i class="fa fa-edit"></i> Edit</a></td>
                         <td>{{ $priv->id}}</td>
                         <td>{{ $priv->name }}</td>
                         <td>{{ $priv->is_superadmin }}</td>

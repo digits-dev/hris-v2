@@ -48,8 +48,10 @@ Route::group(['middleware' => ['web']], function() {
     Route::get('log-user-access', [LogUserAccessContent::class, 'index'])->middleware('auth')->name('log-user-access');
 
     //ADMIN
-    Route::get(config('ad_url.ADMIN_PATH').'/create-privilege', [PrivilegesController::class, 'getCreate'])->middleware('auth')->name('create-privilege');
-    Route::post(config('ad_url.ADMIN_PATH').'/save-privilege', [PrivilegesController::class, 'postAddSave'])->middleware('auth')->name('save-privilege');
+    Route::get(config('ad_url.ADMIN_PATH').'/privileges/create-privilege', [PrivilegesController::class, 'getCreate'])->middleware('auth')->name('create-privilege');
+    Route::post(config('ad_url.ADMIN_PATH').'/privileges/save-privilege', [PrivilegesController::class, 'postAddSave'])->middleware('auth')->name('save-privilege');
+    Route::get(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege/{id}', [PrivilegesController::class, 'getEdit'])->middleware('auth')->name('edit-privilege');
+    Route::post(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save/{id}', [PrivilegesController::class, 'postEditSave'])->middleware('auth')->name('edit-privilege-save');
 });
 
     //ADMIN ROUTE
