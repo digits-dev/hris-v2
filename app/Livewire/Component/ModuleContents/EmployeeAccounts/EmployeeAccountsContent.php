@@ -22,7 +22,7 @@ class EmployeeAccountsContent extends Component
     public $search = ''; 
 
     #[Url(as:'per-page')]
-    public $perPage = 5;
+    public $perPage = 10;
 
     public $userIds = [];
 

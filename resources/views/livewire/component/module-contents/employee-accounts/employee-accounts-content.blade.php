@@ -127,10 +127,6 @@
             pointer-events: none;
         }
 
-
-
-
-
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -141,7 +137,7 @@
         }
 
         .table {
-            width: 1500px;
+            width:2000px;
             margin: 30px 0;
             border-collapse: collapse;
             text-align: left;
@@ -156,14 +152,14 @@
 
         /* position */
 
-        .table th:nth-child(10),
-        .table td:nth-child(10) {
+        .table th:nth-child(11),
+        .table td:nth-child(11) {
             text-align: center;
         }
 
         /* status */
-        .table th:nth-child(11) button,
-        .table td:nth-child(11) {
+        .table th:nth-child(12) button,
+        .table td:nth-child(12) {
             text-align: center;
             margin: auto;
         }
@@ -212,73 +208,78 @@
         /* checkbox  */
         .table th:nth-child(1),
         .table td:nth-child(1) {
-            width: 50px;
+            width:50px;
         }
 
         /* image  */
         .table th:nth-child(2),
         .table td:nth-child(2) {
-            width: 60px;
+            width:60px;
         }
 
         /* first name */
         .table th:nth-child(3),
         .table td:nth-child(3) {
-            width: 150px;
+            width:130px;
         }
 
         /* middle name */
         .table th:nth-child(4),
         .table td:nth-child(4) {
-            width: 150px;
+            width:140px;
         }
 
         /* last name */
         .table th:nth-child(5),
         .table td:nth-child(5) {
-            width: 150px;
+            width:130px;
         }
 
         /* employee id */
         .table th:nth-child(6),
         .table td:nth-child(6) {
-            width: 150px;
+            width:150px;
         }
 
         /* email address */
         .table th:nth-child(7),
         .table td:nth-child(7) {
-            width: 200px;
+            width:120px;
         }
 
         /* company */
         .table th:nth-child(8),
         .table td:nth-child(8) {
-            width: 200px;
+            width:150px;
         }
 
         /* hire location */
         .table th:nth-child(9),
         .table td:nth-child(9) {
-            width: 200px;
+            width:150px;
         }
 
-        /* position */
+        /* hire date */
         .table th:nth-child(10),
         .table td:nth-child(10) {
-            width: 100px;
+            width:150px;
+        }
+        /* position */
+        .table th:nth-child(11),
+        .table td:nth-child(11) {
+            width:100px;
         }
 
         /* status */
-        .table th:nth-child(11),
-        .table td:nth-child(11) {
-            width: 100px;
+        .table th:nth-child(12),
+        .table td:nth-child(12) {
+            width:100px;
         }
 
         /* action */
-        .table th:nth-child(12),
-        .table td:nth-child(12) {
-            width: 100px;
+        .table th:nth-child(13),
+        .table td:nth-child(13) {
+            width:100px;
         }
 
         /* End of Table Column Widths  */
@@ -655,6 +656,11 @@
                             'displayName' => 'Hire Location',
                         ])
 
+                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
+                            'colName' => 'hire_date',
+                            'displayName' => 'Hire Date',
+                        ])
+
                         <th> <Button class="th-sort  mx-auto">Position
                                 <img src="/images/table/sort.png" width="10" alt="sorting icons">
                             </Button>
@@ -688,11 +694,11 @@
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->middle_name }}</td>
                             <td>{{ $user->last_name }}</td>
-
                             <td>{{ $user->employee_id }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->hire_location }}</td>
                             <td>{{ $user->company }}</td>
+                            <td>{{ $user->hire_location }}</td>
+                            <td>{{ $user->hire_date }}</td>
                             <td><span class="role">Employee</span></td>
                             <td><span class="status"
                                     @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
