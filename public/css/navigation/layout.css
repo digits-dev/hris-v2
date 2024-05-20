@@ -25,9 +25,6 @@ body{
 }
 
 
-
-
-
 .sidebar-container {
     height: 100%;
     min-height: 100dvh;
@@ -37,7 +34,7 @@ body{
     overflow: hidden;
     flex-shrink: 0;
 
-    .menu-name, .menu-arrow-icon{
+    .menu-name, .menu-arrow-icon, .menu-child-name{
         display: none;
     }
 

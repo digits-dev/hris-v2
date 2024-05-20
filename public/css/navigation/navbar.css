@@ -12,9 +12,35 @@
     box-shadow: inset 0 5px 5px -5px rgba(0, 0, 0, 0.5);
     height: 70px; 
 }
-.title-content{
-  
+
+/* SKINS */
+
+.skin-blue{
+    background-color: #081968e1 !important;
+
 }
+
+.skin-blue-light{
+    background-color: #0f75dce3 !important;
+}
+
+.skin-yellow{
+    background-color: #f39c12 !important;
+}
+
+.skin-yellow-light{
+    background-color: #eeb14d !important;
+}
+
+.skin-green{
+    background-color: #1a4448e1;
+}
+
+.skin-green-light{
+    background-color: #398187e1;
+}
+
+
 
 .settings-image{
     margin-right: 20px;
@@ -24,7 +50,6 @@
 }
 .system-title-text{
     font-size: 25px;
-    /* color: #37565a; */
     color: #fff !important;
     font-family: "Bebas Neue", sans-serif;
     font-weight: 600;
@@ -34,6 +59,29 @@
     
 }
 
+.skin-purple{
+    background-color: #631768;
+}
+
+.skin-purple-light{
+    background-color: #af28b9;
+}
+
+.skin-red{
+    background-color: #951c1c;
+}
+
+.skin-red-light{
+    background-color: #d52626;
+}
+
+.skin-black{
+    background-color: #000000e1;
+}
+
+.skin-black-light{
+    background-color: #3d3c3ce1;
+}
 
 
 /* FOR POP UP */

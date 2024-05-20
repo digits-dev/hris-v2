@@ -1,4 +1,5 @@
-<div class="navbar-section"
+<div class="navbar-section {{App\Helpers\CommonHelpers::myThemeColor()}}"
+
  x-data="{ isProfileOpen: false }"   
 >
     <link rel="stylesheet" href="{{ asset('css/navigation/navbar.css') }}">
