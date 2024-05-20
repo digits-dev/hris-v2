@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Http\Controllers\Admin\PrivilegesController;
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
@@ -47,11 +48,14 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::get('log-user-access', [LogUserAccessContent::class, 'index'])->middleware('auth')->name('log-user-access');
 
-    //ADMIN
+    //ADMIN PRIVILEGES
     Route::get(config('ad_url.ADMIN_PATH').'/privileges/create-privilege', [PrivilegesController::class, 'getCreate'])->middleware('auth')->name('create-privilege');
     Route::post(config('ad_url.ADMIN_PATH').'/privileges/save-privilege', [PrivilegesController::class, 'postAddSave'])->middleware('auth')->name('save-privilege');
     Route::get(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege/{id}', [PrivilegesController::class, 'getEdit'])->middleware('auth')->name('edit-privilege');
     Route::post(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save/{id}', [PrivilegesController::class, 'postEditSave'])->middleware('auth')->name('edit-privilege-save');
+    //USERS MANAGEMENT
+    Route::get(config('ad_url.ADMIN_PATH').'/users/add-user', [AdminUsersController::class, 'getAddUser'])->middleware('auth')->name('add-user');
+
 });
 
     //ADMIN ROUTE

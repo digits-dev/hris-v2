@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $table = 'users';
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -52,5 +53,16 @@ class User extends Authenticatable
                      ->orWhere('email', 'like', "%$cleanVal%")
                      ->orWhere('location', 'like', "%$cleanVal%")
                      ->orWhere('company', 'like', "%$cleanVal%");
+    }
+
+    public function scopeGetData($query){
+        return $query->leftJoin('ad_privileges','users.id_ad_privileges','ad_privileges.id')
+            ->leftJoin('departments','users.department_id','departments.id')
+            ->select('users.*',
+                    'users.id as u_id',
+                    'ad_privileges.*',
+                    'ad_privileges.name as privilege_name',
+                    'departments.department_name',
+                    'users.status as u_status')->get();
     }
 }

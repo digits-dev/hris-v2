@@ -21,7 +21,7 @@ class PrivilegesController extends Controller{
     public function getIndex(){
         $data = [];
         $data['privileges'] = Privileges::getData();
-        return view('admin/ad-privilege',$data);
+        return view('admin/privileges/ad-privilege',$data);
     }
 
     public function getCreate(){
@@ -40,7 +40,7 @@ class PrivilegesController extends Controller{
                 DB::raw("(select is_delete from ad_privileges_roles where id_ad_modules  = ad_modules.id and id_ad_privileges = '$id') as is_delete")
                 )
          ->orderby("name", "asc")->get();
-        return view('admin/create-privilege',$data);
+        return view('admin/privileges/create-privilege',$data);
     }
 
     public function getEdit($id){
@@ -52,7 +52,7 @@ class PrivilegesController extends Controller{
         $data['row'] = DB::table($this->table_name)->where("id", $id)->first();
         $data['page_title'] = "Edit Data";
         $data['modules'] = DB::table("ad_modules")->where('is_protected', 0)->where('deleted_at', null)->select("ad_modules.*")->orderby("name", "asc")->get();
-        return view('admin/create-privilege', $data);
+        return view('admin/privileges/create-privilege', $data);
         
     }
 

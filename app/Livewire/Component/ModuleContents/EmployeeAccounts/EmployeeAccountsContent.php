@@ -34,7 +34,7 @@ class EmployeeAccountsContent extends Component
     
     public function index(){
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(CommonHelpers::mainpath(), "You don't have privileges to access this area", 'error');
+            CommonHelpers::redirect(CommonHelpers::adminPath(), trans("ad_default.denied_access"));
         }
         return view('modules.employee-accounts.employee-accounts-module', ['routeName' => 'index']);
     }

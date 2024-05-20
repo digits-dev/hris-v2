@@ -24,26 +24,26 @@
                         <strong>Note:</strong> To show the menu you have to create a menu at Menu Management
                     </div>
                     <div class='form-group'>
-                        <label>Privileges Name</label>
+                        <label>{{trans('ad_default.privileges_name')}}</label>
                         <input type='text' class='form-control' name='name' required value='{{ @$row->name }}' />
                         <div class="text-danger">{{ $errors->first('name') }}</div>
                     </div>
 
                     <div class='form-group'>
-                        <label>Set As Superadmin</label>
+                        <label>{{trans('ad_default.set_as_superadmin')}}</label>
                         <div id='set_as_superadmin' class='radio'>
                             <label><input required {{ (@$row->is_superadmin==1)?'checked':'' }} type='radio' name='is_superadmin'
-                                value='1'/> Yes</label> &nbsp;&nbsp;
+                                value='1'/> {{trans('ad_default.confirmation_yes')}}</label> &nbsp;&nbsp;
                             <label><input {{ (@$row->is_superadmin==0)?'checked':'' }} type='radio' name='is_superadmin'
-                                value='0'/> No</label>
+                                value='0'/> {{trans('ad_default.confirmation_no')}}</label>
                         </div>
                         <div class="text-danger">{{ $errors->first('is_superadmin') }}</div>
                     </div>
 
                     <div class='form-group'>
-                        <label>chose_theme_color</label>
+                        <label>{{trans('ad_default.chose_theme_color')}}</label>
                         <select name='theme_color' class='form-control' required>
-                            <option value=''>chose_theme_color_select</option>
+                            <option value=''>{{trans('ad_default.chose_theme_color_select')}}</option>
                             <?php
                             $skins = array(
                                 'skin-blue',
@@ -89,7 +89,7 @@
                     </div>
 
                     <div id='privileges_configuration' class='form-group'>
-                        <label>privileges_configuration</label>
+                        <label> {{trans('ad_default.privileges_configuration')}}</label>
                         @section('script')
                             <script>
                                 $(function () {
@@ -183,8 +183,8 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer" align="right">
                     <button type='button' onclick="location.href='{{App\Helpers\CommonHelpers::mainpath()}}'"
-                            class='btn btn-default'>button_cancel</button>
-                    <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> button_save</button>
+                            class='btn btn-default'>{{trans('ad_default.button_cancel')}}</button>
+                    <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> {{trans('ad_default.button_save')}}</button>
                 </div><!-- /.box-footer-->
         </div><!-- /.box -->
 

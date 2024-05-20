@@ -9,7 +9,7 @@ class Create extends Component
 {
     public function index(){
         if (!CommonHelpers::isCreate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), "You don't have privileges to access this area", 'error');
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"));
         }
         return view('modules.employee-accounts.employee-accounts-module', ['routeName'=>'create']);
         
@@ -18,7 +18,7 @@ class Create extends Component
     
     public function save(){
         if (!CommonHelpers::isCreate()) {
-            echo 'error';
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"));
         }
         return  $this->redirect('/employee-accounts', navigate:true);
      }
