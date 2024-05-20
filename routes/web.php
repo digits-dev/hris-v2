@@ -3,6 +3,7 @@
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Http\Controllers\Admin\PrivilegesController;
 use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\ModulsController;
 use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
@@ -55,6 +56,9 @@ Route::group(['middleware' => ['web']], function() {
     Route::post(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save/{id}', [PrivilegesController::class, 'postEditSave'])->middleware('auth')->name('edit-privilege-save');
     //USERS MANAGEMENT
     Route::get(config('ad_url.ADMIN_PATH').'/users/add-user', [AdminUsersController::class, 'getAddUser'])->middleware('auth')->name('add-user');
+    //MODULES
+    Route::get(config('ad_url.ADMIN_PATH').'/module_generator/create-modules', [ModulsController::class, 'getAddModuls'])->middleware('auth')->name('add-modules');
+    Route::post(config('ad_url.ADMIN_PATH').'/module_generator/save-module', [ModulsController::class, 'postAddSave'])->middleware('auth')->name('save-module');
 
 });
 

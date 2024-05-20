@@ -94,13 +94,19 @@
           <li class="{{ Request::segment(2) == 'privilege' ? 'active' : '' }}">
             <a href="{{ route('PrivilegesControllerGetIndex') }}">
               <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">Privileges</span>
+              <span class="menu-name">{{trans('ad_default.Privileges')}}</span>
             </a>
           </li>
           <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
             <a href="{{ route('AdminUsersControllerGetIndex') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">Users Management</span>
+              <span class="menu-name">{{trans('ad_default.Users_Management')}}</span>
+            </a>
+          </li>
+          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
+            <a href="{{ route('ModulsControllerGetIndex') }}" wire:navigate>
+              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+              <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
             </a>
           </li>
           <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
