@@ -7,7 +7,7 @@
 </head>
 <body>
     @livewire('component.navigation.sidebar')
-    <div class="body-content" style="display: flex; flex-direction: column; flex: 1;">
+    <div class="body-content" style="display: flex; flex-direction: column; flex: 1; overflow-x:hidden;">
         @livewire('component.navigation.navbar')
         @yield('content')
     </div>

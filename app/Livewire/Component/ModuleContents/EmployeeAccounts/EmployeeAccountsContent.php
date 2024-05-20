@@ -12,14 +12,17 @@ class EmployeeAccountsContent extends Component
 {
     use WithPagination;
 
-    // #[Url(history:true)]
+    #[Url(history:true, as:'sort')]
     public $sortBy = "created_at";
-    // #[Url(history:true)]
+
+    #[Url(history:true, as:'dir')]
     public $sortDir = 'DESC';
-    // #[Url(history:true)]
+
+    #[Url(history:true)]
     public $search = ''; 
-    // #[Url()]
-    public $perPage = 10;
+
+    #[Url(as:'per-page')]
+    public $perPage = 5;
 
     public $userIds = [];
 
@@ -111,11 +114,14 @@ class EmployeeAccountsContent extends Component
         $this->userIds = [];
     }
 
+    public function updatedSearch(){
+        $this->resetPage();
+    }
+
     public function resetUserIds($users)
     {
         $this->userIds = [];
     }
-
 
   
     public function render()

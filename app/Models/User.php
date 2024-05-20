@@ -48,10 +48,10 @@ class User extends Authenticatable
 
         $cleanVal = trim($value);
 
-        return $query->where('full_name', 'like', "%$cleanVal%")
+        return $query->where('first_name', 'like', "%$cleanVal%")
                      ->orWhere('employee_id', 'like', "%$cleanVal%")
                      ->orWhere('email', 'like', "%$cleanVal%")
-                     ->orWhere('location', 'like', "%$cleanVal%")
+                     ->orWhere('hire_location', 'like', "%$cleanVal%")
                      ->orWhere('company', 'like', "%$cleanVal%");
     }
 
