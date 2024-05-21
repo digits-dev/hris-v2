@@ -4,6 +4,7 @@ use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Http\Controllers\Admin\PrivilegesController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\ModulsController;
+use App\Http\Controllers\Admin\MenusController;
 use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
@@ -59,6 +60,10 @@ Route::group(['middleware' => ['web']], function() {
     //MODULES
     Route::get(config('ad_url.ADMIN_PATH').'/module_generator/create-modules', [ModulsController::class, 'getAddModuls'])->middleware('auth')->name('add-modules');
     Route::post(config('ad_url.ADMIN_PATH').'/module_generator/save-module', [ModulsController::class, 'postAddSave'])->middleware('auth')->name('save-module');
+    //MENUS
+    Route::post(config('ad_url.ADMIN_PATH').'/menu_management/delete', [MenusController::class, 'postDeleteSave'])->middleware('auth')->name('MenusControllerGetDelete');
+    Route::post(config('ad_url.ADMIN_PATH').'/menu_management/edit', [MenusController::class, 'postEditSave'])->middleware('auth')->name('MenusControllerGetEdit');
+    Route::post(config('ad_url.ADMIN_PATH').'/menu_management/add', [MenusController::class, 'postAddSave'])->middleware('auth')->name('MenusControllerPostSaveMenu');
 
 });
 

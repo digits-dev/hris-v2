@@ -136,6 +136,12 @@
               <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
             </a>
           </li>
+          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
+            <a href="{{ route('MenusControllerGetIndex') }}" wire:navigate>
+              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+              <span class="menu-name">{{trans('ad_default.Menu_Management')}}</span>
+            </a>
+          </li>
           <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
             <a href="{{ route('log-user-access') }}" wire:navigate>
               <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />

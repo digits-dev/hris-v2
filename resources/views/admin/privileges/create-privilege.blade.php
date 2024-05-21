@@ -84,14 +84,7 @@
 
                                     $('#set_as_superadmin input:checked').trigger('click');
                                 })
-                            </script>
-                        @endsection
-                    </div>
 
-                    <div id='privileges_configuration' class='form-group'>
-                        <label> {{trans('ad_default.privileges_configuration')}}</label>
-                        @section('script')
-                            <script>
                                 $(function () {
                                     $("#is_visible").click(function () {
                                         var is_ch = $(this).prop('checked');
@@ -125,11 +118,15 @@
                                 })
                             </script>
                         @endsection
+                    </div>
+
+                    <div id='privileges_configuration' class='form-group'>
+                        <label> {{trans('ad_default.privileges_configuration')}}</label>
                         <table class='table table-striped table-hover table-bordered'>
                             <thead>
                             <tr class='active'>
-                                <th width='3%'> No.</th>
-                                <th width='60%'> Modules Name's</th>
+                                <th width='3%'> {{trans('ad_default.privileges_module_list_no')}}</th>
+                                <th width='60%'> {{trans('ad_default.privileges_module_list_mod_names')}}</th>
                                 <th>&nbsp;</th>
                                 <th>View</th>
                                 <th>Create</th>

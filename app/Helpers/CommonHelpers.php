@@ -440,4 +440,18 @@ class CommonHelpers {
         }
     }
 
+    public static function deleteConfirm($redirectTo)
+    {
+        echo "swal({   
+				title: \"".trans('ad_default.delete_title_confirm')."\",   
+				text: \"".trans('ad_default.delete_description_confirm')."\",   
+				type: \"warning\",   
+				showCancelButton: true,   
+				confirmButtonColor: \"#ff0000\",   
+				confirmButtonText: \"".trans('ad_default.confirmation_yes')."\",  
+				cancelButtonText: \"".trans('ad_default.confirmation_no')."\",  
+				closeOnConfirm: false }, 
+				function(){  location.href=\"$redirectTo\" });";
+    }
+
 }

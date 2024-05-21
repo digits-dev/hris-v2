@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="{{ asset('css/navigation/section.css') }}">
 @section('content')
 <section>
+    @include('errors/messages')
     <div class="main-container">
         <div class="date-container">
             <span class="font-bold">{{trans('ad_default.Privileges')}}</span>

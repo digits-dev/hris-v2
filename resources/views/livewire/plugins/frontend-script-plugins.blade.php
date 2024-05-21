@@ -15,5 +15,6 @@
 
     {{-- JQUERY UI JS  --}}
     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
-
+    <script src="{{ asset ('plugins/select2/select2.min.js') }}"></script>
+    <script src='{{asset("js/jquery-sortable-min.js")}}'></script>
 </div>

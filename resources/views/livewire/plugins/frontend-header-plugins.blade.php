@@ -20,4 +20,5 @@
     {{-- JQUERY CSS  --}}
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
 
+    <link rel="stylesheet" href="{{ asset ('plugins/select2/select2.min.css') }}">
 </div>
