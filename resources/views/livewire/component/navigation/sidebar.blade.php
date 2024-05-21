@@ -58,33 +58,60 @@
           @endif
 
           @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
-              {{-- PARENT --}}
-              <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}"  @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null">
-                <a href="{{ $menu->url }}" {{ $menu->type == "URL" ? '' : 'wire:navigate' }} style="justify-content: space-between">
-                  <div class="nav-icon-name-container">
-                    <img src="{{asset($menu->icon)}}" class="nav-icon" />
-                    <span class="menu-name">{{$menu->name}}</span>
-                  </div>
-                  @if(!empty($menu->children))
-                  <span class="menu-arrow-icon" x-html="selected === {{$menu->id}} ? `<img src='{{ asset('images/navigation/nav-up.png') }}' class='menu-child-arrow-icon'>` : `<img src='{{ asset('images/navigation/nav-down.png') }}' class='menu-child-arrow-icon'>`"></span>
-                  @endif
-                </a>
-              </li>
-              {{-- CHILDREN  --}}
-              <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
+          <div  x-data="{
+              isChildActive: false,
+              ulHeight: 0,
+              maxHeight: 0,
+              isOpen: false,
+
+              toggle(){
+                if(this.isOpen == false){
+                  this.maxHeight = 0
+                }else{
+                  this.maxHeight = this.ulHeight
+                }
+              }
+            }">
+            {{-- PARENT --}}
+            <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}" @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null, isOpen=!isOpen, toggle()">
+              <a href="{{ $menu->url }}" {{ $menu->type == 'URL' ? '' : 'wire:navigate' }} style="justify-content: space-between">
+                <div class="nav-icon-name-container">
+                  <img src="{{ asset($menu->icon) }}" class="nav-icon" />
+                  <span class="menu-name">{{$menu->name}}</span>
+                </div>
                 @if(!empty($menu->children))
-                <ul x-ref="container{{$menu->id}}" x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + $refs.container{{$menu->id}}.scrollHeight + 'px' : ''">
-                    @foreach($menu->children as $child)
-                        <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : "")) ? "active" : ""}}' class="child-menu-container">
-                            <a href='{{ ($child->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$child->url}}'
-                              class='{{($child->color)?"text-".$child->color:""}}'>
-                              <img src="{{asset($child->icon)}}" class="child-nav-icon" /><span class="menu-child-name">{{$child->name}}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                <span class="menu-arrow-icon" x-html="selected === {{$menu->id}} ? `<img src='{{ asset('images/navigation/nav-up.png') }}' class='menu-child-arrow-icon'>` : `<img src='{{ asset('images/navigation/nav-down.png') }}' class='menu-child-arrow-icon'>`"></span>
                 @endif
-              </div>
+              </a>
+            </li>
+            {{-- CHILDREN --}}
+            <div class="relative overflow-hidden transition-all duration-700" x-ref="container{{$menu->id}}">
+              @if(!empty($menu->children))
+              <ul x-ref="ul{{$menu->id}}" x-init="maxHeight = $refs.ul{{$menu->id}}.scrollHeight"
+                  x-bind:style="selected === {{$menu->id}} || isChildActive ? 'max-height: ' + maxHeight + 'px' : 'max-height: 0'">
+                @foreach($menu->children as $child)
+                <li data-id="{{$child->id}}" class="{{ Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? '/*' : '') ? 'active' : '' }} child-menu-container"
+                    x-init="
+                      isActive = $el.classList.contains('active');
+                      ulHeight = $refs.container{{$menu->id}}.scrollHeight;
+                      if (isActive) {
+                        maxHeight = ulHeight;
+                        isChildActive = true;
+                        isOpen = true;
+                      }
+                    ">
+                  <a href="{{ $child->is_broken ? 'javascript:alert(\''.cbLang('controller_route_404').'\')' : $child->url }}"
+                    class="{{ $child->color ? 'text-' . $child->color : '' }}">
+                    <img src="{{ asset($child->icon) }}" class="child-nav-icon" />
+                    <span class="menu-child-name">{{$child->name}}</span>
+                  </a>
+                </li>
+                @endforeach
+              </ul>
+              @endif
+            </div>
+          </div>
+
           @endforeach
          
   

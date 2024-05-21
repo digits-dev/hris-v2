@@ -2,6 +2,8 @@
 <style>
     :root{
         --primary-color: #1A4448;
+        --stroke-color: #599297;
+        --select-color: #1F6268;
         --content-color: #DDFAFD;
         --title-color: #847272;
         --clocked-in-color: #2196F3;
@@ -11,6 +13,7 @@
         --on-sick-leave-color: #0F901B;
 
     }
+
     .main-container{
         margin:  0 2.5rem;
         height: 100%;
@@ -21,8 +24,30 @@
         font-optical-sizing: auto;
         font-weight: 800;
         color: var(--primary-color);
-        font-size: 16px;
+        font-size: 15px;
     }
+
+    /* SELECT */
+
+    .select-button{
+        padding: 15px;
+        width: 100%;
+        border: 2px solid var(--stroke-color);
+        border-radius: 10px;
+        outline: none;
+
+    }
+
+    .select-placeholder{
+        font-family: "Inter", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--select-color);
+
+    }
+
+    /* END OF SELECT */
 
     .employee-attendance-container{
         margin-top: 1rem;
@@ -151,8 +176,37 @@
 
 </style>
 @endsection
-<div class="main-container">
-    <div class="employee-attendance-container">
+<div class="main-container relative">
+    <div 
+        class="max-w-96 w-full fixed bg-white mt-2" 
+        x-data="statisticsFilter" 
+    >
+        <button type="button" class="select-button" style="height: 55px;"
+            @click="selected !== 1 ? selected = 1 :selected = null"
+        >
+            <div class="flex items-center justify-between">
+                <span class="select-placeholder" x-text="truncateText(filterTitle)"></span>
+                <span class="menu-arrow-icon" x-html="selected === 1 ? `<img src='{{ asset('images/table/asc.png') }}' style='width: 10px;'>` : `<img src='{{ asset('images/table/desc.png') }}' style='width: 10px;'>`"></span>
+            </div>
+        </button>
+        <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: 200px' : ''">
+            <div style="overflow: auto; max-height: 200px; z-index: 10;">
+                <div class="p-3 border" >
+                    <button style="width: 100%; text-align:start" @click="selected !== 1 ? selected = 1 :selected = null, filterTitle='All Companies'">
+                        <p>All Companies</p>
+                    </button>
+                </div>
+                @foreach($companies as $company)
+                    <div class="p-3 border" >
+                        <button style="width: 100%; text-align:start" @click="selected !== 1 ? selected = 1 :selected = null, filterTitle='{{$company->company_name}}'"> 
+                            {{$company->company_name}}
+                        </button>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="employee-attendance-container mt-20">
         <div class="statistics-content shadow-md shadow-slate-200">
             <p class="content-title ">Statistics</p>
             <div class="chart-content">
@@ -257,7 +311,25 @@
          document.getElementById('Date').innerText = fullDate;
 
     })
-    
 
+    function statisticsFilter(){
+
+        return {
+            selected:null,
+            filterTitle:'Select Company',
+            
+            truncateText(text) {
+                const maxLength = 40;
+        
+                if (text.length > maxLength) {
+                    return text.substring(0, maxLength) + '...';
+                }
+        
+                // If the length of the text is within the limit, return the original text
+                return text;
+            }
+        }
+    }
+    
   </script>
 @endsection
