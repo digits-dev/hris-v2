@@ -79,7 +79,7 @@ class CommonHelpers {
     }
 
     public static function sidebarDashboard(){
-        $menu = DB::table('ad_menuses')->whereRaw("ad_menuses.id IN (select id_ad_menus from ad_menus_privileges where id_ad_privileges = '".self::myPrivilegeId()."')")->where('is_dashboard', 1)->where('is_active', 1)->first();
+        $menu = DB::table('ad_menuses')->where('is_dashboard', 1)->where('is_active', 1)->first();
         if($menu){
             switch ($menu->type) {
                 case 'Route':

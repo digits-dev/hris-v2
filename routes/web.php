@@ -104,7 +104,6 @@ Route::group(['middleware' => ['web']], function() {
     });
 
     //OTHERS ROUTE
-   
     Route::group([
         'middleware' => ['web'],
         'prefix' => config('ad_url.ADMIN_PATH'),

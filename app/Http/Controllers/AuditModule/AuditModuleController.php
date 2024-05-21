@@ -1,6 +1,6 @@
 <?php
 
-                namespace App\Http\Controllers\"AuditModule"; 
+                namespace App\Http\Controllers\AuditModule; 
                 use App\Helpers\CommonHelpers;
                 use App\Http\Controllers\Controller;
                 use Illuminate\Http\Request;
