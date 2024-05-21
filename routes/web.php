@@ -98,6 +98,43 @@ Route::group(['middleware' => ['web']], function() {
         }
     });
 
+    //OTHERS ROUTE
+   
+    Route::group([
+        'middleware' => ['web'],
+        'prefix' => config('ad_url.ADMIN_PATH'),
+        'namespace' => 'App\Http\Controllers',
+    ], function () {
+       
+        // Todo: change table
+        if (request()->is(config('ad_url.ADMIN_PATH'))) {
+            $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
+            if ($menus) {
+                Route::get('/', 'StatisticBuilderController@getDashboard');
+            } else {
+                CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers');
+            }
+        }
+
+        // Todo: change table
+        $modules = [];
+        try {
+            $modules = DB::table('ad_modules')->whereIn('controller', CommonHelpers::getOthersControllerFiles())->get();
+        } catch (\Exception $e) {
+            Log::error("Load ad moduls is failed. Caused = " . $e->getMessage());
+        }
+
+        foreach ($modules as $v) {
+            if (@$v->path && @$v->controller) {
+                try {
+                    CommonHelpers::routeController($v->path, $v->controller, 'app\Http\Controllers');
+                } catch (\Exception $e) {
+                    Log::error("Path = ".$v->path."\nController = ".$v->controller."\nError = ".$e->getMessage());
+                }
+            }
+        }
+    });
+
     //USERS ROUTE
     Route::group([
         'middleware' => ['web'],

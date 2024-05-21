@@ -23,6 +23,25 @@ class CommonHelpers {
         return $result;
     }
 
+    public static function getOthersControllerFiles() {
+        $controllers = glob(__DIR__.'/../../app/Http/Controllers/*/*.php');
+        $result = [];
+        foreach ($controllers as $file) {
+            $parsedUrl = parse_url($file);
+
+            // Extract the path component
+            $path = $parsedUrl['path'];
+            
+            // Get the directory path
+            $directoryPath = dirname($path);
+            
+            // Get the folder name immediately preceding the basename
+            $precedingFolder = basename($directoryPath);
+            $result[] = str_replace('.php', '', $precedingFolder ."\\". basename($file));
+        }
+        return $result;
+    }
+
     public static function getLivewireControllerFiles() {
         $controllers = glob(__DIR__.'/../../app/Livewire/Component/ModuleContents/*/*.php');
         $livewireFolder = glob(__DIR__.'/../../app/Livewire/Component/ModuleContents/*');
@@ -166,6 +185,7 @@ class CommonHelpers {
         return url(config('ad_url.ADMIN_PATH').'/'.$path);
     }
 
+    //ADMIN
     public static function routeController($prefix, $controller, $namespace = null){
         $prefix = trim($prefix, '/').'/';
         $namespace = ($namespace) ?: 'App\Http\Controllers\Admin';
@@ -199,7 +219,7 @@ class CommonHelpers {
 
         }
     }
-
+    //ROUTE
     public static function routeLivewireController($prefix, $controller, $namespace = null){
         $prefix = trim($prefix, '/').'/';
         $namespace = ($namespace) ?: 'App\Livewire\Component\ModuleContents';
@@ -212,6 +232,41 @@ class CommonHelpers {
             $wildcards = '/{one?}/{two?}/{three?}/{four?}/{five?}';
             foreach ($controller_methods as $method) {
                 if ($method->class != 'Illuminate\Routing\Controller' && $method->name != 'index') {
+                    if (substr($method->name, 0, 3) == 'get') {
+                        $method_name = substr($method->name, 3);
+                        $slug = array_filter(preg_split('/(?=[A-Z])/', $method_name));
+                        $slug = strtolower(implode('-', $slug));
+                        $slug = ($slug == 'index') ? '' : $slug;
+                        Route::get($prefix.$slug.$wildcards, ['uses' => $controller.'@'.$method->name, 'as' => $controller.'Get'.$method_name]);
+                    } elseif (substr($method->name, 0, 4) == 'post') {
+                        $method_name = substr($method->name, 4);
+                        $slug = array_filter(preg_split('/(?=[A-Z])/', $method_name));
+                        Route::post($prefix.strtolower(implode('-', $slug)).$wildcards, [
+                            'uses' => $controller.'@'.$method->name,
+                            'as' => $controller.'Post'.$method_name,
+                        ]);
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+
+        }
+    }
+
+    //OTHER ROUTE
+    public static function routeOtherController($prefix, $controller, $namespace = null){
+        $prefix = trim($prefix, '/').'/';
+        $namespace = ($namespace) ?: 'App\Http\Controllers';
+   
+        try {
+            Route::get($prefix, ['uses' => $controller.'@getIndex', 'as' => $controller.'GetIndex']);
+
+            $controller_class = new \ReflectionClass($namespace.'\\'.$controller);
+            $controller_methods = $controller_class->getMethods(\ReflectionMethod::IS_PUBLIC);
+            $wildcards = '/{one?}/{two?}/{three?}/{four?}/{five?}';
+            foreach ($controller_methods as $method) {
+
+                if ($method->class != 'Illuminate\Routing\Controller' && $method->name != 'getIndex') {
                     if (substr($method->name, 0, 3) == 'get') {
                         $method_name = substr($method->name, 3);
                         $slug = array_filter(preg_split('/(?=[A-Z])/', $method_name));

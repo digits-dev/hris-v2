@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <section>
-
+   
     <form method='post' action='{{ route("save-module") }}'>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="personal-content">
@@ -23,8 +23,9 @@
                             <option value=''>{{trans('ad_lang.form-header.choose-type')}}</option>
                             <?php
                             $skins = array(
+                                'Admin Controller',
                                 'Controller',
-                                'Livewire'
+                                'Livewire',
                             ); ?>
                             @foreach($skins as $skin)
                              <option value='{{$skin}}'>{{$skin}}</option>
