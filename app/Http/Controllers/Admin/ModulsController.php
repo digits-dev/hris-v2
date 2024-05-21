@@ -44,7 +44,6 @@ class ModulsController extends Controller{
 
         //CREATE FILE
         if($request->type === 'Livewire'){
-          
             $folderName = $request->controller;
             $contentName = $request->controller.'Content';
             $viewFolderName = preg_split('/(?=[A-Z])/',$request->controller);
@@ -80,7 +79,8 @@ class ModulsController extends Controller{
             $pathViewModule = base_path("resources/views/modules/$finalViewFolderName/");
             $viewContentModule = self::viewContent();
             $viewContentModule = trim($viewContentModule);
-            file_put_contents($pathViewModule.$finalViewContentName.'.blade.php', $viewContentModule);
+            $finalViewModuleName = strtolower($viewContentName[1])."-".strtolower($viewContentName[2]);
+            file_put_contents($pathViewModule.$finalViewModuleName.'.blade.php', $viewContentModule);
 
             //CREATE MODULE
             DB::table('ad_modules')->updateOrInsert([
@@ -259,7 +259,10 @@ class ModulsController extends Controller{
         use App\Helpers\CommonHelpers;
         
         class '.$contentName.' extends Component{
-            public function index(){}
+            public function index(){
+                return view("modules.'.$finalViewFolderName.'.'.$finalViewFolderName.'");
+            }
+
             public function render(){
                 return view("livewire.component.module-contents.'.$finalViewFolderName.'.'.$finalViewContentName.'");
             }
