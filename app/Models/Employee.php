@@ -9,6 +9,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $table = "employee_logs";
+
     public function scopeSearch($query, $value){
 
         $cleanVal = trim($value);
