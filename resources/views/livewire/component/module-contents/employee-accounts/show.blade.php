@@ -57,13 +57,18 @@
         }
 
         .personal-content {
-            display: flex;
-            justify-content: flex-start;
+            display: grid;
+            grid-template-columns: 1fr;
             margin-top: 40px;
-            margin-left: 30px;
             padding: 30px;
 
         }
+
+        .custom-upload{
+            margin:auto;
+            margin-bottom: 20px;
+        }
+
 
         .personal-content input[type="text"] {
             border: 1px solid var(--stroke-color);
@@ -77,21 +82,46 @@
 
         .personal-content-inputs {
             font-weight: 500;
-            margin-left: 40px;
-            display: flex;
-            gap: 20px;
-            flex-direction: column;
-            justify-content: center;
-            width: 400px;
+            display: grid;
+            grid-template-columns: 1fr;
+            column-gap: 40px;
+            row-gap: 10px;
+            min-width: 80%;
+            max-width: 700px;
+        }
+
+        @media screen and (min-width: 900px){
+
+            .personal-content {
+                grid-template-columns: 1fr 5fr;
+                margin-left: 30px;
+            }
+            .personal-content-inputs{
+                margin-left: 40px;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (min-width: 1200px){
+            .personal-content-inputs{
+                row-gap: 0;
+            }
         }
 
         .account-content {
             margin-top: 40px;
-            margin-left: 30px;
-            padding: 20px;
-            display: flex;
-            gap:40px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap:10px;
         
+        }
+
+        @media screen and (min-width: 900px){
+            .account-content{
+                grid-template-columns: 4fr 4fr 2fr;
+                gap:40px;
+            }
         }
 
         .account-content input, .account-content select  {
@@ -145,7 +175,7 @@
             <div class="personal-content">
                 {{-- <input type="file" name="" id=""> --}}
 
-                <div x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
+                <div class="custom-upload" x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
                     <!-- Original file input -->
                     <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*">
 
@@ -157,6 +187,10 @@
                 <div class="personal-content-inputs">
                     <label for="first-name">First Name
                         <input type="text" name="" id="" value="{{$user->first_name}}" disabled>
+
+                    </label>
+                    <label for="last-name">Middle Name
+                        <input type="text" name="" id="" value="{{$user->middle_name}}" disabled>
 
                     </label>
                     <label for="last-name">Last Name
@@ -172,13 +206,13 @@
             <legend class="legend">Account Information</legend>
             <div class="account-content">
              
-                <div class="flex flex-col w-2/6">
+                <div class="flex flex-col ">
                     <label for="">Employee Id
                         <input type="text" name="" id="" value="{{$user->employee_id}}" disabled>
                     </label>
     
-                    <label for="" class="flex flex-col mt-2">Location
-                        <input type="text" name="" id="" value="{{$user->location}}" disabled>
+                    <label for="" class="flex flex-col mt-2">Hire Location
+                        <input type="text" name="" id="" value="{{$user->hire_location}}" disabled>
                     </label>
     
                     <label for="" class="block mt-3">
@@ -188,8 +222,24 @@
     
                 </div>
 
-                <label for="" class="flex flex-col w-2/6">Role
-                    <input type="email" name="" id="" value="Admin" disabled>
+                <div class="flex flex-col ">
+                    <label for="">Company
+                        <input type="text" name="" id="" value="{{$user->company}}" disabled>
+                    </label>
+    
+                    <label for="" class="flex flex-col mt-2">Position
+                        <input type="text" name="" id="" value="Employee" disabled>
+                    </label>
+    
+                    <label for="" class="block mt-3">
+                        System Privilege
+                        <input type="email" name="" id="" value="User" disabled>
+                    </label>
+    
+                </div>
+
+                <label for="" class="flex flex-col ">Hire Date
+                    <input type="email" name="" id="" value="{{ \Carbon\Carbon::parse($user->hire_date)->format('Y-m-d') }}" disabled>
                 </label>
 
             </div>
@@ -198,5 +248,5 @@
     </form>
 
 
-    <a role="button" href="{{route('employee-accounts')}}" class="back-btn" wire:navigate>Go back</a>
+    <a role="button" href="/employee-accounts" class="back-btn" wire:navigate>Go back</a>
 </section>

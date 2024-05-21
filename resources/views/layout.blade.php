@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @livewire('plugins.frontend-header-plugins')
+    @livewireStyles
     @yield('css')
     @vite(['resources/css/app.css'])
 </head>

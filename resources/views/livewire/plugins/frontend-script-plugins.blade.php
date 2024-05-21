@@ -11,4 +11,9 @@
     
     {{-- CHART JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    {{-- JQUERY UI JS  --}}
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+
 </div>

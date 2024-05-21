@@ -57,13 +57,18 @@
         }
 
         .personal-content {
-            display: flex;
-            justify-content: flex-start;
+            display: grid;
+            grid-template-columns: 1fr;
             margin-top: 40px;
-            margin-left: 30px;
-            padding: 20px;
+            padding: 30px;
 
         }
+
+        .custom-upload{
+            margin:auto;
+            margin-bottom: 20px;
+        }
+
 
         .personal-content input[type="text"] {
             border: 1px solid var(--stroke-color);
@@ -77,22 +82,48 @@
 
         .personal-content-inputs {
             font-weight: 500;
-            margin-left: 40px;
-            display: flex;
-            gap: 20px;
-            flex-direction: column;
-            justify-content: center;
-            width: 400px;
+            display: grid;
+            grid-template-columns: 1fr;
+            column-gap: 40px;
+            row-gap: 10px;
+            min-width: 80%;
+            max-width: 700px;
+        }
+
+        @media screen and (min-width: 900px){
+
+            .personal-content {
+                grid-template-columns: 1fr 5fr;
+                margin-left: 30px;
+            }
+            .personal-content-inputs{
+                margin-left: 40px;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (min-width: 1200px){
+            .personal-content-inputs{
+                row-gap: 0;
+            }
         }
 
         .account-content {
             margin-top: 40px;
-            margin-left: 30px;
-            padding: 20px;
-            display: flex;
-            gap:40px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap:10px;
         
         }
+
+        @media screen and (min-width: 900px){
+            .account-content{
+                grid-template-columns: 4fr 4fr 2fr;
+                gap:40px;
+            }
+        }
+
 
         .account-content input, .account-content select  {
             border: 1px solid var(--stroke-color);
@@ -144,7 +175,7 @@
             <div class="personal-content">
                 {{-- <input type="file" name="" id=""> --}}
 
-                <div x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
+                <div class="custom-upload" x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
                     <!-- Original file input -->
                     <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*">
 
@@ -159,6 +190,9 @@
                     <label for="first-name">First Name
                         <input type="text" name="first_name" id="first-name">
                     </label>
+                    <label for="middle-name">Middle Name
+                        <input type="text" name="middle_name" id="middle-name">
+                    </label>
                     <label for="last-name">Last Name
                         <input type="text" name="last_name" id="last-name">
                     </label>
@@ -171,7 +205,7 @@
             <legend class="legend">Account Information</legend>
             <div class="account-content">
              
-                <div class="flex flex-col w-2/6">
+                <div class="flex flex-col">
                     <label for="">Employee Id
                         <input type="text" name="" id="">
                     </label>
@@ -192,20 +226,41 @@
     
                 </div>
 
-                <label for="" class="flex flex-col w-2/6">Role
-                    <select name="" id="" class="text-primary-text">
-                        <option value="">Select Role</option>
-                        <option value="">Admin</option>
-                        <option value="">User</option>
-                    </select>
+                <div class="flex flex-col">
+                    <label for="" class="flex flex-col">Company
+                        <select name="" id="" class="text-primary-text">
+                            <option value="">Select Company</option>
+                            <option value="">Company 1</option>
+                            <option value="">Company 2</option>
+                        </select>
+                    </label>
+    
+                    <label for="" class="flex flex-col mt-2">Position
+                        <input type="text" name="" id="" value="">
+                    </label>
+    
+
+                    <label for="" class="flex flex-col mt-3">System Privilege
+                        <select name="" id="" class="text-primary-text">
+                            <option value="">Select System Privilege</option>
+                            <option value="">Admin</option>
+                            <option value="">User</option>
+                        </select>
+                    </label>
+    
+                </div>
+
+                <label for="hire_date" class="flex flex-col">Hire Date
+                   <input type="date"  id="hire_date">
                 </label>
 
             </div>
         </fieldset>
 
         <div class="flex w-full justify-between">
-            <a role="button" href="{{url('/employee-accounts')}}" class="table-btn" wire:navigate>Cancel</a>
+            <a role="button" href="/employee-accounts" class="table-btn" wire:navigate>Cancel</a>
             <input  type="submit" value="Submit" class="table-btn">
         </div>
     </form>
 </section>
+
