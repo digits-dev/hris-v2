@@ -74,6 +74,24 @@ class AdMenus extends Seeder
 
         DB::table('ad_menuses')->updateOrInsert(
             [
+                'name'              => 'Employee Logs',
+            ],
+            [
+                'name'              => 'Employee Logs',
+                'type'              => 'Route',
+                'path'              => 'EmployeeLogs\EmployeeLogsContentGetIndex',
+                'color'             => NULL,
+                'icon'              => 'images/navigation/employee-logs-icon.png',
+                'parent_id'         => 0,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 3
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
                 'name'              => 'Sub Master',
             ],
             [
