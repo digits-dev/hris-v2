@@ -241,7 +241,7 @@
                     </label>
     
                     <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="Employee">
+                        <input type="text" name="" id="" value="{{$user->position}}">
                     </label>
     
 

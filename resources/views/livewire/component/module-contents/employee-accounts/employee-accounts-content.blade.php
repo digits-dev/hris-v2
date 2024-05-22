@@ -390,6 +390,11 @@
             width: 30px;
             height: 30px;
             margin: auto;
+            border-radius: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            display: grid;
+            place-content: center;
         }
 
         .role {
@@ -530,6 +535,7 @@
 @endsection
 
 <section>
+    @include('errors/messages')
     <div class="header ">
         <div class="header__left-container">
             <div class="search-form">
@@ -647,12 +653,12 @@
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'company',
+                            'colName' => 'company_id',
                             'displayName' => 'Company',
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'hire_location',
+                            'colName' => 'hire_location_id',
                             'displayName' => 'Hire Location',
                         ])
 
@@ -689,15 +695,16 @@
                                 </td>
                             @endif
 
-                            <td><img class="user-img" src="{{ null ?? '/images/navigation/user.png' }}" width="30"
+                            <td><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
                                     alt="{{ $user->last_name }} picture"></td>
+                                    
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->middle_name }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->employee_id }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->company }}</td>
-                            <td>{{ $user->hire_location }}</td>
+                            <td>{{ $user->company->company_name }}</td>
+                            <td>{{ $user->hireLocation->location_name }}</td>
                             <td>{{ $user->hire_date }}</td>
                             <td><span class="role">Employee</span></td>
                             <td><span class="status"

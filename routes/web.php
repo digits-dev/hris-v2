@@ -110,15 +110,15 @@ Route::group(['middleware' => ['web']], function() {
         'namespace' => 'App\Http\Controllers',
     ], function () {
        
-        // Todo: change table
-        if (request()->is(config('ad_url.ADMIN_PATH'))) {
-            $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
-            if ($menus) {
-                Route::get('/', 'StatisticBuilderController@getDashboard');
-            } else {
-                CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers');
-            }
-        }
+        // // Todo: change table
+        // if (request()->is(config('ad_url.ADMIN_PATH'))) {
+        //     $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
+        //     if ($menus) {
+        //         Route::get('/', 'StatisticBuilderController@getDashboard');
+        //     } else {
+        //         CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers');
+        //     }
+        // }
 
         // Todo: change table
         $modules = [];

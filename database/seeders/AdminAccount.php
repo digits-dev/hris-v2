@@ -18,29 +18,31 @@ class AdminAccount extends Seeder
             'first_name' => 'Mark Anthony',
             'middle_name' => ' ',
             'last_name' => 'Aguilar',
-            'full_name' => 'Mark Anthony Aguilar',
             'image' => fake()->imageUrl(),
             'employee_id' => fake()->numerify("#######"),
             'email' => 'markanthonyaguilar@digits.ph',
-             'hire_location' => fake()->city(),
-             'company' => fake()->company(),
+             'hire_location_id' => fake()->numberBetween(1,2),
+             'hire_date' => now(),
+             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
+            'position' => 'Dev'
         ]);
 
         User::updateOrInsert(['email' => 'joelricmisa@digits.ph'],
         [
             'first_name' => 'Joel',
-            'middle_name' => ' ',
+            'middle_name' => 'Ric',
             'last_name' => 'Ric',
-            'full_name' => 'Joel Ric',
             'image' => fake()->imageUrl(),
             'employee_id' => fake()->numerify("#######"),
             'email' => 'joelricmisa@digits.ph',
-             'hire_location' => fake()->city(),
-             'company' => fake()->company(),
+             'hire_location_id' => fake()->numberBetween(1,2),
+             'hire_date' => now(),
+             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
+            'position' => 'Dev'
         ]);
 
         User::updateOrInsert(['email' => 'marvinmosico@digits.ph'],
@@ -48,14 +50,15 @@ class AdminAccount extends Seeder
             'first_name' => 'Marvin',
             'middle_name' => ' ',
             'last_name' => 'Mosico',
-            'full_name' => 'Marvin Mosico',
             'image' => fake()->imageUrl(),
             'employee_id' => fake()->numerify("#######"),
             'email' => 'marvinmosico@digits.ph',
-             'hire_location' => fake()->city(),
-             'company' => fake()->company(),
+             'hire_location_id' => fake()->numberBetween(1,2),
+             'hire_date' => now(),
+             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
+            'position' => 'Dev'
         ]);
     }
 }

@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     protected $table = 'users';
     /**
@@ -51,8 +47,8 @@ class User extends Authenticatable
         return $query->where('first_name', 'like', "%$cleanVal%")
                      ->orWhere('employee_id', 'like', "%$cleanVal%")
                      ->orWhere('email', 'like', "%$cleanVal%")
-                     ->orWhere('hire_location', 'like', "%$cleanVal%")
-                     ->orWhere('company', 'like', "%$cleanVal%");
+                     ->orWhere('hire_location_id', 'like', "%$cleanVal%")
+                     ->orWhere('company_id', 'like', "%$cleanVal%");
     }
 
     public function scopeGetData($query){
@@ -64,5 +60,18 @@ class User extends Authenticatable
                     'ad_privileges.name as privilege_name',
                     'departments.department_name',
                     'users.status as u_status')->get();
+    }
+
+
+    public function company(){
+        return $this->belongsTo(Companies::class, 'company_id', 'id');
+    }
+
+    public function hireLocation(){
+        return $this->belongsTo(Location::class, 'hire_location_id', 'id');
+    }
+
+    public function getFullnameAttribute(){
+        return "{$this->first_name} {$this->middle_name} {$this->last_name}";
     }
 }

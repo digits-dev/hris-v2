@@ -30,13 +30,14 @@ class UserFactory extends Factory
             'employee_id' => fake()->numerify('#######'),
             'image' => fake()->imageUrl(),
             'email' => fake()->unique()->safeEmail(),
-            'hire_location' => fake()->city(),
+            'hire_location_id' => fake()->numberBetween(1,2),
             'hire_date' => now(),
-            'company' => fake()->company(),
+            'company_id' => fake()->numberBetween(1,2),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'created_at' => now()->addSeconds(rand(1,59))
+            'created_at' => now()->addSeconds(rand(1,59)),
+            'position' => fake()->jobTitle(),
         ];
     }
 

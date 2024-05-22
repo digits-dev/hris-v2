@@ -127,11 +127,10 @@ class EmployeeAccountsContent extends Component
     public function render()
     {
 
-     $users = User::search($this->search)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+     $users = User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
    
         if ($this->selectedAll) {
             $this->userIds = $users->pluck('id')->toArray();
-     
         }
 
         return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', ['users' => $users]);
