@@ -164,8 +164,8 @@ class AdModules extends Seeder
 
                 'created_at' => date('Y-m-d H:i:s'),
                 'name' => 'Employee Attendance',
-                'icon' => 'images/navigation/employee-attendance-icon.png',
-                'path' => 'employee-attendance',
+                'icon' => 'images/navigation/employee-logs-icon.png',
+                'path' => 'employee-logs',
                 'table_name' => 'employees_attendance',
                 'controller' => 'EmployeeAttendance\EmployeeAttendanceContent',
                 'is_protected' => 1,

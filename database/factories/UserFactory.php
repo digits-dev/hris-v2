@@ -20,13 +20,11 @@ class UserFactory extends Factory
         $firstname = fake()->firstName();
         $lastname = fake()->lastName();
         $middlename = fake()->lastName();
-        $fullname = "$firstname $middlename $lastname";
 
         return [
             'first_name' => $firstname,
             'middle_name' => $middlename,
             'last_name' => $lastname,
-            'full_name' => $fullname,
             'employee_id' => fake()->numerify('#######'),
             'image' => fake()->imageUrl(),
             'email' => fake()->unique()->safeEmail(),

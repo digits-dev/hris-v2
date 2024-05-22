@@ -12,4 +12,7 @@ class Location extends Model
     public function users(){
         return $this->hasMany(User::class, 'hire_location_id', 'id');
     }
+    public function employees(){
+        return $this->hasMany(User::class, 'hire_location_id', 'id');
+    }
 }

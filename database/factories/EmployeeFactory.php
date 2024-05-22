@@ -20,8 +20,9 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName,
             'middle_name' => $this->faker->lastName,
             'last_name'=> $this->faker->lastName,
-            'location' => $this->faker->city,
-            'current_location' => $this->faker->city(),
+            'hire_location_id' => fake()->numberBetween(1,2),
+            'current_location_id' => fake()->numberBetween(1,2),
+            'company_id' => fake()->numberBetween(1,2),
             'time_in' => now(),
             'time_out' => now()->addHours(rand(7,12))->addMinutes(rand(0,59)),
         ];

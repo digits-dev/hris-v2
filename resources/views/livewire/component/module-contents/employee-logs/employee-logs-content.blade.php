@@ -141,7 +141,7 @@
         }
 
         .table {
-            width: 2000px;
+            width: 1500px;
             margin: 30px 0;
             border-collapse: collapse;
         }
@@ -150,8 +150,8 @@
 
         /* time in */
 
-        .table th:nth-child(7) button,
-        .table td:nth-child(7) {
+        .table th:nth-child(6) button,
+        .table td:nth-child(6) {
             text-align: center;
             margin: auto;
 
@@ -159,35 +159,23 @@
 
         /* time out */
 
-        .table th:nth-child(8) button,
-        .table td:nth-child(8) {
+        .table th:nth-child(7) button,
+        .table td:nth-child(7) {
             text-align: center;
             margin: auto;
 
         }
 
         /* date */
-        .table th:nth-child(9) button,
-        .table td:nth-child(9) {
+        .table th:nth-child(8) button,
+        .table td:nth-child(8) {
             text-align: center;
             margin: auto;
         }
 
         /* bio duration */
-        .table th:nth-child(10) button,
-        .table td:nth-child(10) {
-            text-align: center;
-            margin: auto;
-        }
-        /* filo duration */
-        .table th:nth-child(11) button,
-        .table td:nth-child(11) {
-            text-align: center;
-            margin: auto;
-        }
-        /* bio duration */
-        .table th:nth-child(12) button,
-        .table td:nth-child(12) {
+        .table th:nth-child(9) button,
+        .table td:nth-child(9) {
             text-align: center;
             margin: auto;
         }
@@ -244,40 +232,28 @@
         .table th:nth-child(3), .table td:nth-child(3){
             width: 150px;
         }
-        /* company  */
+        /* location  */
         .table th:nth-child(4), .table td:nth-child(4){
             width: 180px;
         }
-        /* hire location  */
+        /* current location  */
         .table th:nth-child(5), .table td:nth-child(5){
             width: 180px;
         }
-        /* time in locations  */
+        /* time in  */
         .table th:nth-child(6), .table td:nth-child(6){
             width: 180px;
         }
-        /* first time in  */
+        /* time out  */
         .table th:nth-child(7), .table td:nth-child(7){
             width: 180px;
         }
-        /* last time out  */
+        /* date  */
         .table th:nth-child(8), .table td:nth-child(8){
             width: 150px;
         }
-        /* date  */
-        .table th:nth-child(9), .table td:nth-child(9){
-            width: 120px;
-        }
         /* bio duration  */
-        .table th:nth-child(10), .table td:nth-child(10){
-            width: 120px;
-        }
-        /* filo duration  */
-        .table th:nth-child(11), .table td:nth-child(11){
-            width: 120px;
-        }
-        /* action  */
-        .table th:nth-child(12), .table td:nth-child(12){
+        .table th:nth-child(9), .table td:nth-child(8){
             width: 120px;
         }
 
@@ -325,7 +301,6 @@
 
         .tbl-btns{
             display: flex;
-            justify-content: center;
         }
         .table-btn{
             height: 25px;
@@ -338,11 +313,12 @@
             border: 2px solid var(--secondary-color);
         }
 
-
-        .table-btn--blue {
-            background: #2196F3;
+        .table-btn--red{
+            background: #FF6174;
         }
-
+        .table-btn--green{
+            background: #0F901B;
+        }
 
         .user-img{
             display: inline-block;
@@ -445,40 +421,32 @@
                 <thead>
                  <tr>
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
                     ['colName'=>'first_name', 'displayName' => 'First Name' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
                     ['colName'=>'middle_name', 'displayName' => 'Middle Name' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
                     ['colName'=>'last_name', 'displayName' => 'Last Name' ])
-
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'company_id', 'displayName' => 'Company' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'hire_location_id', 'displayName' => 'Hire Location' ])
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
+                    ['colName'=>'hire_location_id', 'displayName' => 'Location' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'current_location_id', 'displayName' => 'Time in Location/s' ])
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
+                    ['colName'=>'current_location_id', 'displayName' => 'Current Location' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_in', 'displayName' => 'First Time In' ])
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
+                    ['colName'=>'time_in', 'displayName' => 'Time In' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'Last Time Out' ])
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
+                    ['colName'=>'time_out', 'displayName' => 'Time Out' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
                     ['colName'=>'created_at', 'displayName' => 'Date' ])
         
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
                     ['colName'=>'time_out', 'displayName' => 'Bio Duration' ])
-
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'FILO Duration' ])
-
-                    <th>Action</th>
         
                  </tr>
                 </thead>
@@ -489,7 +457,6 @@
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->middle_name }}</td>
                             <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->company->company_name ?? '' }}</td>
                             <td>{{ $user->hireLocation->location_name ?? '' }}</td>
                             <td>{{ $user->currentLocation->location_name ?? '' }}</td>
                             <td>{{ $user->time_in }}</td>
@@ -503,14 +470,7 @@
         
                             <td>{{ \Carbon\Carbon::parse($user->time_in)->format('Y-m-d') }}</td>
                             <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
-                            <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
-                            <td>
-                                <div class="tbl-btns">
-                                    <a role="button" href="#"
-                                        class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
-                                </div>
-
-                            </td>
+        
                         </tr>
                     @endforeach
                 </tbody>

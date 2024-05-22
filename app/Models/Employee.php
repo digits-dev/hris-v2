@@ -18,9 +18,20 @@ class Employee extends Model
         return $query->where('first_name', 'like', "%$cleanVal%")
                      ->orWhere('middle_name', 'like', "%$cleanVal%")
                      ->orWhere('last_name', 'like', "%$cleanVal%")
-                     ->orWhere('location', 'like', "%$cleanVal%")
-                     ->orWhere('current_location', 'like', "%$cleanVal%")
+                     ->orWhere('hire_location_id', 'like', "%$cleanVal%")
+                     ->orWhere('current_location_id', 'like', "%$cleanVal%")
                      ->orWhere('time_in', 'like', "%$cleanVal%")
                      ->orWhere('time_out', 'like', "%$cleanVal%");
+    }
+
+    public function company(){
+        return $this->belongsTo(Companies::class, 'company_id', 'id');
+    }
+
+    public function hireLocation(){
+        return $this->belongsTo(Location::class, 'hire_location_id', 'id');
+    }
+    public function currentLocation(){
+        return $this->belongsTo(Location::class, 'current_location_id', 'id');
     }
 }

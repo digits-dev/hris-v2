@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
+namespace App\Livewire\Component\ModuleContents\EmployeeLogs;
+
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithPagination;
-use App\Helpers\CommonHelpers;
-    
-class EmployeeAttendanceContent extends Component{
+
+class EmployeeLogsContent extends Component
+{
 
     use WithPagination;
 
@@ -19,6 +21,7 @@ class EmployeeAttendanceContent extends Component{
     // #[Url()]
     public $perPage = 10;
 
+
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
             $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
@@ -29,18 +32,18 @@ class EmployeeAttendanceContent extends Component{
         $this->sortDir = "DESC";
     }
 
-    public function index(){
-        return view("modules.employee-attendance.employee-attendance");
+    public function index()
+    {
+        return view('modules.employee-logs.employee-logs-module');
     }
+    
+    public function render()
+    {
 
-    public function render(){
+        $users = Employee::search($this->search)->with([ 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
 
-        $users = Employee::search($this->search)->with(['company', 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
-
-        return view("livewire.component.module-contents.employee-attendance.employee-attendance-content",
-        ['users' => $users]
-    );
+        return view('livewire.component.module-contents.employee-logs.employee-logs-content', 
+        ['users' => $users]);
+ 
     }
-} 
-
-
+}
