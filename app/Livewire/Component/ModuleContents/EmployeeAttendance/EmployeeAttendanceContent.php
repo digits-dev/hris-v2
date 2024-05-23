@@ -33,6 +33,16 @@ class EmployeeAttendanceContent extends Component{
         $this->sortDir = "DESC";
     }
 
+        // FOR FILTER MODAL
+
+        public function openFilterModal(){
+            $this->isFilterModalOpen = true;
+        }
+    
+        public function closeFilterModal(){
+            $this->isFilterModalOpen = false;
+        }
+
    
     public function index(){
         if (!CommonHelpers::isView()) {
