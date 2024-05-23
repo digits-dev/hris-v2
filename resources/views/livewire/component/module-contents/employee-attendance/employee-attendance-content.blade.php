@@ -506,7 +506,7 @@
                             <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
                             <td>
                                 <div class="tbl-btns">
-                                    <a role="button" href="#"
+                                    <a role="button" href="{{ route('employee-attendance.show', $user->id) }}"
                                         class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                 </div>
 
