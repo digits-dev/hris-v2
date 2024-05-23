@@ -22,9 +22,6 @@
             font-family: "Inter", sans-serif;
         }
 
-        form {
-            /* border: 1px solid black; */
-        }
 
         fieldset {
             border: 1px solid var(--stroke-color);
@@ -44,11 +41,11 @@
             font-weight: bold;
             padding: 10px;
             position: absolute;
-            
+
             top: 0;
         }
-        
-        label{
+
+        label {
             font-size: 14px;
         }
 
@@ -64,9 +61,21 @@
 
         }
 
-        .custom-upload{
-            margin:auto;
+
+        .custom-upload-div {
+            margin: auto;
             margin-bottom: 20px;
+
+        }
+
+        .custom-upload {
+            border-radius: 100%;
+            overflow: hidden;
+            height: 180px;
+            width: 180px;
+            display: grid;
+            place-content: center;
+            border: 5px solid var(--stroke-color);
         }
 
 
@@ -90,20 +99,21 @@
             max-width: 700px;
         }
 
-        @media screen and (min-width: 900px){
+        @media screen and (min-width: 900px) {
 
             .personal-content {
                 grid-template-columns: 1fr 5fr;
                 margin-left: 30px;
             }
-            .personal-content-inputs{
+
+            .personal-content-inputs {
                 margin-left: 40px;
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media screen and (min-width: 1200px){
-            .personal-content-inputs{
+        @media screen and (min-width: 1200px) {
+            .personal-content-inputs {
                 row-gap: 0;
             }
         }
@@ -113,18 +123,19 @@
             padding: 40px;
             display: grid;
             grid-template-columns: 1fr;
-            gap:10px;
-        
+            gap: 10px;
+
         }
 
-        @media screen and (min-width: 900px){
-            .account-content{
+        @media screen and (min-width: 900px) {
+            .account-content {
                 grid-template-columns: 4fr 4fr 2fr;
-                gap:40px;
+                gap: 40px;
             }
         }
 
-        .account-content input, .account-content select  {
+        .account-content input,
+        .account-content select {
             border: 1px solid var(--stroke-color);
             border-radius: 8px;
             padding: 8px 16px;
@@ -132,12 +143,13 @@
             margin-top: 5px;
             font-weight: 400;
         }
-        .account-content label{
+
+        .account-content label {
             font-weight: 500;
             font-size: 14px;
         }
 
-        
+
         .back-btn {
             background-color: var(--primary-color);
             color: white;
@@ -148,18 +160,15 @@
             padding: 10px 20px;
             cursor: pointer;
             width: 100px;
-            margin-top:20px;
+            margin-top: 20px;
             display: block;
             margin-left: auto;
             text-align: center
-
         }
 
-        .back-btn:hover{
+        .back-btn:hover {
             opacity: 0.9;
         }
-
-
     </style>
 @endsection
 
@@ -173,29 +182,26 @@
             <legend class="legend">Personal Information</legend>
 
             <div class="personal-content">
-                {{-- <input type="file" name="" id=""> --}}
-
-                <div class="custom-upload" x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
-                    <!-- Original file input -->
-                    <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*">
-
-                    <!-- Custom image or button to trigger file input -->
-                    <img src="/images/navigation/user.png" alt="Upload Image" width="180">
-               
+                <div class="custom-upload-div">
+                    <div class="custom-upload">
+                        @if ($user->image)
+                            <img src="{{ asset('storage/' . $user->image) }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+                        @else
+                            <img src="/images/table/file-upload.png" height="auto" class="object-contain"
+                                alt="default profile image">
+                        @endif
+                    </div>
                 </div>
 
                 <div class="personal-content-inputs">
                     <label for="first-name">First Name
-                        <input type="text" name="" id="" value="{{$user->first_name}}" disabled>
-
+                        <input type="text" name="" id="" value="{{ $user->first_name }}" disabled>
                     </label>
                     <label for="last-name">Middle Name
-                        <input type="text" name="" id="" value="{{$user->middle_name}}" disabled>
-
+                        <input type="text" name="" id="" value="{{ $user->middle_name }}" disabled>
                     </label>
                     <label for="last-name">Last Name
-                        <input type="text" name="" id="" value="{{$user->last_name}}" disabled>
-
+                        <input type="text" name="" id="" value="{{ $user->last_name }}" disabled>
                     </label>
                 </div>
             </div>
@@ -205,41 +211,44 @@
         <fieldset>
             <legend class="legend">Account Information</legend>
             <div class="account-content">
-             
+
                 <div class="flex flex-col ">
                     <label for="">Employee Id
-                        <input type="text" name="" id="" value="{{$user->employee_id}}" disabled>
+                        <input type="text" name="" id="" value="{{ $user->employee_id }}" disabled>
                     </label>
-    
+
                     <label for="" class="flex flex-col mt-2">Hire Location
-                        <input type="text" name="" id="" value="{{$user->hire_location}}" disabled>
+                        <input type="text" name="" id=""
+                            value="{{ $user->hireLocation->location_name }}" disabled>
                     </label>
-    
+
                     <label for="" class="block mt-3">
                         Email Address
-                        <input type="email" name="" id="" value="{{$user->email}}" disabled>
+                        <input type="email" name="" id="" value="{{ $user->email }}" disabled>
                     </label>
-    
+
                 </div>
 
                 <div class="flex flex-col ">
                     <label for="">Company
-                        <input type="text" name="" id="" value="{{$user->company}}" disabled>
+                        <input type="text" name="" id="" value="{{ $user->company->company_name }}"
+                            disabled>
                     </label>
-    
+
                     <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="{{$user->position}}" disabled>
+                        <input type="text" name="" id="" value="{{ $user->position }}" disabled>
                     </label>
-    
+
                     <label for="" class="block mt-3">
                         System Privilege
                         <input type="email" name="" id="" value="User" disabled>
                     </label>
-    
+
                 </div>
 
                 <label for="" class="flex flex-col ">Hire Date
-                    <input type="email" name="" id="" value="{{ \Carbon\Carbon::parse($user->hire_date)->format('Y-m-d') }}" disabled>
+                    <input type="email" name="" id=""
+                        value="{{ \Carbon\Carbon::parse($user->hire_date)->format('Y-m-d') }}" disabled>
                 </label>
 
             </div>

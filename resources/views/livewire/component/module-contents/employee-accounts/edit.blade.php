@@ -22,10 +22,6 @@
             font-family: "Inter", sans-serif;
         }
 
-        form {
-            /* border: 1px solid black; */
-        }
-
         fieldset {
             border: 1px solid var(--stroke-color);
             border-radius: 8px;
@@ -44,11 +40,11 @@
             font-weight: bold;
             padding: 10px;
             position: absolute;
-            
+
             top: 0;
         }
-        
-        label{
+
+        label {
             font-size: 14px;
         }
 
@@ -66,9 +62,20 @@
 
         }
 
-        .custom-upload{
-            margin:auto;
+        .custom-upload-div {
+            margin: auto;
             margin-bottom: 20px;
+
+        }
+
+        .custom-upload {
+            border-radius: 100%;
+            overflow: hidden;
+            height: 180px;
+            width: 180px;
+            display: grid;
+            place-content: center;
+            border: 5px solid var(--stroke-color);
         }
 
 
@@ -83,7 +90,6 @@
 
 
         .personal-content-inputs {
-            font-weight: 500;
             display: grid;
             grid-template-columns: 1fr;
             column-gap: 40px;
@@ -92,20 +98,25 @@
             max-width: 700px;
         }
 
-        @media screen and (min-width: 900px){
+        .personal-content-inputs label {
+            font-weight: 500;
+        }
+
+        @media screen and (min-width: 900px) {
 
             .personal-content {
                 grid-template-columns: 1fr 5fr;
                 margin-left: 30px;
             }
-            .personal-content-inputs{
+
+            .personal-content-inputs {
                 margin-left: 40px;
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media screen and (min-width: 1200px){
-            .personal-content-inputs{
+        @media screen and (min-width: 1200px) {
+            .personal-content-inputs {
                 row-gap: 0;
             }
         }
@@ -115,18 +126,19 @@
             padding: 40px;
             display: grid;
             grid-template-columns: 1fr;
-            gap:10px;
-        
+            gap: 10px;
+
         }
 
-        @media screen and (min-width: 900px){
-            .account-content{
+        @media screen and (min-width: 900px) {
+            .account-content {
                 grid-template-columns: 4fr 4fr 2fr;
-                gap:40px;
+                gap: 40px;
             }
         }
 
-        .account-content input, .account-content select  {
+        .account-content input,
+        .account-content select {
             border: 1px solid var(--stroke-color);
             border-radius: 8px;
             padding: 5px 10px;
@@ -136,12 +148,13 @@
             padding: 8px 16px;
 
         }
-        .account-content label{
+
+        .account-content label {
             font-weight: 500;
             font-size: 14px;
         }
 
-            
+
         .table-btn {
             background-color: var(--primary-color);
             color: white;
@@ -154,14 +167,15 @@
             width: 100px;
             display: block;
             text-align: center
-
         }
 
-        .table-btn:hover{
+        .table-btn:hover {
             opacity: 0.9;
         }
 
-
+        .error-text {
+            color: rgb(250, 48, 48);
+        }
     </style>
 @endsection
 
@@ -175,29 +189,76 @@
             <legend class="legend">Personal Information</legend>
 
             <div class="personal-content">
-                {{-- <input type="file" name="" id=""> --}}
+                <div class="custom-upload-div">
+                    <div class="custom-upload" x-data="{ editFileInput: function() { document.getElementById('fileInput').click(); } }">
+                        <!-- Original file input -->
+                        <input type="file" wire:model="profileImage" id="fileInput" style="display: none;"
+                            accept="image/*">
 
-                <div class="custom-upload" x-data="{ openFileInput: function() { document.getElementById('fileInput').click(); } }">
-                    <!-- Original file input -->
-                    <input type="file" name="file" id="fileInput" style="display: none;" accept="image/*">
+                        <!-- Custom image or button to trigger file input -->
+                        <button @click.prevent="editFileInput">
+                            @if ($profileImage && $profileImage->getMimeType() && strpos($profileImage->getMimeType(), 'image/') === 0)
+                                <!-- If editing and there's a new image uploaded, show the temporary URL -->
+                                <img src="{{ $profileImage->temporaryUrl() }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+                            @elseif ($profileImagePath)
+                                <!-- If editing and there's an image path from the database, show that image -->
+                                <img src="{{ $profileImagePath }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+                            @else
+                                <!-- If creating or no image available, show the default upload image -->
+                                <img src="/images/table/file-upload.png" height="auto" class="object-contain"
+                                    alt="Upload Image">
+                            @endif
+                        </button>
 
-                    <!-- Custom image or button to trigger file input -->
-                    <button @click="openFileInput">
-                        <img src="/images/table/file-upload.png" alt="Upload Image" width="180">
-                        <label for="" class="cursor-pointer font-medium block mt-2">Add Photo</label>
-                    </button>
+                    </div>
+                    {{-- Show add photo label if user image is null --}}
+                    @if (!$profileImagePath)
+                        <label for="" class="cursor-pointer font-medium block mt-2 text-center">
+                            Add Photo
+                        </label>
+                    @endif
+
+                    @error('profileImage')
+                        <em>
+                            <p class="error-text text-center">{{ $message }}</p>
+                        </em>
+                    @enderror
                 </div>
 
+
                 <div class="personal-content-inputs">
-                    <label for="first-name">First Name
-                        <input type="text" name="first_name" id="first-name" value="{{$user->first_name}}">
-                    </label>
-                    <label for="middle-name">Middle Name
-                        <input type="text" name="last_name" id="last-name" value="{{$user->middle_name}}">
-                    </label>
-                    <label for="last-name">Last Name
-                        <input type="text" name="last_name" id="last-name" value="{{$user->last_name}}">
-                    </label>
+                    <div>
+                        <label for="first-name">First Name
+                            <input type="text" id="first-name" wire:model.blur="first_name">
+                        </label>
+                        @error('first_name')
+                            <em>
+                                <p class="error-text">{{ $message }}</p>
+                            </em>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="middle-name">Middle Name
+                            <input type="text" id="middle-name" wire:model.blur="middle_name">
+                        </label>
+                        @error('middle_name')
+                            <em>
+                                <p class="error-text">{{ $message }}</p>
+                            </em>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="last-name">Last Name
+                            <input type="text" id="last-name" wire:model.blur="last_name">
+                        </label>
+                        @error('last_name')
+                            <em>
+                                <p class="error-text">{{ $message }}</p>
+                            </em>
+                        @enderror
+                    </div>
                 </div>
             </div>
         </fieldset>
@@ -206,77 +267,116 @@
         <fieldset>
             <legend class="legend">Account Information</legend>
             <div class="account-content">
-             
+
                 <div class="flex flex-col">
-                    <label for="">Employee Id
-                        <input type="text" name="" id="" value="{{$user->employee_id}}">
+                    <label for="employeeId">Employee Id
+                        <input type="text" id="employeeId" wire:model.blur="employee_id">
                     </label>
-    
-                    <label for="" class="flex flex-col mt-2">Location
-                        <select name="" id="" class="text-primary-text">
-                            <option value="">Select Location</option>
-                            <option value="" selected>{{$user->hire_location}}</option>
-                            <option value="">Quezon City </option>
-                            <option value="">Manila City </option>
+                    @error('employee_id')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
+
+                    <label for="location" class="flex flex-col mt-2">Location
+                        <select wire:model.blur="location_id" id="location" class="text-primary-text">
+                            <option value="" disabled>Select Location</option>
+                            @foreach ($locations as $location)
+                                <option value="{{ $location->id }}" @if ($location->id == $user->hire_location_id) selected @endif>
+                                    {{ $location->location_name }}
+                                </option>
+                            @endforeach
                         </select>
                     </label>
-    
-                    <label for="" class="block mt-3">
+                    @error('location_id')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
+
+                    <label for="email" class="block mt-3">
                         Email Address
-                        <input type="email" name="" id="" value="{{$user->email}}">
-    
+                        <input type="email" id="email" wire:model.blur="email">
                     </label>
-    
+                    @error('email')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
                 </div>
 
 
                 <div class="flex flex-col">
-                    <label for="" class="flex flex-col">Company
-                        <select name="" id="" class="text-primary-text">
-                            <option value="">Select Company</option>
-                            <option value="" selected>{{$user->company}}</option>
-                            <option value="">Company 1</option>
-                            <option value="">Company 2</option>
+                    <label for="company" class="flex flex-col">Company
+                        <select wire:model.blur="company_id" id="company" class="text-primary-text">
+                            <option value="" disabled>Select Company</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}" @if ($company->id == $user->company_id) selected @endif>
+                                    {{ $company->company_name }}
+                                </option>
+                            @endforeach
                         </select>
                     </label>
-    
-                    <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="{{$user->position}}">
-                    </label>
-    
+                    @error('company_id')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
 
-                    <label for="" class="flex flex-col mt-3">System Privilege
-                        <select name="" id="" class="text-primary-text">
-                            <option value="">Select System Privilege</option>
-                            <option value="">Admin</option>
-                            <option value="">User</option>
+                    <label for="position" class="flex flex-col mt-2">Position
+                        <input type="text" id="position" wire:model.blur="position">
+                    </label>
+                    @error('position')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
+
+                    <label for="privilege" class="flex flex-col mt-3">System Privilege
+                        <select wire:model.blur="privilege_id" id="privilege" class="text-primary-text">
+                            <option value="" disabled>Select System Privilege</option>
+                            @foreach ($privileges as $privilege)
+                                <option value="{{ $privilege->id }}" @if ($privilege->id == $user->id_ad_privileges) selected @endif>
+                                    {{ $privilege->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </label>
-    
+                    @error('privilege_id')
+                        <em>
+                            <p class="error-text">{{ $message }}</p>
+                        </em>
+                    @enderror
                 </div>
 
                 <div class="flex flex-col">
-                    <label for="hire_date" class="flex flex-col">Hire Date
-                       <input type="date" name="" id="hire_date" value="{{date('Y-m-d', strtotime($user->hire_date))}}">
-                    </label>
+                    <div>
+                        <label for="hire_date" class="flex flex-col">Hire Date
+                            <input type="date" id="hire_date" wire:model.blur="hire_date">
+                        </label>
+                        @error('hire_date')
+                            <em>
+                                <p class="error-text">{{ $message }}</p>
+                            </em>
+                        @enderror
+                    </div>
 
                     <label for="" class="flex flex-col mt-2">Status
                         <select name="" id="" class="text-primary-text">
-                            <option value="">Select Status</option>
-                            <option value="" selected>{{$user->status ? 'Active' : 'Inactive'}}</option>
-                            <option value="{{!$user->status ? 1 : 0}}">{{!$user->status ? 'Active' : 'Inactive'}}</option>
+                            <option value="" disabled>Select Status</option>
+                            <option value="" selected>{{ $user->status ? 'Active' : 'Inactive' }}</option>
+                            <option value="{{ !$user->status ? 1 : 0 }}">{{ !$user->status ? 'Active' : 'Inactive' }}
+                            </option>
                         </select>
                     </label>
                 </div>
-
-                
 
             </div>
         </fieldset>
 
-    <div class="flex w-full justify-between">
-        <a role="button" href="/employee-accounts" class="table-btn" wire:navigate>Cancel</a>
-        <input  type="submit" value="Save" class="table-btn">
-    </div>
+        <div class="flex w-full justify-between">
+            <a role="button" href="/employee-accounts" class="table-btn" wire:navigate>Cancel</a>
+            <input type="submit" value="Save" class="table-btn">
+        </div>
     </form>
 </section>

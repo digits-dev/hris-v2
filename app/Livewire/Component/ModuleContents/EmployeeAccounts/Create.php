@@ -99,18 +99,6 @@ class Create extends Component
 
         $this->validate(['profileImage' => 'nullable|image']);
 
-
-
-
-        // list($width, $height) = getimagesize($this->profileImage->temporaryUrl());
-
-        // if($width > $height) {
-        //    $this->isLandscape = true;
-        // } else{
-        //     $this->isLandscape = false;
-        // }
-
-
           // Check if a file is uploaded
           if ($this->profileImage) {
             // Get the MIME type of the uploaded file
@@ -126,9 +114,6 @@ class Create extends Component
             } else {
                 // If it's not an image, reset the property or handle accordingly
                 $this->profileImage = null;
-                // Optionally, you can log an error or display a message to the user
-                // Log::error('Uploaded file is not an image');
-                // session()->flash('error', 'Uploaded file is not an image');
             }
         }
      }
