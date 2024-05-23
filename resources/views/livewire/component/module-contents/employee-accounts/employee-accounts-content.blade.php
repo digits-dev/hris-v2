@@ -715,7 +715,7 @@
                 </button>
             </div>
            
-            <button class="primary-btn">Export</button>
+            <button class="primary-btn" wire:click="openFilterExportModal()">Export</button>
         </div>
     </div>
 
@@ -844,6 +844,40 @@
                     </div>
                 </div>
             </div>
+        @endif
+    </div>
+
+    {{-- Export filter modal --}}
+    <div>
+        @if($isFilterExportModalOpen)
+            <div class="modal-backdrop"></div>
+
+            <!-- Modal content -->
+            <div class="filter-modal-content">
+                <div class="filter-modal-header">
+                    <p>Export</p>
+                 </div>
+                <form wire:submit="export">
+                    <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
+                    <div class="filter-modal-body">
+                        <div class="modal-body-container1">
+                            <div class="filter-modal-select-container">
+                                <div class="filter-modal-select">
+                                    <label>File Name</label>
+                                    <input type="text" wire:model="filename" class='form-control' required value="Export {{date('Y-m-d H:i:s')}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="filter-modal-footer">
+                        <button type="button" class="secondary-btn" wire:click="closeFilterModal">Cancel</button>
+                        <button type="submit" class="secondary-btn">Export</button>
+                        <!-- Additional buttons or actions -->
+                    </div>
+                </form>
+            </div>
+        </div>
         @endif
     </div>
 

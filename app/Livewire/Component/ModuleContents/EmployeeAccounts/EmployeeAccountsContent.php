@@ -11,6 +11,11 @@ use App\Models\Companies;
 use App\Models\Location;
 use App\Models\Position;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Employee;
 
 class EmployeeAccountsContent extends Component
 {
@@ -40,6 +45,16 @@ class EmployeeAccountsContent extends Component
 
     public $statusFnc = '';
 
+    //Export
+    public $isFilterExportModalOpen = false;
+    public $filename;
+    public $filters;
+
+    public function mount()
+    {
+        $this->filename = 'Export ' . now()->format('Y-m-d H:i:s');
+        $this->filters =  now()->format('Y-m-d H:i:s');
+    }
     
     public function index(){
         if (!CommonHelpers::isView()) {
@@ -58,6 +73,14 @@ class EmployeeAccountsContent extends Component
         $this->isFilterModalOpen = false;
     }
 
+    //EXPORT FILTER
+    public function openFilterExportModal(){
+        $this->isFilterExportModalOpen = true;
+    }
+
+    public function closeFilterExportModal(){
+        $this->isFilterExportModalOpen = false;
+    }
   
     // FOR BULK ACTIONS MODAL
 
@@ -139,6 +162,14 @@ class EmployeeAccountsContent extends Component
     public function resetUserIds($users)
     {
         $this->userIds = [];
+    }
+
+    public function export(){
+        $filename = $this->filename;
+        $filters = $this->filters;
+        $query = Employee::filterForReport(Employee::generateReport(), $filters);
+
+        return Excel::download(new ExportEmployees($datas), $filename.'.xlsx');
     }
 
   
