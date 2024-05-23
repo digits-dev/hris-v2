@@ -7,6 +7,10 @@ use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use App\Helpers\CommonHelpers;
+use App\Models\Companies;
+use App\Models\Location;
+use App\Models\Position;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeAccountsContent extends Component
 {
@@ -141,13 +145,19 @@ class EmployeeAccountsContent extends Component
     public function render()
     {
 
-     $users = User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data = [];
+        $data['users'] =  User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data['companies'] = Companies::get();
+        $data['locations'] = Location::get();
+        $data['positions'] = Position::get();
+
+
    
         if ($this->selectedAll) {
-            $this->userIds = $users->pluck('id')->toArray();
+            $this->userIds = $data['users']->pluck('id')->toArray();
         }
 
-        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', ['users' => $users]);
+        return view('livewire.component.module-contents.employee-accounts.employee-accounts-content', $data);
     }
 
 }

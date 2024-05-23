@@ -513,14 +513,152 @@
             margin-left: 10px;
         }
 
-        .close {
-            cursor: pointer;
-            margin-left: auto;
-        }
 
         /* FOR FILTER MODAL */
 
-       
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .filter-modal-content {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 25px;
+            z-index: 10000;
+        }
+
+        .filter-modal-header p {
+            font-size: 18px;
+            color: #113437;
+            font-family: "Inter", sans-serif;
+            font-weight: bold;
+        }
+
+        .filter-modal-body {
+            display: flex;
+            justify-content: center; /* Space between for even spacing */
+            margin: 10px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-modal-footer{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-body-container1,
+        .modal-body-container2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+        }
+
+
+        /* SELECT */
+        
+        .filter-modal-select {
+            position: relative;
+            width: 300px;
+            min-width: 100px;
+            height: 40px;
+        }
+
+        .filter-modal-select-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .filter-modal-select-container p {
+            text-align: start;
+            margin-bottom: 5px;
+            font-size: 15px;
+            font-family: "Inter", sans-serif;
+            color: #113437;
+            font-weight: bold;
+        }
+        
+
+        .filter-modal-select select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 14px;
+            outline: none;
+            font-family: "Inter", sans-serif;
+            border: 2px solid var(--stroke-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .filter-modal-arrow-icon {
+            position: absolute;
+            top: 60%;
+            right: 15px;
+            transform: translateY(-50%); /* Adjusted for perfect centering */
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+
+        /* DATE */
+
+        .hire-date-container{
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid var(--stroke-color);
+            font-weight: 600;
+            font-size: 14px;
+            font-family: "Inter", sans-serif;
+            border-radius: 8px;
+            width: 100%;
+            overflow: hidden;
+            align-items: center;
+            position: relative;
+        }
+
+        .hire-date-container span{
+            padding: 12px 10px;
+            text-align: center;
+            width: 60px;
+            font-size: 12px;
+            color: var(--primary-color);
+            border-right: 2px solid var(--stroke-color);
+        }
+
+        .hire-date-container input{
+            flex: 1;
+            padding: 0 20px;
+            outline: none;
+            color: var(--primary-color);
+            -webkit-appearance: none; /* Hide the default calendar icon in Chrome, Safari, and Opera */
+            -moz-appearance: textfield; /* Hide the default calendar icon in Firefox */
+        }
+
+
+        /* END OF FOR FILTER MODAL */
 
         .no-data-container {
             width: 100%;
@@ -621,25 +759,89 @@
 
 
     {{-- FILTER MODAL --}}
-
-    
     <div>
-
         @if ($isFilterModalOpen)
             <div>
                 <!-- Modal backdrop -->
-                <div class="modal-backdrop" wire:click="closeFilterModal"></div>
+                <div class="modal-backdrop"></div>
 
                 <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
+                <div class="filter-modal-content">
+                    <div class="filter-modal-header">
+                       <p>Filters</p>
+                    </div>
+                    <div class="filter-modal-body">
+                        <div class="modal-body-container1">
+                            <div class="filter-modal-select-container">
+                                <p>Company</p>
+                                <div class="filter-modal-select">
+                                    <select>
+                                        <option>Select Company</option>
+                                        @foreach ($companies as $company)
+                                        <option value="{{$company->company_name}}">{{$company->company_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                </div>
+                            </div>
+                            <div class="filter-modal-select-container">
+                                <p>Hire Location</p>
+                                <div class="filter-modal-select">
+                                    <select>
+                                        <option>Select Location</option>
+                                        @foreach ($locations as $location)
+                                        <option value="{{$location->location_name}}">{{$location->location_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                </div>
+                            </div>
+                            <div class="filter-modal-select-container">
+                                <p>Status</p>
+                                <div class="filter-modal-select">
+                                    <select>
+                                        <option>Select Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="2">Inactive</option>
+                                    </select>
+                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body-container2">
+                            <div class="filter-modal-select-container">
+                                <p>Position</p>
+                                <div class="filter-modal-select">
+                                    <select>
+                                        <option>Select Position</option>
+                                        @foreach ($positions as $position)
+                                        <option value="{{$position->position_name}}">{{$position->position_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                </div>
+                            </div>
 
+                            <div class="filter-modal-select-container">
+                                <p>Hire Date</p>
+                                <div class="hire-date-container mb-2">
+                                    <span>From</span>
+                                    <input type="date">
+                                </div>
+                                <div class="hire-date-container">
+                                    <span>To</span>
+                                    <input type="date">
+                                </div>
+                               
+                            </div>
+                          
+                          
+                           
+                        </div>
                     </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="primary-btn" wire:click="closeFilterModal">Confirm</button>
+                    <div class="filter-modal-footer">
                         <button type="button" class="secondary-btn" wire:click="closeFilterModal">Cancel</button>
+                        <button type="button" class="primary-btn" wire:click="closeFilterModal">Search</button>  
                         <!-- Additional buttons or actions -->
                     </div>
                 </div>

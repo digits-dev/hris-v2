@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
        $this->call([AdMenuPrivileges::class]);
        $this->call([Companies::class]);
        $this->call([Locations::class]);
+       $this->call([Positions::class]);
 
         // \App\Models\User::factory(100)->create();
         \App\Models\Employee::factory(100)->create();

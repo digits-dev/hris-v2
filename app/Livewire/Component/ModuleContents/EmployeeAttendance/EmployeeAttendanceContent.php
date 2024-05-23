@@ -3,6 +3,8 @@
 namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
 use Livewire\Component;
 use App\Models\Employee;
+use App\Models\Location;
+use App\Models\Companies;
 use Livewire\WithPagination;
 use App\Helpers\CommonHelpers;
     
@@ -18,6 +20,8 @@ class EmployeeAttendanceContent extends Component{
     public $search = ''; 
     // #[Url()]
     public $perPage = 10;
+
+    public $isFilterModalOpen = false;
 
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
@@ -41,11 +45,12 @@ class EmployeeAttendanceContent extends Component{
 
     public function render(){
 
-        $users = Employee::search($this->search)->with(['company', 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data = [];
+        $data['users'] = Employee::search($this->search)->with(['company', 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data['companies'] = Companies::get();
+        $data['locations'] = Location::get();
 
-        return view("livewire.component.module-contents.employee-attendance.employee-attendance-content",
-        ['users' => $users]
-    );
+        return view("livewire.component.module-contents.employee-attendance.employee-attendance-content", $data);
     }
 } 
 
