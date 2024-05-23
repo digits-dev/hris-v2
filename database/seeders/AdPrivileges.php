@@ -18,9 +18,10 @@ class AdPrivileges extends Seeder
         // DB::statement('ALTER TABLE cms_moduls AUTO_INCREMENT = 12');
         $data = [
             [
-                'created_at' => date('Y-m-d H:i:s'),
                 'name' => 'Super Administrator',
                 'is_superadmin' => 1,
+                'theme_color'   => 'skin-blue',
+                'created_at' => date('Y-m-d H:i:s'),
             ],
         ];
 

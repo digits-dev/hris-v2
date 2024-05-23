@@ -82,7 +82,7 @@
                 @foreach($menu->children as $child)
                 <li data-id="{{$child->id}}" class="{{ Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? '/*' : '') ? 'active' : '' }} child-menu-container"
                     >
-                  <a href="{{ $child->is_broken ? 'javascript:alert(\''.cbLang('controller_route_404').'\')' : $child->url }}"
+                  <a href="{{ $child->is_broken ? 'javascript:alert(\''.trans('ad_default.controller_route_404').'\')' : $child->url }}"
                     class="{{ $child->color ? 'text-' . $child->color : '' }}">
                     <img src="{{ asset($child->icon) }}" class="child-nav-icon" />
                     <span class="menu-child-name">{{$child->name}}</span>

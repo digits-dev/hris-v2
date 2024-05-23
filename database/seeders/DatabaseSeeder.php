@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
        $this->call([Companies::class]);
        $this->call([Locations::class]);
 
-        \App\Models\User::factory(100)->create();
-        // \App\Models\Employee::factory(100)->create();
+        // \App\Models\User::factory(100)->create();
+        \App\Models\Employee::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

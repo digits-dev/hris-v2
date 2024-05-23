@@ -1,5 +1,5 @@
 @extends('layout')
-
+<link rel="stylesheet" href="{{ asset ('css/bootstrap-utilities/utilities.css') }}">
     @section('css')
         <style type="text/css">
             body.dragging, body.dragging * {
@@ -57,7 +57,6 @@
     @endsection
 
     @section('script')
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
         <script type="text/javascript">
             $(function () {
                 function format(icon) {
@@ -129,16 +128,17 @@
         </script>
     @endsection
     @section('content')
+    <section class="content">
         <div class='row'>
             <div class="col-sm-5">
                 <meta name="csrf-token" content="{{ csrf_token() }}">
-                <div class="panel panel-success">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <strong>Menu Order (Active)</strong> <span id='menu-saved-info' style="display:none" class='pull-right text-success'><i
                                     class='fa fa-check'></i> Menu Saved !</span>
                     </div>
                     <div class="panel-body clearfix">
-                        <ul class='draggable-menu draggable-menu-active'>
+                        <ul class='draggable-menu draggable-menu-active list-disc space-y-2'>
                             @foreach($menu_active as $menu)
                                 @php
                                     $privileges = DB::table('ad_menus_privileges')
@@ -149,7 +149,7 @@
                                     <div class='{{$menu->is_dashboard?"is-dashboard":""}}' title="{{$menu->is_dashboard?'This is setted as Dashboard':''}}">
                                         <i class='{{($menu->is_dashboard)?"icon-is-dashboard fa fa-dashboard":$menu->icon}}'></i> {{$menu->name}} <span
                                                 class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                    href='{{route("MenusControllerGetEdit")."/".$menu->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
+                                                                    href='{{url(config('ad_url.ADMIN_PATH').'/menu_management/edit').'/'.$menu->id }}'></a>&nbsp;&nbsp;<a
                                                     title='Delete' class='fa fa-trash'
                                                     onclick='{{App\Helpers\CommonHelpers::deleteConfirm(route("MenusControllerGetDelete") ."/".$menu->id) }}'
                                                     href='javascript:void(0)'></a></span>
@@ -157,7 +157,7 @@
                                             <small><i class="fa fa-users"></i> &nbsp; {{implode(', ',$privileges)}}</small>
                                         </em>
                                     </div>
-                                    <ul>
+                                    <ul class="list-disc pl-5 mt-1 space-y-1">
                                         @if(isset($menu->children))
                                             @foreach($menu->children as $child)
                                                 @php
@@ -166,12 +166,12 @@
                                                     ->where('id_ad_menus',$child->id)->pluck('ad_privileges.name')->toArray();
                                                 @endphp
 
-                                                <li data-id='{{$child->id}}' data-name='{{$child->name}}'>
+                                                <li data-id='{{$child->id}}' data-name='{{$child->name}}' class="space-x-6">
                                                     <div class='{{$child->is_dashboard?"is-dashboard":""}}'
                                                         title="{{$child->is_dashboard?'This is setted as Dashboard':''}}"><i
                                                                 class='{{($child->is_dashboard)?"icon-is-dashboard fa fa-dashboard":$child->icon}}'></i> {{$child->name}}
                                                         <span class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                                    href='{{ route("MenusControllerGetEdit") ."/".$child->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
+                                                                    href='{{url(config('ad_url.ADMIN_PATH').'/menu_management/edit').'/'.$child->id }}'></a>&nbsp;&nbsp;<a
                                                                     title="Delete" class='fa fa-trash'
                                                                     onclick='{{App\Helpers\CommonHelpers::deleteConfirm(route("MenusControllerGetDelete") . "/". $child->id) }}'
                                                                     href='javascript:void(0)'></a></span>
@@ -201,7 +201,7 @@
                             @foreach($menu_inactive as $menu)
                                 <li data-id='{{$menu->id}}' data-name='{{$menu->name}}'>
                                     <div><i class='{{$menu->icon}}'></i> {{$menu->name}} <span class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                                                                    href='{{route("MenusControllerGetEdit",["id"=>$menu->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
+                                                                                                                    href='{{route("MenusControllerGetEdit",["id"=>$menu->id])}}'></a>&nbsp;&nbsp;<a
                                                     title='Delete' class='fa fa-trash'
                                                     onclick='{{App\Helpers\CommonHelpers::deleteConfirm(route("MenusControllerGetDelete",["id"=>$menu->id]))}}'
                                                     href='javascript:void(0)'></a></span></div>
@@ -211,7 +211,7 @@
                                                 <li data-id='{{$child->id}}' data-name='{{$child->name}}'>
                                                     <div><i class='{{$child->icon}}'></i> {{$child->name}} <span class='pull-right'><a class='fa fa-pencil'
                                                                                                                                     title='Edit'
-                                                                                                                                    href='{{route("MenusControllerGetEdit",["id"=>$child->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
+                                                                                                                                    href='{{route("MenusControllerGetEdit",["id"=>$child->id])}}'></a>&nbsp;&nbsp;<a
                                                                     title="Delete" class='fa fa-trash'
                                                                     onclick='{{App\Helpers\CommonHelpers::deleteConfirm(route("MenusControllerGetDelete",["id"=>$child->id]))}}'
                                                                     href='javascript:void(0)'></a></span></div>
@@ -246,4 +246,5 @@
                 </div>
             </div>
         </div>
+    </section>
     @endsection

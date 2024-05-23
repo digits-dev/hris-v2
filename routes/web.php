@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ModulsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\PrivilegesController;
+use App\Http\Controllers\Admin\MenusController;
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\LogUserAccess\LogUserAccessContent;
@@ -63,8 +64,9 @@ Route::group(['middleware' => ['web']], function() {
     Route::post(config('ad_url.ADMIN_PATH').'/module_generator/save-module', [ModulsController::class, 'postAddSave'])->middleware('auth')->name('save-module');
     //MENUS
     Route::post(config('ad_url.ADMIN_PATH').'/menu_management/delete', [MenusController::class, 'postDeleteSave'])->middleware('auth')->name('MenusControllerGetDelete');
-    Route::post(config('ad_url.ADMIN_PATH').'/menu_management/edit', [MenusController::class, 'postEditSave'])->middleware('auth')->name('MenusControllerGetEdit');
+    Route::get(config('ad_url.ADMIN_PATH').'/menu_management/edit/{id}', [MenusController::class, 'getEdit'])->middleware('auth')->name('MenusControllerGetEdit');
     Route::post(config('ad_url.ADMIN_PATH').'/menu_management/add', [MenusController::class, 'postAddSave'])->middleware('auth')->name('MenusControllerPostSaveMenu');
+    Route::post(config('ad_url.ADMIN_PATH').'/menu_management/edit-menu-save/{id}', [MenusController::class, 'postEditSave'])->middleware('auth')->name('edit-menus-save');
 
 });
 
@@ -79,7 +81,7 @@ Route::group(['middleware' => ['web']], function() {
         if (request()->is(config('ad_url.ADMIN_PATH'))) {
             $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
             if ($menus) {
-                Route::get('/', 'StatisticBuilderController@getDashboard');
+                Route::get('/', 'Dashboard\DashboardContentGetIndex');
             } else {
                 CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers\Admin');
             }
@@ -111,15 +113,15 @@ Route::group(['middleware' => ['web']], function() {
         'namespace' => 'App\Http\Controllers',
     ], function () {
        
-        // // Todo: change table
-        // if (request()->is(config('ad_url.ADMIN_PATH'))) {
-        //     $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
-        //     if ($menus) {
-        //         Route::get('/', 'StatisticBuilderController@getDashboard');
-        //     } else {
-        //         CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers');
-        //     }
-        // }
+        // Todo: change table
+        if (request()->is(config('ad_url.ADMIN_PATH'))) {
+            $menus = DB::table('ad_menuses')->where('is_dashboard', 1)->first();
+            if ($menus) {
+                Route::get('/', 'StatisticBuilderController@getDashboard');
+            } else {
+                CommonHelpers::routeController('/', 'AdminController', 'App\Http\Controllers');
+            }
+        }
 
         // Todo: change table
         $modules = [];
