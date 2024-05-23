@@ -49,31 +49,20 @@
         <ul class="navigation">
           <?php $dashboard = App\Helpers\CommonHelpers::sidebarDashboard();?>
           @if($dashboard)
-            <li class="{{ Request::segment(1) == $dashboard->path ? 'active' : '' }}">
+            <li class="{{ Request::segment(1) == $dashboard->slug ? 'active' : '' }}">
               <a href="{{ $dashboard->url }}" wire:navigate>
                 <img src="{{asset($dashboard->icon)}}" class="nav-icon" />
                 <span class="menu-name">Dashboard</span>
               </a>
             </li>
           @endif
-
+          
           @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
-          <div  x-data="{
-              isChildActive: false,
-              ulHeight: 0,
-              maxHeight: 0,
-              isOpen: false,
-
-              toggle(){
-                if(this.isOpen == false){
-                  this.maxHeight = 0
-                }else{
-                  this.maxHeight = this.ulHeight
-                }
-              }
-            }">
-            {{-- PARENT --}}
-            <li class="{{ Request::segment(1) == $menu->path ? 'active' : '' }}" @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null, isOpen=!isOpen, toggle()">
+          <div>
+            
+            <li class="{{ Request::segment(1) == $menu->slug ? 'active' : '' }}" 
+              @click="selected !== {{$menu->id}} ? selected = {{$menu->id}} : selected = null"
+            >
               <a href="{{ $menu->url }}" {{ $menu->type == 'URL' ? '' : 'wire:navigate' }} style="justify-content: space-between">
                 <div class="nav-icon-name-container">
                   <img src="{{ asset($menu->icon) }}" class="nav-icon" />
@@ -84,22 +73,15 @@
                 @endif
               </a>
             </li>
-            {{-- CHILDREN --}}
-            <div class="relative overflow-hidden transition-all duration-700" x-ref="container{{$menu->id}}">
+            
+            <div class="relative overflow-hidden transition-all max-h-0 duration-700" 
+                x-ref="container{{$menu->id}}" 
+                x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + maxHeight + 'px' : ''">
               @if(!empty($menu->children))
-              <ul x-ref="ul{{$menu->id}}" x-init="maxHeight = $refs.ul{{$menu->id}}.scrollHeight"
-                  x-bind:style="selected === {{$menu->id}} || isChildActive ? 'max-height: ' + maxHeight + 'px' : 'max-height: 0'">
+              <ul x-ref="ul{{$menu->id}}" x-init="maxHeight = $refs.ul{{$menu->id}}.scrollHeight">
                 @foreach($menu->children as $child)
                 <li data-id="{{$child->id}}" class="{{ Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? '/*' : '') ? 'active' : '' }} child-menu-container"
-                    x-init="
-                      isActive = $el.classList.contains('active');
-                      ulHeight = $refs.container{{$menu->id}}.scrollHeight;
-                      if (isActive) {
-                        maxHeight = ulHeight;
-                        isChildActive = true;
-                        isOpen = true;
-                      }
-                    ">
+                    >
                   <a href="{{ $child->is_broken ? 'javascript:alert(\''.cbLang('controller_route_404').'\')' : $child->url }}"
                     class="{{ $child->color ? 'text-' . $child->color : '' }}">
                     <img src="{{ asset($child->icon) }}" class="child-nav-icon" />
@@ -111,8 +93,55 @@
               @endif
             </div>
           </div>
-
           @endforeach
+
+          {{-- <div
+            x-data="sidebarDropdown"
+            x-init="console.log(parentDropdown)"
+          >
+            @foreach(App\Helpers\CommonHelpers::sidebarMenu() as $menu)
+            <li
+              x-init="
+                let menu = {{ Js::from($menu) }}
+                if(menu.children){
+                  parentDropdown.push({id: menu.id, isOpen: false});
+                }
+              "
+            >
+              <a href="{{ $menu->url }}" {{ $menu->type == 'URL' ? '' : 'wire:navigate' }} style="justify-content: space-between">
+                <div class="nav-icon-name-container">
+                  <img src="{{ asset($menu->icon) }}" class="nav-icon" />
+                  <span class="menu-name">{{$menu->name}}</span>
+                </div>
+                @if(!empty($menu->children))
+                  <span class="menu-arrow-icon">
+                    <img src="{{ asset('images/navigation/nav-down.png') }}" class="h-2">
+                  </span>
+                @endif
+              </a>
+            </li>
+
+            <div class="relative overflow-hidden transition-all max-h-0 duration-700" 
+              x-ref="container{{$menu->id}}" 
+              x-bind:style="selected == {{$menu->id}} ? 'max-height: ' + maxHeight + 'px' : ''">
+              @if(!empty($menu->children))
+              <ul x-ref="ul{{$menu->id}}" x-init="maxHeight = $refs.ul{{$menu->id}}.scrollHeight">
+                @foreach($menu->children as $child)
+                <li data-id="{{$child->id}}" class="{{ Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? '/*' : '') ? 'active' : '' }} child-menu-container"
+                    >
+                  <a href="{{ $child->is_broken ? 'javascript:alert(\''.cbLang('controller_route_404').'\')' : $child->url }}"
+                    class="{{ $child->color ? 'text-' . $child->color : '' }}">
+                    <img src="{{ asset($child->icon) }}" class="child-nav-icon" />
+                    <span class="menu-child-name">{{$child->name}}</span>
+                  </a>
+                </li>
+                @endforeach
+              </ul>
+              @endif
+            </div>
+
+            @endforeach
+          </div> --}}
          
   
         {{-- IS ADMIN --}}
@@ -156,3 +185,12 @@
 
   </div>
 </div>
+
+<script>
+  function sidebarDropdown() {
+    return {
+      selected: '',
+      parentDropdown: [],
+    }
+  }
+</script>

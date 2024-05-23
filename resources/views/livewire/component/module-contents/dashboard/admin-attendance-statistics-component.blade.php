@@ -4,6 +4,8 @@
         --primary-color: #1A4448;
         --stroke-color: #599297;
         --select-color: #1F6268;
+        --stroke-color: #599297;
+        --select-color: #1F6268;
         --content-color: #DDFAFD;
         --title-color: #847272;
         --clocked-in-color: #2196F3;
@@ -13,6 +15,7 @@
         --on-sick-leave-color: #0F901B;
 
     }
+
 
     .main-container{
         margin:  0 2.5rem;
@@ -25,7 +28,30 @@
         font-weight: 800;
         color: var(--primary-color);
         font-size: 15px;
+        font-size: 15px;
     }
+
+    /* SELECT */
+
+    .select-button{
+        padding: 15px;
+        width: 100%;
+        border: 2px solid var(--stroke-color);
+        border-radius: 10px;
+        outline: none;
+
+    }
+
+    .select-placeholder{
+        font-family: "Inter", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--select-color);
+
+    }
+
+    /* END OF SELECT */
 
     /* SELECT */
 
@@ -178,7 +204,7 @@
 @endsection
 <div class="main-container relative">
     <div 
-        class="max-w-96 w-full fixed bg-white mt-2" 
+        class="max-w-96 w-full absolute bg-white mt-2" 
         x-data="statisticsFilter" 
     >
         <button type="button" class="select-button" style="height: 55px;"
@@ -262,6 +288,8 @@
         </div>
     </div>
     <br>
+
+   
 </div>
 
 @section('script')

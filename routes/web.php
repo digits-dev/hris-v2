@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Authentication\LoginAuthController;
-use App\Http\Controllers\Admin\PrivilegesController;
-use App\Http\Controllers\Admin\AdminUsersController;
-use App\Http\Controllers\Admin\ModulsController;
-use App\Http\Controllers\Admin\MenusController;
-use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
-use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\Show as ShowEmployeeAccount;
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\Edit as EditEmployeeAccount;
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
-
-use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
-use App\Livewire\Component\ModuleContents\LogUserAccess\LogUserAccessContent;
-use Illuminate\Support\Facades\Route;
 use App\Helpers\CommonHelpers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ModulsController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\PrivilegesController;
+use App\Http\Controllers\Authentication\LoginAuthController;
+use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
+use App\Livewire\Component\ModuleContents\LogUserAccess\LogUserAccessContent;
+
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
+use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Edit as EditEmployeeAccount;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Show as ShowEmployeeAccount;
+use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
+use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
 
 /*
 |--------------------------------------------------------------------------

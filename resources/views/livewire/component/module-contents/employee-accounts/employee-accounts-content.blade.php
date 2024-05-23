@@ -518,6 +518,8 @@
             margin-left: auto;
         }
 
+        /* FOR FILTER MODAL */
+
        
 
         .no-data-container {
@@ -554,7 +556,7 @@
 
                 <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
             </div>
-            <button class="primary-btn">Filters</button>
+            <button class="primary-btn" wire:click="openFilterModal()">Filters</button>
 
         </div>
 
@@ -579,6 +581,8 @@
         </div>
     </div>
 
+
+    {{-- BULK ACTIONS MODAL --}}
 
     <div>
 
@@ -608,6 +612,34 @@
                     <div class="modal-footer">
                         <button type="button" class="primary-btn" wire:click="{{ $statusFnc }}">Confirm</button>
                         <button type="button" class="secondary-btn" wire:click="closeModal">Cancel</button>
+                        <!-- Additional buttons or actions -->
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+
+
+    {{-- FILTER MODAL --}}
+
+    
+    <div>
+
+        @if ($isFilterModalOpen)
+            <div>
+                <!-- Modal backdrop -->
+                <div class="modal-backdrop" wire:click="closeFilterModal"></div>
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="primary-btn" wire:click="closeFilterModal">Confirm</button>
+                        <button type="button" class="secondary-btn" wire:click="closeFilterModal">Cancel</button>
                         <!-- Additional buttons or actions -->
                     </div>
                 </div>

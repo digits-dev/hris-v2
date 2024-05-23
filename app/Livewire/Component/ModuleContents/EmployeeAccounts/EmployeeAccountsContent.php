@@ -30,6 +30,8 @@ class EmployeeAccountsContent extends Component
 
     public $isModalOpen = false;
 
+    public $isFilterModalOpen = false;
+
     public $setTo = '';
 
     public $statusFnc = '';
@@ -42,7 +44,19 @@ class EmployeeAccountsContent extends Component
         return view('modules.employee-accounts.employee-accounts-module', ['routeName' => 'index']);
     }
 
+    // FOR FILTER MODAL
+
+    public function openFilterModal(){
+        $this->isFilterModalOpen = true;
+    }
+
+    public function closeFilterModal(){
+        $this->isFilterModalOpen = false;
+    }
+
   
+    // FOR BULK ACTIONS MODAL
+
     public function setToActive(){
 
         User::whereIn('id', $this->userIds)->update(['status' => 1]);

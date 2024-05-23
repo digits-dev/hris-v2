@@ -46,6 +46,7 @@ body{
 .sidebar-container:hover{
     width: 15.625rem;
 }
+
 .sidebar-container:hover .navigation li a span, .sidebar-container:hover  {
     display: block;
 }
