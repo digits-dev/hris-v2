@@ -15,6 +15,7 @@ use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsConte
 use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Edit as EditEmployeeAccount;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Show as ShowEmployeeAccount;
+use App\Livewire\Component\ModuleContents\EmployeeAttendance\Show as ShowEmployeeAttendance;
 use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
 
@@ -44,10 +45,14 @@ Route::group(['middleware' => ['web']], function() {
     // Backend
     // Dashboard
     Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
-
+    // Employee Accounts
     Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
     Route::get('employee-accounts/{userId}', [ShowEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
     Route::get('employee-accounts/{userId}/edit', [EditEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.edit');
+
+    // Employee Attendance Summary
+    Route::get('employee-attendance/{employeeId}', [ShowEmployeeAttendance::class, 'index'])->middleware('auth')->name('employee-attendance.show');
+
 
     Route::get('log-user-access', [LogUserAccessContent::class, 'index'])->middleware('auth')->name('log-user-access');
 

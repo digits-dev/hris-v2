@@ -29,9 +29,15 @@ class EmployeeAttendanceContent extends Component{
         $this->sortDir = "DESC";
     }
 
+   
     public function index(){
-        return view("modules.employee-attendance.employee-attendance");
+        if (!CommonHelpers::isView()) {
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), "danger");
+        }
+        return view("modules.employee-attendance.employee-attendance", ['routeName' => 'index']);
+
     }
+
 
     public function render(){
 
