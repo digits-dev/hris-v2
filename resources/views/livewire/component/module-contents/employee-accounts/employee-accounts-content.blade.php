@@ -566,10 +566,10 @@
         .modal-body-container2 {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; 
+            justify-content: space-between; 
         }
 
-
+    
         /* SELECT */
         
         .filter-modal-select {
@@ -796,7 +796,7 @@
                                     <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
                                 </div>
                             </div>
-                            <div class="filter-modal-select-container">
+                            <div class="filter-modal-select-container" >
                                 <p>Status</p>
                                 <div class="filter-modal-select">
                                     <select>
@@ -822,7 +822,7 @@
                                 </div>
                             </div>
 
-                            <div class="filter-modal-select-container">
+                            <div class="filter-modal-select-container" style="margin-bottom: 7px">
                                 <p>Hire Date</p>
                                 <div class="hire-date-container mb-2">
                                     <span>From</span>
@@ -833,9 +833,7 @@
                                     <input type="date">
                                 </div>
                                
-                            </div>
-                          
-                          
+                            </div>                    
                            
                         </div>
                     </div>

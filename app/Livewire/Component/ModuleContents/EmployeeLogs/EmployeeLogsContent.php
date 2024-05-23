@@ -5,6 +5,7 @@ namespace App\Livewire\Component\ModuleContents\EmployeeLogs;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
+use App\Models\Location;
 use Livewire\WithPagination;
 
 class EmployeeLogsContent extends Component
@@ -21,6 +22,8 @@ class EmployeeLogsContent extends Component
     // #[Url()]
     public $perPage = 10;
 
+    public $isFilterModalOpen = false;
+
 
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
@@ -36,14 +39,25 @@ class EmployeeLogsContent extends Component
     {
         return view('modules.employee-logs.employee-logs-module');
     }
+
+    
+    // FOR FILTER MODAL
+
+    public function openFilterModal(){
+        $this->isFilterModalOpen = true;
+    }
+
+    public function closeFilterModal(){
+        $this->isFilterModalOpen = false;
+    }
     
     public function render()
     {
+        $data = [];
+        $data['users'] = Employee::search($this->search)->with([ 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data['locations'] = Location::get();
 
-        $users = Employee::search($this->search)->with([ 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
-
-        return view('livewire.component.module-contents.employee-logs.employee-logs-content', 
-        ['users' => $users]);
+        return view('livewire.component.module-contents.employee-logs.employee-logs-content', $data);
  
     }
 }
