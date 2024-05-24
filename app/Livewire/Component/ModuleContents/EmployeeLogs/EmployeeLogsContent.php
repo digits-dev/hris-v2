@@ -4,7 +4,7 @@ namespace App\Livewire\Component\ModuleContents\EmployeeLogs;
 
 use App\Models\User;
 use Livewire\Component;
-use App\Models\Employee;
+use App\Models\EmployeeLog;
 use App\Models\Location;
 use Livewire\WithPagination;
 
@@ -54,7 +54,22 @@ class EmployeeLogsContent extends Component
     public function render()
     {
         $data = [];
-        $data['users'] = Employee::search($this->search)->with([ 'hireLocation', 'currentLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data['employeeLogs'] = EmployeeLog::search($this->search)
+        ->select(['id', 'employee_id', 'time_entry_id', 'date_clocked_in', 'date_clocked_out','clock_in_terminal_id','clock_out_terminal_id'])
+        ->with([
+            'hireLocation' => function ($query) {
+                $query->select('id', 'location_name');
+            },
+            'currentLocation' => function ($query) {
+                $query->select('id', 'location_name');
+            },
+            'user' => function ($query) {
+                $query->select('employee_id', 'first_name', 'middle_name', 'last_name');
+            }
+        ])
+        ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+
+
         $data['locations'] = Location::get();
 
         return view('livewire.component.module-contents.employee-logs.employee-logs-content', $data);

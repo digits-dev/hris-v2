@@ -290,7 +290,7 @@ return [
     'filter_rows_of' => 'of',
 
     // confirmation
-    'confirmation_yes' => 'Yes!',
+    'confirmation_yes' => 'Yes',
     'confirmation_no' => 'No',
 
     //filemanager

@@ -3,18 +3,18 @@
 namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
 
 use Livewire\Component;
-use App\Models\Employee;
+use App\Models\EmployeeLog;
 use app\Helpers\CommonHelpers;
 
 class Show extends Component
 {
 
     
-    public Employee $employee;
+    public EmployeeLog $employee;
 
 
     public function mount($employeeId){
-        $this->employee = Employee::findOrFail($employeeId);
+        $this->employee = EmployeeLog::findOrFail($employeeId);
     }
 
     public function index($employeeId){

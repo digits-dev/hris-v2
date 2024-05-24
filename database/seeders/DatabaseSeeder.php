@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
        $this->call([Positions::class]);
 
         // \App\Models\User::factory(100)->create();
-        \App\Models\Employee::factory(100)->create();
+        \App\Models\EmployeeLog::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

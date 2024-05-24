@@ -126,15 +126,15 @@
             
                 <div class="personal-content-inputs ">
                     <label for="first-name">First Name
-                        <input type="text" id="first-name" value="{{ $employee->first_name }}" disabled>
+                        <input type="text" id="first-name" value="{{ $employee->user->first_name }}" disabled>
                     </label>
 
                     <label for="middle-name">Middle Name
-                        <input type="text" id="middle-name" value="{{ $employee->middle_name }}" disabled>
+                        <input type="text" id="middle-name" value="{{ $employee->user->middle_name }}" disabled>
                     </label>
 
                     <label for="last-name">Last Name
-                        <input type="text" id="last-name" value="{{ $employee->last_name }}" disabled>
+                        <input type="text" id="last-name" value="{{ $employee->user->last_name }}" disabled>
                     </label>
 
                     <label for="company">Company
@@ -152,20 +152,20 @@
 
                 <div class="personal-content-inputs ">
                     <label for="first-time-in">First Time in
-                        <input type="text" id="first-time-in" value="{{ $employee->time_in }}" disabled>
+                        <input type="text" id="first-time-in" value="{{ $employee->date_clocked_in }}" disabled>
                     </label>
 
                     <label for="last-time-out">Last Time out
-                        <input type="text" id="last-time-out" value="{{ $employee->time_out }}" disabled>
+                        <input type="text" id="last-time-out" value="{{ $employee->date_clocked_out }}" disabled>
                     </label>
 
                     @php
-                        $timeIn = \Carbon\Carbon::parse($employee->time_in);
-                        $timeOut = \Carbon\Carbon::parse($employee->time_out);
+                        $timeIn = \Carbon\Carbon::parse($employee->date_clocked_in);
+                        $timeOut = \Carbon\Carbon::parse($employee->date_clocked_out);
                     @endphp     
 
                     <label for="date">Date
-                        <input type="text" id="date" value="{{ \Carbon\Carbon::parse($employee->time_in)->format('Y-m-d') }}" disabled>
+                        <input type="text" id="date" value="{{ \Carbon\Carbon::parse($employee->date_clocked_in)->format('Y-m-d') }}" disabled>
                     </label>
 
                     <div class="flex gap-5">

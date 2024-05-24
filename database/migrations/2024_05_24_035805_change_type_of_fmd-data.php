@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->id();
-            $table->string('location_name')->nullable();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->unsignedInteger('updated_by')->nullable();
-            $table->timestamps();
-
+        // Alter columns
+        Schema::table('fmd_employee_tables', function (Blueprint $table) {
+            $table->longText('fmd_data')->nullable()->change();
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('location');
+        Schema::table('fmd_employee_tables', function (Blueprint $table) {
+            $table->string('fmd_data')->nullable()->change();
+        });
     }
 };

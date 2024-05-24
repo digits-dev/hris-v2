@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Employee;
+use App\Models\EmployeeLog;
 
 class EmployeeAccountsContent extends Component
 {
@@ -167,7 +167,7 @@ class EmployeeAccountsContent extends Component
     public function export(){
         $filename = $this->filename;
         $filters = $this->filters;
-        $query = Employee::filterForReport(Employee::generateReport(), $filters);
+        $query = EmployeeLog::filterForReport(EmployeeLog::generateReport(), $filters);
 
         return Excel::download(new ExportEmployees($datas), $filename.'.xlsx');
     }

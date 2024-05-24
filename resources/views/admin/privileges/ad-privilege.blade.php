@@ -1,37 +1,77 @@
 @extends('layout')
 <link rel="stylesheet" href="{{ asset('css/navigation/section.css') }}">
+
+@section('css')
+    <style>
+     
+    /* Table Column Widths  */
+
+    /* ID  */
+    .table th:nth-child(1), .table td:nth-child(1){
+        width: 25%;
+    }
+
+    /* Privilege Name */
+    .table th:nth-child(2), .table td:nth-child(2){
+        width: 25%;
+    }
+    /* Super Admin */
+    .table th:nth-child(3), .table td:nth-child(3){
+        width: 25%;
+    }
+    /* Action */
+    .table th:nth-child(4), .table td:nth-child(4){
+        width: 25%;
+    }
+
+    /* End of Table Column Widths  */
+
+    .table{
+        text-align: center;
+    }
+   
+
+    </style>
+@endsection
+
 @section('content')
 <section>
     @include('errors/messages')
     <div class="main-container">
-        <div class="date-container">
-            <span class="font-bold">{{trans('ad_default.Privileges')}}</span>
-            <a href="{{ route('create-privilege') }}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-1 dark:bg-green-700 dark:hover:bg-green-700 dark:focus:ring-green-800"> <i class="fa fa-circle-plus"></i> {{trans('ad_default.Add_New_Privilege')}}</a>
-            <p class="date" id="Date"></p>
-        </div>
+        <p class="header-title">{{trans('ad_default.Privileges')}}</p>
+
+        <a href="{{ route('create-privilege') }}" class="primary-btn mt-2 inline-block">{{trans('ad_default.Add_New_Privilege')}}</a>
 
         <table class="table">
             <thead>
              <tr>
-                <th>{{trans('ad_default.action_label')}}</th>
                 <th>{{trans('ad_default.privileges_ID')}}</th>
                 <th>{{trans('ad_default.privileges_name')}}</th>
                 <th>{{trans('ad_default.privileges_super_admin')}}</th>
+                <th>{{trans('ad_default.action_label')}}</th>
              </tr>
             </thead>
     
             <tbody>
                 @foreach ($privileges as $priv)
                     <tr>
-                        <td><a class="" href="{{url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege')."/$priv->id"}}"> <i class="fa fa-edit"></i> Edit</a></td>
                         <td>{{ $priv->id}}</td>
                         <td>{{ $priv->name }}</td>
-                        <td>{{ $priv->is_superadmin }}</td>
+                        <td>
+                        <span class="status"
+                            @style([$priv->is_superadmin ? 'background: var(--tertiary-color)' : 'background: #1F6268'])>
+                            {{ $priv->is_superadmin ? "Super Admin" : "Standard" }}
+                        </span>
+
+                           </td>
+                        <td><a role="button" href="{{url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege')."/$priv->id"}}"
+                        class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a></td>
+           
                     </tr>
                 @endforeach
             </tbody>
     
-    
+         
         </table>
     </div>
 </section>

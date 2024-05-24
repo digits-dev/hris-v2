@@ -5,8 +5,6 @@
     --primary-text: #113437;
     --primary-hover: #DDFAFD;
     --tertiary-color: #27C1CE;
-
-
 }
 
 section {
@@ -90,33 +88,6 @@ section {
     text-align: left;
 }
 
-/* Adjust Table Column Text Alignment  */
-
-/* Time In */
-.table th:nth-child(4) button, .table td:nth-child(4){
-    text-align: center;
-    margin: auto
-}
-/* Time Out */
-.table th:nth-child(5) button, .table td:nth-child(5){
-    text-align: center;
-    margin: auto
-}
-/* Date */
-.table th:nth-child(6) button, .table td:nth-child(6){
-    text-align: center;
-    margin: auto
-
-}
-/* Duration */
-.table th:nth-child(7) button, .table td:nth-child(7){
-    text-align: center;
-    margin: auto
-
-}
-
-/* End of Table Column Text Alignment  */
-
 .table thead {
     background: var(--secondary-color);
     
@@ -153,43 +124,6 @@ section {
     font-size: 12px;
 }
 
-/* Table Column Widths  */
-
-/* Checkbox  */
-.table th:nth-child(1), .table td:nth-child(1){
-    width:5%;
-}
-
-/* First Name */
-.table th:nth-child(2), .table td:nth-child(2){
-    width:15%;
-}
-/* Last Name */
-.table th:nth-child(3), .table td:nth-child(3){
-    width:15%;
-}
-/* Time In */
-.table th:nth-child(4), .table td:nth-child(4){
-    width:15%;
-}
-/* Time Out */
-.table th:nth-child(5), .table td:nth-child(5){
-    width:15%;
-}
-/*   Date   */
-.table th:nth-child(6), .table td:nth-child(6){
-    width:15%;
-}
-/*  Duration  */
-.table th:nth-child(7), .table td:nth-child(7){
-    width:10%;
-}
-/*  Action  */
-.table th:nth-child(8), .table td:nth-child(8){
-    width:10%;
-}
-
-/* End of Table Column Widths  */
 
 .table input {
     display: inline-block;
@@ -243,6 +177,7 @@ input[type="checkbox"]:checked::after {
     font-size: 10px;
     color: white;
     border: 2px solid var(--secondary-color);
+    margin:auto;
 }
 
 .table-btn--red{
@@ -276,8 +211,23 @@ input[type="checkbox"]:checked::after {
 }
 
 .th-sort{
-display: flex; 
-align-items: center;
-justify-content: center;
-gap:10px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 12px;
+    border: 2px solid var(--stroke-color);
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
 }

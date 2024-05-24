@@ -44,11 +44,12 @@ class User extends Authenticatable
 
         $cleanVal = trim($value);
 
-        return $query->where('first_name', 'like', "%$cleanVal%")
+        return $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE '%$cleanVal%'")
                      ->orWhere('employee_id', 'like', "%$cleanVal%")
                      ->orWhere('email', 'like', "%$cleanVal%")
                      ->orWhere('hire_location_id', 'like', "%$cleanVal%")
                      ->orWhere('company_id', 'like', "%$cleanVal%");
+
     }
 
     public function scopeGetData($query){
@@ -73,5 +74,9 @@ class User extends Authenticatable
 
     public function getFullnameAttribute(){
         return "{$this->first_name} {$this->middle_name} {$this->last_name}";
+    }
+
+    public function employeeLogs(){
+        return $this->hasMany(EmployeeLog::class, 'employee_id', 'employee_id');
     }
 }

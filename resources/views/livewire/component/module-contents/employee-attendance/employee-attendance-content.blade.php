@@ -678,7 +678,7 @@
 
 
  
-    @if (count($users) == 0)
+    @if (count($employeeLogs) == 0)
         <div class="no-data-container">
             <p>No data available in table</p>
         </div>
@@ -727,29 +727,29 @@
                 </thead>
         
                 <tbody wire:loading.class="opacity-50">
-                    @foreach ($users as $user)
+                    @foreach ($employeeLogs as $employeeLog)
                         <tr>
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->middle_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->company->company_name ?? '' }}</td>
-                            <td>{{ $user->hireLocation->location_name ?? '' }}</td>
-                            <td>{{ $user->currentLocation->location_name ?? '' }}</td>
-                            <td>{{ $user->time_in }}</td>
-                            <td>{{ $user->time_out }}</td>
+                            <td>{{ $employeeLog->user->first_name }}</td>
+                            <td>{{ $employeeLog->user->middle_name }}</td>
+                            <td>{{ $employeeLog->user->last_name }}</td>
+                            <td>{{ $employeeLog->company->company_name ?? '' }}</td>
+                            <td>{{ $employeeLog->hireLocation->location_name ?? '' }}</td>
+                            <td>{{ $employeeLog->currentLocation->location_name ?? '' }}</td>
+                            <td>{{ $employeeLog->date_clocked_in }}</td>
+                            <td>{{ $employeeLog->date_clocked_out }}</td>
         
                             @php
-                                $timeIn = \Carbon\Carbon::parse($user->time_in);
-                                $timeOut = \Carbon\Carbon::parse($user->time_out);
+                                $timeIn = \Carbon\Carbon::parse($employeeLog->date_clocked_in);
+                                $timeOut = \Carbon\Carbon::parse($employeeLog->date_clocked_out);
         
                             @endphp     
         
-                            <td>{{ \Carbon\Carbon::parse($user->time_in)->format('Y-m-d') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($employeeLog->date_clocked_in)->format('Y-m-d') }}</td>
                             <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
                             <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
                             <td>
                                 <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee-attendance.show', $user->id) }}"
+                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->id) }}"
                                         class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                 </div>
 
@@ -763,6 +763,6 @@
         </div>
     @endif
     <div class="pagination">
-    {{ $users->links() }}
+    {{ $employeeLogs->links() }}
     </div>
 </section>
