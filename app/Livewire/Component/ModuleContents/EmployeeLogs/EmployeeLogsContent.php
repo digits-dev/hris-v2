@@ -70,6 +70,7 @@ class EmployeeLogsContent extends Component
         ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
 
 
+
         $data['locations'] = Location::get();
 
         return view('livewire.component.module-contents.employee-logs.employee-logs-content', $data);

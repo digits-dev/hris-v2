@@ -138,15 +138,15 @@
                     </label>
 
                     <label for="company">Company
-                        <input type="text" id="company" value="{{ $employee->company->company_name }}" disabled>
+                        <input type="text" id="company" value="{{ $employee->company->company_name ?? '' }}" disabled>
                     </label>
 
                     <label for="hire-location">Hire Location
-                        <input type="text" id="hire-location" value="{{ $employee->hireLocation->location_name }}" disabled>
+                        <input type="text" id="hire-location" value="{{ $employee->hireLocation->location_name ?? '' }}" disabled>
                     </label>
                     
                     <label for="time-in-location">Time in Location/s
-                        <input type="text" id="time-in-location" value="{{ $employee->currentLocation->location_name  }}" disabled>
+                        <input type="text" id="time-in-location" value="{{ $employee->currentLocation->location_name ?? ''  }}" disabled>
                     </label>
                 </div>
 

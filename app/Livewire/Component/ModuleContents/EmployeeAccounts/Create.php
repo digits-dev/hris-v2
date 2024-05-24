@@ -70,7 +70,11 @@ class Create extends Component
 
         $this->validate();
 
-        $photo = $this->profileImage->store('photos', 'public');
+        if($this->profileImage){
+            $photo = $this->profileImage->store('photos', 'public');
+        } else{
+            $photo = null;
+        }
 
         $user = User::create([
             'first_name' => $this->first_name,

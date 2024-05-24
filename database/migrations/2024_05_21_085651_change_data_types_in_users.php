@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-    // Alter columns
-    Schema::table('users', function (Blueprint $table) {
-        $table->integer('hire_location_id')->nullable()->change();
-        $table->integer('company_id')->nullable()->change();
-        $table->string('employee_id')->change();
-        $table->string('image')->nullable()->change();
-    });
+        // Alter columns
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('hire_location_id')->nullable()->change();
+            $table->integer('company_id')->nullable()->change();
+            $table->string('employee_id')->change();
+            $table->string('image')->nullable()->change();
+        });
     }
 
     /**
