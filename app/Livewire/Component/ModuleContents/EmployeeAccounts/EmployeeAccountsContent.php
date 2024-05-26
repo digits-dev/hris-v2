@@ -48,12 +48,12 @@ class EmployeeAccountsContent extends Component
     //Export
     public $isFilterExportModalOpen = false;
     public $filename;
-    public $filters;
+    public $filters = [];
 
     public function mount()
     {
         $this->filename = 'Export ' . now()->format('Y-m-d H:i:s');
-        $this->filters =  now()->format('Y-m-d H:i:s');
+        $this->filters =  ['search'=> now()->format('Y-m-d H:i:s')];
     }
     
     public function index(){
@@ -165,9 +165,14 @@ class EmployeeAccountsContent extends Component
     }
 
     public function export(){
+        $employee = new \App\Models\Employee();
         $filename = $this->filename;
         $filters = $this->filters;
+<<<<<<< Updated upstream
         $query = EmployeeLog::filterForReport(EmployeeLog::generateReport(), $filters);
+=======
+        $query = $employee->filterForReport($employee->generateReport(), $filters);
+>>>>>>> Stashed changes
 
         return Excel::download(new ExportEmployees($datas), $filename.'.xlsx');
     }
