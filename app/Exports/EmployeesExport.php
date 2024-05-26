@@ -8,14 +8,13 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use CRUDBooster;
 
-class StoreSalesExport implements FromQuery, WithHeadings, WithMapping
+class EmployeesExport implements FromQuery, WithHeadings, WithMapping
 {
     use Exportable;
     private $userReport;
     public $query;
 
     public function __construct($query) {
-        $this->userReport = ReportPrivilege::myReport(1,CRUDBooster::myPrivilegeId());
         $this->query = $query;
     }
 
@@ -30,7 +29,10 @@ class StoreSalesExport implements FromQuery, WithHeadings, WithMapping
 
     public function map($item): array {
 
-       $employees = [''=>''];
+       $employees = [
+                    $item->first_name,
+                    $item->last_name
+                    ];
        
         return $employees;
     }

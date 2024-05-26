@@ -16,6 +16,7 @@ use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EmployeeLog;
+use App\Exports\EmployeesExport;
 
 class EmployeeAccountsContent extends Component
 {
@@ -50,10 +51,10 @@ class EmployeeAccountsContent extends Component
     public $filename;
     public $filters = [];
 
-    public function mount()
+    public function mount($filters = [])
     {
-        $this->filename = 'Export ' . now()->format('Y-m-d H:i:s');
-        $this->filters =  ['search'=> now()->format('Y-m-d H:i:s')];
+        $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
+        $this->filters =  $filters;
     }
     
     public function index(){
@@ -165,16 +166,11 @@ class EmployeeAccountsContent extends Component
     }
 
     public function export(){
-        $employee = new \App\Models\Employee();
+        $employee = new \App\Models\User();
         $filename = $this->filename;
-        $filters = $this->filters;
-<<<<<<< Updated upstream
-        $query = EmployeeLog::filterForReport(EmployeeLog::generateReport(), $filters);
-=======
+        $filters = $this->filters;  
         $query = $employee->filterForReport($employee->generateReport(), $filters);
->>>>>>> Stashed changes
-
-        return Excel::download(new ExportEmployees($datas), $filename.'.xlsx');
+        return Excel::download(new EmployeesExport($query), $filename.'.xlsx');
     }
 
   

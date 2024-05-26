@@ -79,4 +79,38 @@ class User extends Authenticatable
     public function employeeLogs(){
         return $this->hasMany(EmployeeLog::class, 'employee_id', 'employee_id');
     }
+
+    public function filterForReport($query, $filters=[]) {
+        $search = $filters['search'] ?? '';
+        $dataFrom = $filters['datefrom'] ?? '';
+        $dateTo = $filters['dateto'] ?? '';
+        if ($dataFrom && $dateTo) {
+            $query->whereBetween('users.created_at', [$dataFrom, $dateTo]);
+        }
+       
+        if ($search)  {
+            $search_filter = "
+                users.first_name LIKE '%$search%' OR
+                users.last_name LIKE '%$search%'
+            ";
+            $query->whereRaw("($search_filter)");
+        }
+        
+        return $query;
+    }
+    
+
+    public function generateReport($ids = null) {
+        $query = User::select(
+            'users.id',
+            'users.first_name',
+            'users.last_name',
+            'created_at'
+        );
+
+        if (isset($ids)) {
+            $query->whereIn('users.id', $ids);
+        }
+        return $query;
+    }
 }
