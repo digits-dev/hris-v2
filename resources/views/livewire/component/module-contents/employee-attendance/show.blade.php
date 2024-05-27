@@ -121,60 +121,69 @@
         {{-- Personal  Information  --}}
         <fieldset>
             <legend class="legend">Employee Attendance Summary Details</legend>
-
             <div class="personal-content">
             
                 <div class="personal-content-inputs ">
                     <label for="first-name">First Name
-                        <input type="text" id="first-name" value="{{ $employee->user->first_name }}" disabled>
+                        <input type="text" id="first-name" value="{{ $employeeData->first_name }}" disabled>
                     </label>
 
                     <label for="middle-name">Middle Name
-                        <input type="text" id="middle-name" value="{{ $employee->user->middle_name }}" disabled>
+                        <input type="text" id="middle-name" value="{{ $employeeData->middle_name }}" disabled>
                     </label>
 
                     <label for="last-name">Last Name
-                        <input type="text" id="last-name" value="{{ $employee->user->last_name }}" disabled>
+                        <input type="text" id="last-name" value="{{ $employeeData->last_name }}" disabled>
                     </label>
 
                     <label for="company">Company
-                        <input type="text" id="company" value="{{ $employee->company->company_name ?? '' }}" disabled>
+                        <input type="text" id="company" value="{{ $employeeData->company ?? '' }}" disabled>
                     </label>
 
                     <label for="hire-location">Hire Location
-                        <input type="text" id="hire-location" value="{{ $employee->hireLocation->location_name ?? '' }}" disabled>
+                        <input type="text" id="hire-location" value="{{ $employeeData->hire_location ?? '' }}" disabled>
                     </label>
-                    
+
+              
+                    @php
+                        $currentLocationIds = explode(",", $employeeData->combined_terminal_ids);
+                        $showLocations = [];
+
+                        foreach ($locations as $location) {
+                            if (in_array($location->id, $currentLocationIds)) {
+                                $showLocations[] = $location->location_name;
+                            }
+                        }
+
+                        $locationsString = implode(', ', $showLocations);
+                    @endphp
+
+
                     <label for="time-in-location">Time in Location/s
-                        <input type="text" id="time-in-location" value="{{ $employee->currentLocation->location_name ?? ''  }}" disabled>
+                        <input type="text" id="time-in-location" value="{{$locationsString}}" disabled>
                     </label>
                 </div>
 
                 <div class="personal-content-inputs ">
                     <label for="first-time-in">First Time in
-                        <input type="text" id="first-time-in" value="{{ $employee->date_clocked_in }}" disabled>
+                        <input type="text" id="first-time-in" value="{{ $employeeData->first_clock_in }}" disabled>
                     </label>
 
                     <label for="last-time-out">Last Time out
-                        <input type="text" id="last-time-out" value="{{ $employee->date_clocked_out }}" disabled>
+                        <input type="text" id="last-time-out" value="{{ $employeeData->last_clock_out }}" disabled>
                     </label>
 
-                    @php
-                        $timeIn = \Carbon\Carbon::parse($employee->date_clocked_in);
-                        $timeOut = \Carbon\Carbon::parse($employee->date_clocked_out);
-                    @endphp     
-
                     <label for="date">Date
-                        <input type="text" id="date" value="{{ \Carbon\Carbon::parse($employee->date_clocked_in)->format('Y-m-d') }}" disabled>
+                        <input type="text" id="date" value="{{ $employeeData->date_clocked_in }}" disabled>
                     </label>
 
                     <div class="flex gap-5">
                         <label for="bio-duration">Bio Duration
-                            <input type="text" id="bio-duration" value="{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}" disabled>
+                            <input type="text" id="bio-duration" value="{{ $employeeData->total_time_bio_diff }}" disabled>
                         </label>
 
                         <label for="filo-duration">FILO Duration
-                            <input type="text" id="filo-duration" value="{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}" disabled>
+                            <input type="text" id="filo-duration" value="{{ $employeeData->total_time_filo_diff }}" disabled>
                         </label>
                     </div>
 

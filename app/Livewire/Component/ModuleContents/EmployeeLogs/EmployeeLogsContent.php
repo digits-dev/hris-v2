@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\EmployeeLog;
 use App\Models\Location;
 use Livewire\WithPagination;
+use App\Helpers\CommonHelpers as CM;
 
 class EmployeeLogsContent extends Component
 {
@@ -23,7 +24,7 @@ class EmployeeLogsContent extends Component
     public $perPage = 10;
 
     public $isFilterModalOpen = false;
-
+  
 
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {

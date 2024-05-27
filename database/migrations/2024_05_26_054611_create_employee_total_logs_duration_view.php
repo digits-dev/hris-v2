@@ -17,14 +17,13 @@ return new class extends Migration
         WITH first_last_times AS (
             SELECT 
                 employee_id,
-                clock_in_terminal_id,
+                GROUP_CONCAT(DISTINCT clock_in_terminal_id ORDER BY clock_in_terminal_id ASC) AS combined_terminal_ids,
                 DATE_FORMAT(date_clocked_in, '%Y-%m-%d') AS date_clocked_in,
                 MIN(date_clocked_in) AS first_clock_in,
                 MAX(date_clocked_out) AS last_clock_out
             FROM employee_logs
             GROUP BY 
                 employee_id, 
-                clock_in_terminal_id,
                 DATE_FORMAT(date_clocked_in, '%Y-%m-%d')
         ),
         all_times AS (
@@ -42,7 +41,7 @@ return new class extends Migration
             flt.date_clocked_in,
             flt.first_clock_in,
             flt.last_clock_out,
-            flt.clock_in_terminal_id,
+            flt.combined_terminal_ids,
             SEC_TO_TIME(at.total_time_seconds) AS total_time_bio_diff,
             SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(flt.last_clock_out, flt.first_clock_in))) AS total_time_filo_diff
         FROM first_last_times flt

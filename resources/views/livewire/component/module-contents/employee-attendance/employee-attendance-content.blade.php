@@ -768,7 +768,24 @@
                             <td>{{ $employeeLog->last_name }}</td>
                             <td>{{ $employeeLog->company ?? '' }}</td>
                             <td>{{ $employeeLog->hire_location ?? '' }}</td>
-                            <td>{{ $employeeLog->current_location ?? '' }}</td>
+
+                            <td>{{ $employeeLog->current_location ?? '' }}
+                                @php
+                                    $currentLocationIds = explode(",", $employeeLog->combined_terminal_ids);
+                                @endphp
+                                
+                                @foreach ($locations as $location)
+                                    @if (in_array($location->id, $currentLocationIds))
+                                        @if ($loop->last)
+                                        {{ $location->location_name }}
+                                        @else
+                                        {{ $location->location_name }}, 
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </td>
+
+
                             <td>{{ $employeeLog->first_clock_in }}</td>
                             <td>{{ $employeeLog->last_clock_out }}</td>
                             <td>{{ $employeeLog->date_clocked_in }}</td>
@@ -776,7 +793,7 @@
                             <td>{{ $employeeLog->total_time_filo_diff }}</td>
                             <td>
                                 <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
+                                    <a role="button" href="{{ route('employee-attendance.show', ['employeeId'=>$employeeLog->employee_id, 'date'=> $employeeLog->date_clocked_in]) }}"
                                         class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                 </div>
 

@@ -273,7 +273,7 @@
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
                         <p class="item-title"> On Vacation Leave</p>
-                        <p class="on-vacation-leave-value">21</p>
+                        <p class="on-vacation-leave-value">-</p>
                     </div>
                 </div>
                 {{-- ON SICK LEAVE --}}
@@ -281,7 +281,7 @@
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
                         <p class="item-title"> On Sick Leave</p>
-                        <p class="on-sick-leave-value">25</p>
+                        <p class="on-sick-leave-value">-</p>
                     </div>
                 </div>
             </div>
