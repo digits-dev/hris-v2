@@ -1,13 +1,23 @@
 <?php
 
 namespace App\Livewire\Component\Navigation;
-use App\Helpers\CommonHelpers;
+use App\Helpers\CommonHelpers as CM;
 use Livewire\Component;
 
 class Sidebar extends Component
 {
+
+    public $menus;
+
+    public function mount(){
+        
+        $this->menus = CM::sidebarMenu();
+        
+    }
+    
     public function render()
     {
-        return view('livewire.component.navigation.sidebar');
+        $sidebar = CM::sidebarMenu();
+        return view('livewire.component.navigation.sidebar', compact('sidebar'));
     }
 }

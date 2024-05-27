@@ -34,20 +34,21 @@ body{
     overflow: hidden;
     flex-shrink: 0;
 
-    .menu-name, .menu-arrow-icon, .menu-child-name{
+    .nav-name, .menu-child-arrow-icon, .child-nav-name, .menu-name{
         display: none;
     }
 
-    .menu-child-name{
-        font-size: 11px !important;
-    }
     
 }
 .sidebar-container:hover{
     width: 15.625rem;
+
+    .nav-name, .child-nav-name, .menu-child-arrow-icon{
+        display: block;
+    }
 }
 
-.sidebar-container:hover .navigation li a span, .sidebar-container:hover  {
+.sidebar-container:hover .navigation li a span  {
     display: block;
 }
 
@@ -134,11 +135,7 @@ height: 7px;
     align-items: center;
 }
 
-.child-nav-icon{
-    object-fit: contain;
-    width: 1.2rem;
-    margin-left: 3px;
-}
+
 
 .menu-child-arrow-icon{
     width: 7px;
@@ -183,4 +180,61 @@ height: 7px;
 
 .margin-auto {
     margin: auto;
+}
+
+/* FOR DROPDOWN NAV BUTTONS */
+
+.navigation-div a:hover{
+    background-color: rgba(0, 255, 255, 0.092);
+    border-radius: 5px;
+}
+
+
+.nav-parent{
+    display: flex;
+    padding: 0.5rem 1.4rem;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.nav-parent:hover{
+    background-color: rgba(0, 255, 255, 0.092);
+    border-radius: 5px;
+}
+
+.nav-name{
+    color: white;
+    flex: 1;
+    margin-left: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+}
+
+.nav-child{
+    display: flex !important;
+    padding: 0.5rem 1.4rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.child-nav-icon{
+    object-fit: contain;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 3px;
+}
+
+.child-nav-name{
+    color: white;
+    flex: 1;
+    margin-left: 10px;
+    white-space: nowrap;
+    font-size: 11px;
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
 }
