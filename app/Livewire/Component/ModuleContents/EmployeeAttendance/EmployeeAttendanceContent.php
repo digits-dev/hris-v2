@@ -55,14 +55,13 @@ class EmployeeAttendanceContent extends Component{
 
 
     public function render(){
-
+        
         $data = [];
    
         $data['employeeLogs'] =  DB::table('employee_total_logs_duration_view as logs_duration')
         ->leftJoin('users', 'users.employee_id', 'logs_duration.emp_id')
         ->leftJoin('companies', 'companies.id', 'users.company_id')
         ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
-        ->leftJoin('locations as current_location', 'current_location.id', 'logs_duration.clock_in_terminal_id')
         ->select([
             'users.employee_id',
             'users.first_name',
@@ -73,10 +72,9 @@ class EmployeeAttendanceContent extends Component{
             'logs_duration.date_clocked_in',
             'logs_duration.first_clock_in',
             'logs_duration.last_clock_out',
-            'current_location.location_name as current_location',
             'logs_duration.total_time_bio_diff',
             'logs_duration.total_time_filo_diff',
-
+            'logs_duration.combined_terminal_ids',
         ])
         ->orderBy($this->sortBy, $this->sortDir)
         ->paginate($this->perPage);
