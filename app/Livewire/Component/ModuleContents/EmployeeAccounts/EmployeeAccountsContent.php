@@ -54,7 +54,7 @@ class EmployeeAccountsContent extends Component
     public function mount()
     {
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
-        $this->filters =  ['company_id'=>'',
+        $this->filters =  ['company_id'=>2,
                            'position'=> '',
                            'hire_location_id'=>'',
                            'date_from'=>'',
@@ -181,6 +181,7 @@ class EmployeeAccountsContent extends Component
             'search' => $requestFilters['search']
         ];
         $query = $employee->filterForReport($employee->generateReport(), $filter_params);
+
         return Excel::download(new EmployeesExport($query), $filename.'.xlsx');
     }
 
