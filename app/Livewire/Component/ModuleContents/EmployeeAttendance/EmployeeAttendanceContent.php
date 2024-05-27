@@ -2,18 +2,19 @@
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAttendance;
 use Livewire\Component;
-use App\Models\EmployeeLog;
 use App\Models\Location;
 use App\Models\Companies;
+use App\Models\EmployeeLog;
 use Livewire\WithPagination;
 use App\Helpers\CommonHelpers;
+use Illuminate\Support\Facades\DB;
     
 class EmployeeAttendanceContent extends Component{
 
     use WithPagination;
 
     // #[Url(history:true)]
-    public $sortBy = "created_at";
+    public $sortBy = "date_clocked_in";
     // #[Url(history:true)]
     public $sortDir = 'DESC';
     // #[Url(history:true)]
@@ -56,25 +57,33 @@ class EmployeeAttendanceContent extends Component{
     public function render(){
 
         $data = [];
-        $data['employeeLogs'] = EmployeeLog::search($this->search)
-        ->select(['id', 'employee_id', 'time_entry_id', 'date_clocked_in', 'date_clocked_out','clock_in_terminal_id','clock_out_terminal_id'])
-        ->with([
-            'hireLocation' => function ($query) {
-                $query->select('id', 'location_name');
-            },
-            'currentLocation' => function ($query) {
-                $query->select('id', 'location_name');
-            },
-            'user' => function ($query) {
-                $query->select('employee_id', 'first_name', 'middle_name', 'last_name','company_id');
-            },
-            'company' => function ($query) {
-                $query->select('id', 'company_name');
-            }
-        ])
-        ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+   
+        $data['employeeLogs'] =  DB::table('employee_total_logs_duration_view as logs_duration')
+        ->leftJoin('users', 'users.employee_id', 'logs_duration.emp_id')
+        ->leftJoin('companies', 'companies.id', 'users.company_id')
+        ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
+        ->leftJoin('locations as current_location', 'current_location.id', 'logs_duration.clock_in_terminal_id')
+        ->select([
+            'users.employee_id',
+            'users.first_name',
+            'users.middle_name',
+            'users.last_name',
+            'companies.company_name as company',
+            'hire_location.location_name as hire_location',
+            'logs_duration.date_clocked_in',
+            'logs_duration.first_clock_in',
+            'logs_duration.last_clock_out',
+            'current_location.location_name as current_location',
+            'logs_duration.total_time_bio_diff',
+            'logs_duration.total_time_filo_diff',
 
-        
+        ])
+        ->orderBy($this->sortBy, $this->sortDir)
+        ->paginate($this->perPage);
+
+        // dd($data['employeeLogs']);
+
+
         $data['companies'] = Companies::get();
         $data['locations'] = Location::get();
 

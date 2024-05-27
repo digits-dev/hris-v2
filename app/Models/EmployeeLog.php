@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EmployeeLog extends Model
 {
@@ -71,4 +70,34 @@ class EmployeeLog extends Model
         return $this->belongsTo(Companies::class, 'company_id', 'id');
     }
 
+
+    public function filterForReport($query, $filters = [], $is_upload = false) {
+        $search = $filters['search'];
+        if ($filters['datefrom'] && $filters['dateto']) {
+            $query->whereBetween('employee_logs.created_at', [$filters['datefrom'], $filters['dateto']]);
+        }
+       
+        if ($search)  {
+            $search_filter = "
+                employee_logs.first_name LIKE '%$search%' OR
+                employee_logs.last_name LIKE '%$search%'
+            ";
+            $query->whereRaw("($search_filter)");
+        }
+        return $query;
+    }
+    
+
+    public function generateReport($ids = null) {
+        $query = Employee::select(
+            'employee_logs.id',
+            'employee_logs.first_name',
+            'employee_logs.last_name',
+        );
+
+        if (isset($ids)) {
+            $query->whereIn('employee_logs.id', $ids);
+        }
+        return $query;
+    }
 }

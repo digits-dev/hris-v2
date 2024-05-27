@@ -713,7 +713,7 @@
                     ['colName'=>'time_out', 'displayName' => 'Last Time Out' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'created_at', 'displayName' => 'Date' ])
+                    ['colName'=>'date_clocked_in', 'displayName' => 'Date' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
                     ['colName'=>'time_out', 'displayName' => 'Bio Duration' ])
@@ -729,27 +729,20 @@
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
-                            <td>{{ $employeeLog->user->first_name }}</td>
-                            <td>{{ $employeeLog->user->middle_name }}</td>
-                            <td>{{ $employeeLog->user->last_name }}</td>
-                            <td>{{ $employeeLog->company->company_name ?? '' }}</td>
-                            <td>{{ $employeeLog->hireLocation->location_name ?? '' }}</td>
-                            <td>{{ $employeeLog->currentLocation->location_name ?? '' }}</td>
+                            <td>{{ $employeeLog->first_name }}</td>
+                            <td>{{ $employeeLog->middle_name }}</td>
+                            <td>{{ $employeeLog->last_name }}</td>
+                            <td>{{ $employeeLog->company ?? '' }}</td>
+                            <td>{{ $employeeLog->hire_location ?? '' }}</td>
+                            <td>{{ $employeeLog->current_location ?? '' }}</td>
+                            <td>{{ $employeeLog->first_clock_in }}</td>
+                            <td>{{ $employeeLog->last_clock_out }}</td>
                             <td>{{ $employeeLog->date_clocked_in }}</td>
-                            <td>{{ $employeeLog->date_clocked_out }}</td>
-        
-                            @php
-                                $timeIn = \Carbon\Carbon::parse($employeeLog->date_clocked_in);
-                                $timeOut = \Carbon\Carbon::parse($employeeLog->date_clocked_out);
-        
-                            @endphp     
-        
-                            <td>{{ \Carbon\Carbon::parse($employeeLog->date_clocked_in)->format('Y-m-d') }}</td>
-                            <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
-                            <td>{{ sprintf("%02d:%02d", $timeIn->diffInHours($timeOut), $timeIn->diffInMinutes($timeOut) % 60) }}</td>
+                            <td>{{ $employeeLog->total_time_bio_diff }}</td>
+                            <td>{{ $employeeLog->total_time_filo_diff }}</td>
                             <td>
                                 <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->id) }}"
+                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
                                         class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                 </div>
 
