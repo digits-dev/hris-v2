@@ -181,7 +181,6 @@ class EmployeeAccountsContent extends Component
             'search' => $requestFilters['search']
         ];
         $query = $employee->filterForReport($employee->generateReport(), $filter_params);
-
         return Excel::download(new EmployeesExport($query), $filename.'.xlsx');
     }
 

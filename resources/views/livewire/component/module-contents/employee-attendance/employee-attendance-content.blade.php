@@ -568,7 +568,6 @@
 @endsection
 
 <section>
-
     <div class="header ">
         <div class="header__left-container">
             <div class="search-form">
@@ -592,13 +591,13 @@
         </div>
 
         <div class="flex items-center gap-2 relative ">
-            <button class="primary-btn">Export</button>
+            <button class="primary-btn" wire:click="openFilterExportModal()">Export</button>
         </div>
     </div>
 
     {{-- FILTER MODAL --}}
     <div>
-        @if ($isFilterModalOpen)
+        @if($isFilterModalOpen)
             <div>
                 <!-- Modal backdrop -->
                 <div class="modal-backdrop"></div>
@@ -608,76 +607,111 @@
                     <div class="filter-modal-header">
                        <p>Filters</p>
                     </div>
-                    <div class="filter-modal-body">
-                        <div class="modal-body-container1">
-                            <div class="filter-modal-select-container">
-                                <p>Company</p>
-                                <div class="filter-modal-select">
-                                    <select>
-                                        <option>Select Company</option>
-                                        @foreach ($companies as $company)
-                                        <option value="{{$company->company_name}}">{{$company->company_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                    <form wire:submit="filterData">
+                        <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
+                        <div class="filter-modal-body">
+                            <div class="modal-body-container1">
+                                <div class="filter-modal-select-container">
+                                    <p>Company</p>
+                                    <div class="filter-modal-select">
+                                        <select wire:model="company_id">
+                                            <option>Select Company</option>
+                                            @foreach ($companies as $company)
+                                                <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                    </div>
+                                </div>
+                                <div class="filter-modal-select-container">
+                                    <p>Hire Location</p>
+                                    <div class="filter-modal-select">
+                                        <select wire:model="hire_location">
+                                            <option>Select Location</option>
+                                            @foreach ($locations as $location)
+                                                <option value="{{$location->location_name}}">{{$location->location_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="filter-modal-select-container">
-                                <p>Hire Location</p>
-                                <div class="filter-modal-select">
-                                    <select>
-                                        <option>Select Location</option>
-                                        @foreach ($locations as $location)
-                                        <option value="{{$location->location_name}}">{{$location->location_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                            <div class="modal-body-container2">
+                                <div class="filter-modal-select-container">
+                                    <p>Time in Location/s</p>
+                                    <div class="filter-modal-select">
+                                        <select wire:model="time_in_location">
+                                            <option>Select Time in Location/s</option>
+                                            @foreach ($locations as $location)
+                                                <option value="{{$location->location_name}}">{{$location->location_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-body-container2">
-                            <div class="filter-modal-select-container">
-                                <p>Time in Location/s</p>
-                                <div class="filter-modal-select">
-                                    <select>
-                                        <option>Select Time in Location/s</option>
-                                        @foreach ($locations as $location)
-                                        <option value="{{$location->location_name}}">{{$location->location_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
-                                </div>
-                            </div>
 
-                            <div class="filter-modal-select-container">
-                                <p>Hire Date</p>
-                                <div class="hire-date-container mb-2">
-                                    <span>From</span>
-                                    <input type="date">
-                                </div>
-                                <div class="hire-date-container">
-                                    <span>To</span>
-                                    <input type="date">
-                                </div>
-                               
+                                <div class="filter-modal-select-container">
+                                    <p>Hire Date</p>
+                                    <div class="hire-date-container mb-2">
+                                        <span>From</span>
+                                        <input type="date" wire:model="date_from">
+                                    </div>
+                                    <div class="hire-date-container">
+                                        <span>To</span>
+                                        <input type="date" wire:model="date_to">
+                                    </div>
+                                
+                                </div>                          
                             </div>
-                          
-                          
-                           
                         </div>
-                    </div>
-                    <div class="filter-modal-footer">
-                        <button type="button" class="secondary-btn" wire:click="closeFilterModal">Cancel</button>
-                        <button type="button" class="primary-btn" wire:click="closeFilterModal">Search</button>  
-                        <!-- Additional buttons or actions -->
-                    </div>
+                        <div class="filter-modal-footer">
+                            <button type="button" class="secondary-btn" wire:click="closeFilterModal">Cancel</button>
+                            <button type="submit" class="primary-btn" wire:click="closeFilterModal">Search</button>  
+                            <!-- Additional buttons or actions -->
+                        </div>
+                    </form>
                 </div>
             </div>
         @endif
     </div>
 
+    {{-- Export Modal --}}
+     <div>
+        @if($isFilterExportModalOpen)
+            <div class="modal-backdrop"></div>
+                <!-- Modal content -->
+                <div class="filter-modal-content">
+                    <div class="filter-modal-header">
+                        <p>Export</p>
+                    </div>
+                    <form wire:submit="exportFilter">
+                        <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
+                        @if($isFilter == 1)
+                            <input type="text" wire:model="company_id" value="{{$company_id}}" class='form-control'/>
+                            <input type="text" wire:model="hire_location" value="{{$hire_location}}" class='form-control'/>
+                        @endif
+                        <div class="filter-modal-body">
+                            <div class="modal-body-container1">
+                                <div class="filter-modal-select-container">
+                                    <div class="filter-modal-select">
+                                        <label>File Name</label>
+                                        <input type="text" wire:model="filename" class='form-control' required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="filter-modal-footer">
+                            <button type="button" class="secondary-btn" wire:click="closeFilterExportModal">Cancel</button>
+                            <button type="submit" class="secondary-btn" wire:click="closeFilterExportModal">Export</button>
+                            <!-- Additional buttons or actions -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endif
+     </div>
 
- 
     @if (count($employeeLogs) == 0)
         <div class="no-data-container">
             <p>No data available in table</p>

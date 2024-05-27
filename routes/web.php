@@ -54,7 +54,6 @@ Route::group(['middleware' => ['web']], function() {
     // Employee Attendance Summary
     Route::get('employee-attendance/{employeeId}', [ShowEmployeeAttendance::class, 'index'])->middleware('auth')->name('employee-attendance.show');
 
-
     Route::get('log-user-access', [LogUserAccessContent::class, 'index'])->middleware('auth')->name('log-user-access');
 
     //ADMIN PRIVILEGES

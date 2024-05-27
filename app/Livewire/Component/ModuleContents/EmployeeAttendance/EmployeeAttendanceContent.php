@@ -8,7 +8,9 @@ use App\Models\EmployeeLog;
 use Livewire\WithPagination;
 use App\Helpers\CommonHelpers;
 use Illuminate\Support\Facades\DB;
-    
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EmployeeAttendanceSummary;
+
 class EmployeeAttendanceContent extends Component{
 
     use WithPagination;
@@ -21,30 +23,49 @@ class EmployeeAttendanceContent extends Component{
     public $search = ''; 
     // #[Url()]
     public $perPage = 10;
-
     public $isFilterModalOpen = false;
+    public $filters = [];
+    public $company_id;
+    public $hire_location;
+    public $time_in_location;
+    public $date_from;
+    public $date_to;
+    public $isFilter = false;
+    public $isFilterExportModalOpen = false;
+    public $filename;
+
+    public function mount(){
+        $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
+    }
 
     public function setSortBy($fieldName){
         if($this->sortBy === $fieldName) {
             $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
             return;
         }
-
         $this->sortBy = $fieldName;
         $this->sortDir = "DESC";
     }
 
-        // FOR FILTER MODAL
+    // FOR FILTER MODAL
 
-        public function openFilterModal(){
-            $this->isFilterModalOpen = true;
-        }
+    public function openFilterModal(){
+        $this->isFilterModalOpen = true;
+    }
+
+    public function closeFilterModal(){
+        $this->isFilterModalOpen = false;
+    }
+
+     //EXPORT FILTER
+     public function openFilterExportModal(){
+        $this->isFilterExportModalOpen = true;
+    }
+
+    public function closeFilterExportModal(){
+        $this->isFilterExportModalOpen = false;
+    }
     
-        public function closeFilterModal(){
-            $this->isFilterModalOpen = false;
-        }
-
-   
     public function index(){
         if (!CommonHelpers::isView()) {
             CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), "danger");
@@ -53,12 +74,64 @@ class EmployeeAttendanceContent extends Component{
 
     }
 
-
-    public function render(){
-
+    public function filterData(){
         $data = [];
-   
-        $data['employeeLogs'] =  DB::table('employee_total_logs_duration_view as logs_duration')
+        $requestFilters = $this->all();
+        $query_filter_params = self::generateFilterParams($requestFilters);
+        $filter_params = [
+            'filters' => $query_filter_params
+        ];
+        $isFilter = 0;
+        if(sizeof($query_filter_params)){
+            $isFilter = 1;
+        }
+        $alldatas = self::getAllData();
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $data = ['isFilter' => $isFilter,
+                 'datas' => $result,
+                ];
+        return $data;
+      
+    }
+
+    public function generateFilterParams($request) {
+        $request = $request;
+        $query_filter_params = [];
+        $company = array_filter((array)$request['company_id'] ?: []);
+        $hire_locations = array_filter((array)$request['hire_location'] ?: []);
+        $time_in_location = array_filter((array)$request['time_in_location'] ?: []);
+        $datefrom = array_filter((array)$request['date_from'] ?: []);
+        $dateto = array_filter((array)$request['date_to'] ?: []);
+
+        if (sizeof($company)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['company_id', $company]
+            ];
+        }
+        if (sizeof($hire_locations)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['hire_location_id', $hire_locations]
+            ];
+        }
+        if (sizeof($time_in_location)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['hire_location_id', $time_in_location]
+            ];
+        }
+        if (sizeof($datefrom) && sizeof($dateto)) {
+            $query_filter_params[] = [
+                'method' => 'whereBetween',
+                'params' => ['hire_date', [$datefrom,$dateto]]
+            ];
+        }
+        return $query_filter_params;
+    }
+
+    public function getAllData(){
+        $query = DB::table('employee_total_logs_duration_view as logs_duration')
         ->leftJoin('users', 'users.employee_id', 'logs_duration.emp_id')
         ->leftJoin('companies', 'companies.id', 'users.company_id')
         ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
@@ -76,19 +149,53 @@ class EmployeeAttendanceContent extends Component{
             'current_location.location_name as current_location',
             'logs_duration.total_time_bio_diff',
             'logs_duration.total_time_filo_diff',
+            'users.hire_date',
+            'users.company_id',
+        ]);
+        return $query;
+    }
 
-        ])
-        ->orderBy($this->sortBy, $this->sortDir)
-        ->paginate($this->perPage);
+    public function filteredData($query, $params){
+        $filters = $params['filters'];
 
-        // dd($data['employeeLogs']);
+        foreach ($filters as $filter) {
+            $query->{$filter['method']}(...$filter['params']);
+        }
+        
+        return $query;
+    }
 
+    public function exportFilter(){
+        $filename = $this->filename;
+        $requestFilters = $this->all();
+        $query_filter_params = self::generateFilterParams($requestFilters);
+        $filter_params = [
+            'filters' => $query_filter_params
+        ];
+        $isFilter = 0;
+        if(sizeof($query_filter_params)){
+            $isFilter = 1;
+        }
+        $alldatas = self::getAllData();
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir);
+        return Excel::download(new EmployeeAttendanceSummary($result), $filename.'.xlsx');
+    }
 
+    public function render(){
+        $data = [];
+        $filterData = self::filterData();
+        if($filterData['isFilter'] == 0){
+            $data['employeeLogs'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        }else{
+            $data['isFilter'] = $filterData['isFilter'];
+            $data['employeeLogs'] =  $filterData['datas'];
+        }
         $data['companies'] = Companies::get();
         $data['locations'] = Location::get();
 
         return view("livewire.component.module-contents.employee-attendance.employee-attendance-content", $data);
     }
+
 } 
 
 
