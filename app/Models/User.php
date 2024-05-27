@@ -80,12 +80,12 @@ class User extends Authenticatable
         return $this->hasMany(EmployeeLog::class, 'employee_id', 'employee_id');
     }
 
-    public function filterForReport($query, $filters=[]) {
-        $search = $filters['search'] ?? '';
-        $dataFrom = $filters['datefrom'] ?? '';
-        $dateTo = $filters['dateto'] ?? '';
-        if ($dataFrom && $dateTo) {
-            $query->whereBetween('users.created_at', [$dataFrom, $dateTo]);
+    public function filterForReport($query, $params) {
+        $filters = $params['filters'];
+        $search = $params['search'] ?? '';
+
+        foreach ($filters as $filter) {
+            $query->{$filter['method']}(...$filter['params']);
         }
        
         if ($search)  {

@@ -51,10 +51,15 @@ class EmployeeAccountsContent extends Component
     public $filename;
     public $filters = [];
 
-    public function mount($filters = [])
+    public function mount()
     {
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
-        $this->filters =  $filters;
+        $this->filters =  ['company_id'=>'',
+                           'position'=> '',
+                           'hire_location_id'=>'',
+                           'date_from'=>'',
+                           'date_to'=>'',
+                           'search' => ''];
     }
     
     public function index(){
@@ -168,9 +173,51 @@ class EmployeeAccountsContent extends Component
     public function export(){
         $employee = new \App\Models\User();
         $filename = $this->filename;
-        $filters = $this->filters;  
-        $query = $employee->filterForReport($employee->generateReport(), $filters);
+        $requestFilters = $this->filters;  
+        
+        $query_filter_params = self::generateFilterParams($requestFilters);
+        $filter_params = [
+            'filters' => $query_filter_params,
+            'search' => $requestFilters['search']
+        ];
+        $query = $employee->filterForReport($employee->generateReport(), $filter_params);
         return Excel::download(new EmployeesExport($query), $filename.'.xlsx');
+    }
+
+    public function generateFilterParams($request) {
+        $request = $request;
+        $query_filter_params = [];
+        $company = array_filter((array)$request['company_id'] ?: []);
+        $positions = array_filter((array)$request['position'] ?: []);
+        $hire_locations = array_filter((array)$request['hire_location_id'] ?: []);
+        $datefrom = array_filter((array)$request['date_from'] ?: []);
+        $dateto = array_filter((array)$request['date_to'] ?: []);
+
+        if (sizeof($company)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['company_id', $company]
+            ];
+        }
+        if (sizeof($positions)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['position', $positions]
+            ];
+        }
+        if (sizeof($hire_locations)) {
+            $query_filter_params[] = [
+                'method' => 'whereIn',
+                'params' => ['hire_location_id', $hire_locations]
+            ];
+        }
+        if (sizeof($datefrom) && sizeof($dateto)) {
+            $query_filter_params[] = [
+                'method' => 'whereBetween',
+                'params' => ['hire_date', [$datefrom,$dateto]]
+            ];
+        }
+        return $query_filter_params;
     }
 
   
