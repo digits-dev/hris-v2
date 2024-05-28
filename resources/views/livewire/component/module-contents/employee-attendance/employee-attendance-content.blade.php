@@ -768,11 +768,13 @@
 
                             <td>{{ $employeeLog->current_location ?? '' }}
                                 @php
-                                    $currentLocationIds = explode(",", $employeeLog->combined_terminal_ids);
+                                    $currentLocationIdsIn = explode(",", $employeeLog->combined_terminal_in_ids);
+                                    $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
+                                    $allLocations = array_merge($currentLocationIdsIn, $currentLocationIdsOut);
                                 @endphp
                                 
                                 @foreach ($locations as $location)
-                                    @if (in_array($location->id, $currentLocationIds))
+                                    @if (in_array($location->id, $allLocations))
                                         @if ($loop->last)
                                         {{ $location->location_name }}
                                         @else

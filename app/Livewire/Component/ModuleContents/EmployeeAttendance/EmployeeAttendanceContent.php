@@ -154,7 +154,8 @@ class EmployeeAttendanceContent extends Component{
             'logs_duration.total_time_filo_diff',
             'users.hire_date',
             'users.company_id',            
-            'logs_duration.combined_terminal_ids',
+            'logs_duration.combined_terminal_in_ids',
+            'logs_duration.combined_terminal_out_ids'
         ]);
         return $query;
     }
