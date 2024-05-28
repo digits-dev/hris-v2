@@ -651,7 +651,7 @@
                                 </div>
 
                                 <div class="filter-modal-select-container">
-                                    <p>Hire Date</p>
+                                    <p>Date</p>
                                     <div class="hire-date-container mb-2">
                                         <span>From</span>
                                         <input type="date" wire:model="date_from">
