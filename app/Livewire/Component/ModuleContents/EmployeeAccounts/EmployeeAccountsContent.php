@@ -184,13 +184,6 @@ class EmployeeAccountsContent extends Component
 
  
     //EXPORT FILTER
-    public function openFilterExportModal(){
-        $this->isFilterExportModalOpen = true;
-    }
-
-    public function closeFilterExportModal(){
-        $this->isFilterExportModalOpen = false;
-    }
 
     public function export(){
     
@@ -299,8 +292,6 @@ class EmployeeAccountsContent extends Component
                 $data['users'] =  $filterData['datas'];
             }
         }
-
-
     
 
         // $data['users'] =  User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
