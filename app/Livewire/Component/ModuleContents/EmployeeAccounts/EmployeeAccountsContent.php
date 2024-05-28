@@ -29,7 +29,7 @@ class EmployeeAccountsContent extends Component
     public $sortDir = 'DESC';
 
     #[Url(history:true)]
-    public $search = ''; 
+    public $search = null; 
 
     #[Url(as:'per-page')]
     public $perPage = 10;
@@ -38,7 +38,13 @@ class EmployeeAccountsContent extends Component
 
     public $selectedAll = false;
 
-    public $isFilterModalOpen = false;
+    // Filter Modal 
+    public $company_id;
+    public $hire_location_id;
+    public $status;
+    public $position;
+    public $date_from;
+    public $date_to;
 
     //Export
     public $isFilterExportModalOpen = false;
@@ -48,12 +54,13 @@ class EmployeeAccountsContent extends Component
     public function mount()
     {
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
-        $this->filters =  ['company_id'=>2,
+        $this->filters =  ['company_id'=>'',
                            'position'=> '',
                            'hire_location_id'=>'',
                            'date_from'=>'',
                            'date_to'=>'',
-                           'search' => ''];
+                           'search' => '',
+                           'status' => ''];
     }
     
     public function index(){
@@ -65,95 +72,67 @@ class EmployeeAccountsContent extends Component
 
     // FOR FILTER MODAL
 
-    public function openFilterModal(){
-        $this->isFilterModalOpen = true;
-    }
+    public function filterData(){
+        $data = [];
+        $requestFilters = $this->all();
 
-    public function closeFilterModal(){
-        $this->isFilterModalOpen = false;
-    }
-
-    //EXPORT FILTER
-    public function openFilterExportModal(){
-        $this->isFilterExportModalOpen = true;
-    }
-
-    public function closeFilterExportModal(){
-        $this->isFilterExportModalOpen = false;
-    }
-  
-    // FOR BULK ACTIONS MODAL
-
-    public function setToActive(){
-
-        User::whereIn('id', $this->userIds)->update(['status' => 1]);
-        $this->selectedAll = false;
-        $this->userIds = [];
-
-        // dd($this->userIds);
-        
-    }
-    public function setToInactive(){
-        User::whereIn('id', $this->userIds)->update(['status' => 0]);
-        $this->selectedAll = false;
-        $this->userIds = [];
-
-        // dd($this->userIds);
-
-    }
-
-    
-    public function setSortBy($fieldName){
-        if($this->sortBy === $fieldName) {
-            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
-            return;
-        }
-
-        $this->sortBy = $fieldName;
-        $this->sortDir = "DESC";
-    }
-
-    public function updatedSelectedAll()
-    {
-        if ($this->selectedAll) {
-            $this->userIds = User::search($this->search)
-                ->orderBy($this->sortBy, $this->sortDir)
-                ->pluck('id')
-                ->take($this->perPage)
-                ->toArray(); // Select all user IDs
-        } else {
-            $this->userIds = []; // Deselect all user IDs
-        }
-    }
-
-    public function updatedPage()
-    {
-        // Reset $selectedAll when navigating to a new page
-        $this->selectedAll = false;
-        $this->userIds = [];
-    }
-
-    public function updatedSearch(){
-        $this->resetPage();
-    }
-
-    public function resetUserIds($users)
-    {
-        $this->userIds = [];
-    }
-
-    public function export(){
-        $employee = new \App\Models\User();
-        $filename = $this->filename;
-        $requestFilters = $this->filters;  
-        
         $query_filter_params = self::generateFilterParams($requestFilters);
+
         $filter_params = [
-            'filters' => $query_filter_params,
-            'search' => $requestFilters['search']
+            'filters' => $query_filter_params
         ];
-        $query = $employee->filterForReport($employee->generateReport(), $filter_params);
-        return Excel::download(new EmployeesExport($query), $filename.'.xlsx');
+
+        $isFilter = 0;
+
+        if(sizeof($query_filter_params)){
+            $isFilter = 1;
+        }
+
+        $alldatas = self::getAllData();
+
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+
+        $data = ['isFilter' => $isFilter,
+                 'datas' => $result,
+                ];
+
+        return $data;
+      
+    }
+
+    public function filteredData($query, $params){
+        $filters = $params['filters'];
+
+        if($filters){
+            foreach ($filters as $filter) {
+                $query->{$filter['method']}(...$filter['params']);
+            }
+        }
+        
+        return $query;
+    }
+
+
+    public function getAllData(){
+        $query = DB::table('users')
+        ->leftJoin('companies', 'companies.id', 'users.company_id')
+        ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
+        ->select([
+            'users.id',
+            'users.employee_id',
+            'users.first_name',
+            'users.middle_name',
+            'users.last_name',
+            'users.email',
+            'companies.company_name as company',
+            'hire_location.location_name as hire_location',
+            'users.hire_date',
+            'users.position',
+            'users.status',
+            'users.image',
+            'users.created_at'
+        ]);
+        return $query;
     }
 
     public function generateFilterParams($request) {
@@ -164,7 +143,16 @@ class EmployeeAccountsContent extends Component
         $hire_locations = array_filter((array)$request['hire_location_id'] ?: []);
         $datefrom = array_filter((array)$request['date_from'] ?: []);
         $dateto = array_filter((array)$request['date_to'] ?: []);
+        $status = array_filter((array)$request['status'], function($value) {
+            return $value !== null && $value !== "";
+        });
 
+        if (sizeof($status)) {
+            $query_filter_params[] = [
+                'method' => 'where',
+                'params' => ['users.status', $status]
+            ];
+        }
         if (sizeof($company)) {
             $query_filter_params[] = [
                 'method' => 'whereIn',
@@ -189,7 +177,89 @@ class EmployeeAccountsContent extends Component
                 'params' => ['hire_date', [$datefrom,$dateto]]
             ];
         }
+       
         return $query_filter_params;
+    }
+
+
+ 
+    //EXPORT FILTER
+    public function openFilterExportModal(){
+        $this->isFilterExportModalOpen = true;
+    }
+
+    public function closeFilterExportModal(){
+        $this->isFilterExportModalOpen = false;
+    }
+
+    public function export(){
+    
+        $filename = $this->filename;
+        $requestFilters = $this->all();
+        $query_filter_params = self::generateFilterParams($requestFilters);
+        $filter_params = [
+            'filters' => $query_filter_params
+        ];
+        $isFilter = 0;
+        if(sizeof($query_filter_params)){
+            $isFilter = 1;
+        }
+        $alldatas = self::getAllData();
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir);
+        return Excel::download(new EmployeesExport($result), $filename.'.xlsx');
+    }
+
+  
+    // FOR BULK ACTIONS MODAL
+
+    public function setToActive(){
+
+        User::whereIn('id', $this->userIds)->update(['status' => 1]);
+        $this->selectedAll = false;
+        $this->userIds = [];
+
+        // dd($this->userIds);
+        
+    }
+    public function setToInactive(){
+        User::whereIn('id', $this->userIds)->update(['status' => 0]);
+        $this->selectedAll = false;
+        $this->userIds = [];
+
+        // dd($this->userIds);
+
+    }
+
+    public function setSortBy($fieldName){
+        if($this->sortBy === $fieldName) {
+            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
+            return;
+        }
+
+        $this->sortBy = $fieldName;
+        $this->sortDir = "DESC";
+    }
+
+    public function updatedSelectedAll()
+    {
+        if (!$this->selectedAll) {
+            $this->userIds = []; // Deselect all user IDs
+        } 
+    }
+
+    public function updatedPage()
+    {
+        $this->selectedAll = false;
+        $this->userIds = [];
+    }
+
+    public function updatedSearch(){
+        $this->resetPage();
+    }
+
+    public function resetUserIds($users)
+    {
+        $this->userIds = [];
     }
 
   
@@ -197,7 +267,43 @@ class EmployeeAccountsContent extends Component
     {
 
         $data = [];
-        $data['users'] =  User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+
+        if($this->search){
+        $data['users'] =  User::search($this->search)
+        ->leftJoin('companies', 'companies.id', 'users.company_id')
+        ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
+        ->select([
+            'users.id',
+            'users.employee_id',
+            'users.first_name',
+            'users.middle_name',
+            'users.last_name',
+            'users.email',
+            'companies.company_name as company',
+            'hire_location.location_name as hire_location',
+            'users.hire_date',
+            'users.position',
+            'users.status',
+            'users.image',
+            'users.created_at'
+            ])
+        ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+
+        } else{
+            $filterData = self::filterData();
+
+            if($filterData['isFilter'] == 0){
+                $data['users'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+            }else{
+                $data['isFilter'] = $filterData['isFilter'];
+                $data['users'] =  $filterData['datas'];
+            }
+        }
+
+
+    
+
+        // $data['users'] =  User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
         $data['companies'] = Companies::get();
         $data['locations'] = Location::get();
         $data['positions'] = Position::get();

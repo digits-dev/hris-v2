@@ -46,10 +46,7 @@ class User extends Authenticatable
 
         return $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE '%$cleanVal%'")
                      ->orWhere('employee_id', 'like', "%$cleanVal%")
-                     ->orWhere('email', 'like', "%$cleanVal%")
-                     ->orWhere('hire_location_id', 'like', "%$cleanVal%")
-                     ->orWhere('company_id', 'like', "%$cleanVal%");
-
+                     ->orWhere('email', 'like', "%$cleanVal%");
     }
 
     public function scopeGetData($query){
