@@ -457,15 +457,21 @@
         }
 
 
+        .modal-container{
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+
+        }
+
         /* Modal Style  */
         .modal-backdrop {
-            position: fixed;
+            /* position: fixed;
             top: 0;
-            left: 0;
+            left: 0; */
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
         }
 
         .modal-content {
@@ -694,46 +700,44 @@
 
                 <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
             </div>
+
             <button class="primary-btn" wire:click="openFilterModal()">Filters</button>
+
 
         </div>
 
-        <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false }">
+        <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
             <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
 
-            <button @click="isBulkOpen=!isBulkOpen" @click.outside="isBulkOpen=false" class="secondary-btn">Bulk
+            <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
                 Actions</button>
+
             <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
-                <button class="bulk-content" wire:click="openModal('active')">
+
+                <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
                     <i class="fa-solid fa-user-check mx-2"></i>
                     <p>Set to Active </p>
                 </button>
 
-                <button class="bulk-content" wire:click="openModal('inactive')">
+                <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
                     <i class="fa-solid fa-user-xmark mx-2"></i>
                     <p>Set to Inactive </p>
                 </button>
             </div>
            
-            <button class="primary-btn" wire:click="openFilterExportModal()">Export</button>
-        </div>
-    </div>
+            {{-- BULK ACTIONS MODAL --}}
+            <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
 
-
-    {{-- BULK ACTIONS MODAL --}}
-
-    <div>
-
-        @if ($isModalOpen)
-            <div>
                 <!-- Modal backdrop -->
-                <div class="modal-backdrop" wire:click="closeModal"></div>
+                <div class="modal-backdrop" x-on:click="openBulkModal = false">
+                </div>
 
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
 
                     </div>
+
                     <div class="modal-body">
                         <!-- Modal content goes here -->
                         <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]" aria-hidden="true"
@@ -741,20 +745,22 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <p>Are you sure that you want to set the selected @if (count($userIds) > 1)
-                                users
-                            @else
-                                user
-                            @endif to {{ $setTo }}?</p>
+                        <p>Are you sure that you want to set the selected user to <span x-text="status"></span>?</p>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" class="primary-btn" wire:click="{{ $statusFnc }}">Confirm</button>
-                        <button type="button" class="secondary-btn" wire:click="closeModal">Cancel</button>
-                        <!-- Additional buttons or actions -->
+                        <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
+                        <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
                     </div>
                 </div>
+
             </div>
-        @endif
+
+            {{-- Export Btn  --}}
+            <button class="primary-btn" wire:click="openFilterExportModal()">Export</button>
+
+        
+        </div>
     </div>
 
 

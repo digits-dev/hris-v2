@@ -38,13 +38,7 @@ class EmployeeAccountsContent extends Component
 
     public $selectedAll = false;
 
-    public $isModalOpen = false;
-
     public $isFilterModalOpen = false;
-
-    public $setTo = '';
-
-    public $statusFnc = '';
 
     //Export
     public $isFilterExportModalOpen = false;
@@ -93,7 +87,6 @@ class EmployeeAccountsContent extends Component
     public function setToActive(){
 
         User::whereIn('id', $this->userIds)->update(['status' => 1]);
-        $this->isModalOpen = false;
         $this->selectedAll = false;
         $this->userIds = [];
 
@@ -102,32 +95,11 @@ class EmployeeAccountsContent extends Component
     }
     public function setToInactive(){
         User::whereIn('id', $this->userIds)->update(['status' => 0]);
-        $this->isModalOpen = false;
         $this->selectedAll = false;
         $this->userIds = [];
 
         // dd($this->userIds);
 
-    }
-
-
-    public function openModal($status)
-    {
-        if($status == 'active'){
-            $this->setTo = 'active';
-            $this->statusFnc = 'setToActive';
-        } else {
-            $this->setTo = 'inactive';    
-            $this->statusFnc = 'setToInactive';
-
-        }
-
-        $this->isModalOpen = true;
-    }
-
-    public function closeModal()
-    {
-        $this->isModalOpen = false;
     }
 
     
