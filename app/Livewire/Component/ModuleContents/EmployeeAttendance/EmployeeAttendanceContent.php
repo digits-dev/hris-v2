@@ -14,7 +14,7 @@ use App\Exports\EmployeeAttendanceSummary;
 class EmployeeAttendanceContent extends Component{
 
     use WithPagination;
-
+    public $isFilterExportModalOpen = false;
     // #[Url(history:true)]
     public $sortBy = "date_clocked_in";
     // #[Url(history:true)]
@@ -31,8 +31,8 @@ class EmployeeAttendanceContent extends Component{
     public $date_from;
     public $date_to;
     public $isFilter = false;
-    public $isFilterExportModalOpen = false;
     public $filename;
+    protected $listeners = ['toggleFilterExportModal', 'toggleFilterModal'];
 
     public function mount(){
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
@@ -50,20 +50,20 @@ class EmployeeAttendanceContent extends Component{
     // FOR FILTER MODAL
 
     public function openFilterModal(){
-        $this->isFilterModalOpen = true;
+        $this->emit('toggleFilterModal', true);
     }
 
     public function closeFilterModal(){
-        $this->isFilterModalOpen = false;
+        $this->emit('toggleFilterModal', false);
     }
 
      //EXPORT FILTER
      public function openFilterExportModal(){
-        $this->isFilterExportModalOpen = true;
+        $this->emit('toggleFilterExportModal', true);
     }
 
     public function closeFilterExportModal(){
-        $this->isFilterExportModalOpen = false;
+        $this->emit('toggleFilterExportModal', false);
     }
     
     public function index(){
@@ -79,10 +79,11 @@ class EmployeeAttendanceContent extends Component{
         $requestFilters = $this->all();
         $query_filter_params = self::generateFilterParams($requestFilters);
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
         ];
         $isFilter = 0;
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
         $alldatas = self::getAllData();
@@ -92,6 +93,10 @@ class EmployeeAttendanceContent extends Component{
                 ];
         return $data;
       
+    }
+
+    public function updatedSearch(){
+        self::filterData();
     }
 
     public function generateFilterParams($request) {
@@ -156,9 +161,18 @@ class EmployeeAttendanceContent extends Component{
 
     public function filteredData($query, $params){
         $filters = $params['filters'];
+        $search =  $params['search'] ?? '';
 
         foreach ($filters as $filter) {
             $query->{$filter['method']}(...$filter['params']);
+        }
+
+        if ($search)  {
+            $search_filter = "
+                users.first_name LIKE '%$search%' OR
+                users.last_name LIKE '%$search%'
+            ";
+            $query->whereRaw("($search_filter)");
         }
         
         return $query;
@@ -169,10 +183,11 @@ class EmployeeAttendanceContent extends Component{
         $requestFilters = $this->all();
         $query_filter_params = self::generateFilterParams($requestFilters);
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
         ];
         $isFilter = 0;
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
         $alldatas = self::getAllData();
@@ -183,6 +198,7 @@ class EmployeeAttendanceContent extends Component{
     public function render(){
         $data = [];
         $filterData = self::filterData();
+  
         if($filterData['isFilter'] == 0){
             $data['employeeLogs'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
         }else{

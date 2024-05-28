@@ -23,19 +23,22 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
                     'Employee ID',
                     'First Name',
                     'Last Name',
-                    'Company'
+                    'Company',
+                    'Hire Location',
+                    'Time in Location/s'
                     ];
         return $headers;
 
     }
 
     public function map($item): array {
-
+       $timeInLocations = 
        $employees = [
                     $item->employee_id,
                     $item->first_name,
                     $item->last_name,
-                    $item->company
+                    $item->company,
+                    $item->hire_location,
                     ];
        
         return $employees;
