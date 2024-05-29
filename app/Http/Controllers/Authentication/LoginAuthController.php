@@ -34,6 +34,7 @@ class LoginAuthController extends Controller
         }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            Session::put('admin_id', $users->id);
             Session::put('admin_is_superadmin', $session_details['priv']->is_superadmin);
             Session::put("admin_privileges", $session_details['priv']->id);
             Session::put('admin_privileges_roles', $session_details['roles']);

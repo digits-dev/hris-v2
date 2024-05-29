@@ -68,6 +68,10 @@ class CommonHelpers {
         return Session::get('admin_is_superadmin');
     }
 
+    public static function myId(){
+        return Session::get('admin_id');
+    }
+
     public static function myPrivilegeId()
     {
         return Session::get('admin_privileges');

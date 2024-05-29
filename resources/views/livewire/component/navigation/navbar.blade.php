@@ -23,9 +23,14 @@
             <img src="{{asset('images/navigation/user.png')}}" class="profile-info-image">
             <p>{{auth()->user()->full_name}}</p>
         </div>
-        <a href="" class="logout-content">
+        <a href="{{route('profile')}}" class="logout-content">
             <i class="fa-regular fa-user mx-2"></i>
             <p>Profile</p>
+        </a>
+
+        <a href="{{route('change-password')}}" class="logout-content">
+            <i class="fa-solid fa-lock mx-2"></i>
+            <p>Change Password</p>
         </a>
 
         <div class="footer-info">

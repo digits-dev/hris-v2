@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use DB;
 use App\Models\User;
 
@@ -44,6 +45,37 @@ use App\Models\User;
             $data['privileges'] = DB::table('ad_privileges')->select('*')->get();
             $data['companies'] = DB::table('companies')->select('*')->where('status','ACTIVE')->get();
             return $data;
+        }
+
+        public function getChangePasswordView(){
+            $data = [];
+            $data['page_title'] = "Change Password";
+            return view('admin/users/change-password', $data);
+        }
+
+        public function postUpdatePassword(Request $request){
+            $user = User::find(CommonHelpers::myId());
+            if (Hash::check($request->all()['current_password'], $user->password)){
+          
+                $request->validate([
+                    'new_password' => 'required',
+                    'confirmation_password' => 'required|same:new_password'
+                ]);
+          
+                $user->password = Hash::make($request->get('new_password'));
+                $user->save();
+  
+                return CommonHelpers::redirect(url('/change-password'), "Password Updated, You Will Be Logged-Out.", "success");
+                
+            } else {
+                return CommonHelpers::redirect(url('/change-password'), "Incorrect Current Password.", "danger");
+            }
+        }
+
+        public function getProfileUser(){
+            $data = [];
+            $data['page_title'] = "Profile";
+            return view('admin/users/profile', $data);
         }
     }
 

@@ -15,5 +15,11 @@
             </div>
             @endif
         @endif
+        @if ($errors->has('new_password'))
+            <span style="color: red; display:block;">{{ $errors->first('new_password') }}</span>
+        @endif
+        @if ($errors->has('confirmation_password'))
+            <span style="color: red; display:block;">{{ $errors->first('confirmation_password') }}</span>
+        @endif
     </div>
 </div>

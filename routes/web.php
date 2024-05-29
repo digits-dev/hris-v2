@@ -20,6 +20,7 @@ use App\Livewire\Component\ModuleContents\EmployeeAttendance\Show as ShowEmploye
 use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,7 @@ Route::group(['middleware' => ['web']], function() {
     Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
     Route::get('employee-accounts/{userId}', [ShowEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
     Route::get('employee-accounts/{userId}/edit', [EditEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.edit');
+    //Employee changes password
 
     // Employee Attendance Summary
     Route::get('employee-attendance/{employeeId?}/{date}', [ShowEmployeeAttendance::class, 'index'])->middleware('auth')->name('employee-attendance.show');
@@ -63,6 +65,10 @@ Route::group(['middleware' => ['web']], function() {
     Route::post(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save/{id}', [PrivilegesController::class, 'postEditSave'])->middleware('auth')->name('edit-privilege-save');
     //USERS MANAGEMENT
     Route::get(config('ad_url.ADMIN_PATH').'/users/add-user', [AdminUsersController::class, 'getAddUser'])->middleware('auth')->name('add-user');
+    Route::get('change-password', [AdminUsersController::class, 'getChangePasswordView'])->middleware('auth')->name('change-password');
+    Route::post('change-password', [AdminUsersController::class, 'postUpdatePassword'])->name('update_password');
+    Route::get('profile', [AdminUsersController::class, 'getProfileUser'])->name('profile');
+
     //MODULES
     Route::get(config('ad_url.ADMIN_PATH').'/module_generator/create-modules', [ModulsController::class, 'getAddModuls'])->middleware('auth')->name('add-modules');
     Route::post(config('ad_url.ADMIN_PATH').'/module_generator/save-module', [ModulsController::class, 'postAddSave'])->middleware('auth')->name('save-module');
