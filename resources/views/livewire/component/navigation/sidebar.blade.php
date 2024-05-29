@@ -67,12 +67,14 @@
                 }); 
             }}"
             x-init="console.log(menus)">
+           
           <template x-for="(menu, index) in menus">
+     
             {{-- PARENT --}}
               <div class="navigation-div">
-                <a id="dropdown-title" :href="menu.children ? '#' : menu.url" @click="closeOtherDropdowns(index); menu.myDropdown = !menu.myDropdown; console.log(menu);" >
+                <a id="dropdown-title" :href="menu.children ? '#' : menu.url" @click="closeOtherDropdowns(index); menu.myDropdown = !menu.myDropdown;" >
                   <div class="nav-parent mb-1 mt-1" :class="menu.slug == '{{ Request::segment(1) }}' ? 'active' : ''" >
-                    <img :src="`${menu.icon}`" class="nav-icon" >
+                    <img :src="'{{ Request::segment(1) }}' == 'admin' ? getIconPath(menu.icon) : `${menu.icon}`" class="nav-icon" console.log(menu.slug);>
                     <p class="nav-name" x-text="menu.name"></p>
                     <img x-show="menu.children" :src="menu.myDropdown ? '{{ asset('images/navigation/nav-up.png') }}' : '{{ asset('images/navigation/nav-down.png') }}'" 
                     class='menu-child-arrow-icon'>
@@ -97,7 +99,7 @@
                               }"
                     
                         >
-                        <img :src="`${children.icon}`" class="child-nav-icon" x-init="console.log(children.icon)" >
+                        <img :src="'{{ Request::segment(1) }}' == 'admin' ? getIconPath(children.icon) : `${children.icon}`" class="child-nav-icon" x-init="console.log(children.icon)" >
                         <p x-text="children.name" class="child-nav-name">children names</p>
                         </a>
                       </template>
@@ -109,31 +111,32 @@
           {{-- IS ADMIN --}}
           @if(App\Helpers\CommonHelpers::isSuperadmin())
           <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold pt-2">Admin</span></li>
-            <li class="{{ Request::segment(1) == 'privileges' ? 'active' : '' }}">
+            <li class="{{ Request::segment(2) == 'privileges' ? 'active' : '' }}">
               <a href="{{ route('PrivilegesControllerGetIndex') }}">
                 <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">{{trans('ad_default.Privileges')}}</span>
               </a>
             </li>
-            <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
+            <li class="{{ Request::segment(2) == 'users' ? 'active' : '' }}">
               <a href="{{ route('AdminUsersControllerGetIndex') }}">
                 <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">{{trans('ad_default.Users_Management')}}</span>
               </a>
             </li>
-            <li class="{{ Request::segment(1) == 'module_generator' ? 'active' : '' }}">
+            <li class="{{ Request::segment(2) == 'module_generator' ? 'active' : '' }}">
               <a href="{{ route('ModulsControllerGetIndex') }}">
                 <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
               </a>
             </li>
-            <li class="{{ Request::segment(1) == 'menu_management' ? 'active' : '' }}">
+            <li class="{{ Request::segment(2) == 'menu_management' ? 'active' : '' }}">
               <a href="{{ route('MenusControllerGetIndex') }}">
                 <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">{{trans('ad_default.Menu_Management')}}</span>
               </a>
             </li>
             <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
+    
               <a href="{{ route('log-user-access') }}">
                 <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">Log User Access</span>
@@ -154,5 +157,10 @@
       selected: '',
       parentDropdown: [],
     }
+  }
+  function getIconPath(icon) {
+    // Adjust the path based on your needs
+    const baseUrl = '{{ asset('') }}';
+    return `${baseUrl}${icon}`;
   }
 </script>

@@ -157,7 +157,7 @@ class AdModules extends Seeder
                 'path' => 'employee-accounts',
                 'table_name' => 'employees',
                 'controller' => 'EmployeeAccounts\EmployeeAccountsContent',
-                'is_protected' => 1,
+                'is_protected' => 0,
                 'is_active' => 1,
             ],
             [
@@ -168,7 +168,7 @@ class AdModules extends Seeder
                 'path' => 'employee-logs',
                 'table_name' => 'employee_logs',
                 'controller' => 'EmployeeLogs\EmployeeLogsContent',
-                'is_protected' => 1,
+                'is_protected' => 0,
                 'is_active' => 1,
             ],
             [
@@ -179,7 +179,7 @@ class AdModules extends Seeder
                 'path' => 'employee-attendance',
                 'table_name' => 'employees_attendance',
                 'controller' => 'EmployeeAttendance\EmployeeAttendanceContent',
-                'is_protected' => 1,
+                'is_protected' => 0,
                 'is_active' => 1,
             ],
         ];

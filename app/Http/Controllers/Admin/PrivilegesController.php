@@ -150,7 +150,7 @@ class PrivilegesController extends Controller{
             $roles = DB::table('ad_privileges_roles')->where('id_ad_privileges', CommonHelpers::myPrivilegeId())->join('ad_modules', 'ad_modules.id', '=', 'id_ad_modules')->select('ad_modules.name', 'ad_modules.path', 'is_visible', 'is_create', 'is_read', 'is_edit', 'is_delete')->get();
             Session::put('admin_privileges_roles', $roles);
 
-            Session::put('theme_color', $this->arr['theme_color']);
+            Session::put('theme_color', $request->theme_color);
         }
 
         CommonHelpers::redirect(CommonHelpers::mainpath(), "Data updated!", [

@@ -692,8 +692,7 @@
         <div class="header__left-container">
             <div class="search-form">
                 <label for="search-input" class="search-form__label ">Search</label>
-                <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input "
-                    placeholder="Search User" id="search-input">
+                <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input" placeholder="Search User" id="search-input">
             </div>
             <div class="custom-select">
                 <select wire:model.live="perPage" id="per-page">
@@ -703,16 +702,11 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
-
                 <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
             </div>
 
             <div x-data="{openFilterModal: false}">
-
-       
                 <button class="primary-btn" x-on:click="openFilterModal = true">Filters</button>
-
-
                 {{-- FILTER MODAL --}}
                 <div x-show="openFilterModal" x-cloak  x-transition class="modal-container" >
 
@@ -808,77 +802,63 @@
                     </div>
 
                 </div>
-
-
             </div>
-
-
         </div>
 
         <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
-            <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
+            @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
+                <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
+                <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
+                    Actions</button>
 
-            <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
-                Actions</button>
+                <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
+                    <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
+                        <i class="fa-solid fa-user-check mx-2"></i>
+                        <p>Set to Active </p>
+                    </button>
 
-            <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
-
-                <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
-                    <i class="fa-solid fa-user-check mx-2"></i>
-                    <p>Set to Active </p>
-                </button>
-
-                <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
-                    <i class="fa-solid fa-user-xmark mx-2"></i>
-                    <p>Set to Inactive </p>
-                </button>
-            </div>
-           
-            {{-- BULK ACTIONS MODAL --}}
-            <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
-
-                <!-- Modal backdrop -->
-                <div class="modal-backdrop" x-on:click="openBulkModal = false">
+                    <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
+                        <i class="fa-solid fa-user-xmark mx-2"></i>
+                        <p>Set to Inactive </p>
+                    </button>
                 </div>
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-
+            
+                {{-- BULK ACTIONS MODAL --}}
+                <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
+                    <!-- Modal backdrop -->
+                    <div class="modal-backdrop" x-on:click="openBulkModal = false">
                     </div>
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body">
+                            <!-- Modal content goes here -->
+                            <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <p>Are you sure that you want to set the selected user to <span x-text="status"></span>?</p>
+                        </div>
 
-                    <div class="modal-body">
-                        <!-- Modal content goes here -->
-                        <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <p>Are you sure that you want to set the selected user to <span x-text="status"></span>?</p>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
-                        <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
+                        <div class="modal-footer">
+                            <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
+                            <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            @endif
 
 
             <div x-data="{openExportModal:false}">
-
                 {{-- Export Btn  --}}
                 <button class="primary-btn" x-on:click="openExportModal = true">Export</button>
-
-
                 {{-- EXPORT MODAL --}}
                 <div x-show="openExportModal" x-cloak  x-transition class="modal-container" >
-
                     <!-- Modal backdrop -->
                     <div class="modal-backdrop" x-on:click="openExportModal = false">
                     </div>
-
                     <!-- Modal content -->
                     <div class="filter-modal-content">
                         <div class="filter-modal-header">
@@ -905,9 +885,6 @@
                     </div>
                 </div>
             </div>
-         
-
-        
         </div>
     </div>
 
@@ -1013,13 +990,16 @@
                                     @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
                             <td>
-                                <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee.show', $user->id) }}"
-                                        class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
-                                    <a role="button" href="{{ route('employee.edit', $user->id) }}"
-                                        class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
-                                </div>
-
+                             
+                                    <div class="tbl-btns">
+                                        <a role="button" href="{{ route('employee.show', $user->id) }}"
+                                            class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
+                                            @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
+                                             <a role="button" href="{{ route('employee.edit', $user->id) }}"
+                                                class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
+                                            @endif
+                                    </div>
+                              
                             </td>
                         </tr>
                     @endforeach
