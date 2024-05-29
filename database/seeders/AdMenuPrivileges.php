@@ -32,7 +32,31 @@ class AdMenuPrivileges extends Seeder
             [
                 'id_ad_menus' => 3,
                 'id_ad_privileges' => 2
-            ]
+            ],
+            [
+                'id_ad_menus' => 4,
+                'id_ad_privileges' => 1
+            ],
+            [
+                'id_ad_menus' => 5,
+                'id_ad_privileges' => 1
+            ],
+            [
+                'id_ad_menus' => 6,
+                'id_ad_privileges' => 1
+            ],
+            [
+                'id_ad_menus' => 7,
+                'id_ad_privileges' => 1
+            ],
+            [
+                'id_ad_menus' => 8,
+                'id_ad_privileges' => 1
+            ],
+            [
+                'id_ad_menus' => 9,
+                'id_ad_privileges' => 1
+            ],
         ];
         DB::table('ad_menus_privileges')->insert($data);
 
