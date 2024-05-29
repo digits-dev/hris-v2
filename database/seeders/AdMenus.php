@@ -88,11 +88,11 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_accounts',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/user-accounts-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 4
+                'sorting'           => 1
             ]
         );
 
@@ -107,11 +107,11 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_attendance',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/employee-attendance-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 5
+                'sorting'           => 2
             ]
         );
 
@@ -126,13 +126,72 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_logs',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/employee-logs-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 6
+                'sorting'           => 3
             ]
         );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Company',
+            ],
+            [
+                'name'              => 'Company',
+                'type'              => 'Route',
+                'path'              => 'CompanyController\CompanyControllerContentGetIndex',
+                'slug'              => 'companies',
+                'color'             => NULL,
+                'icon'              => 'images/navigation/company-icon.png',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 1
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Location',
+            ],
+            [
+                'name'              => 'Location',
+                'type'              => 'Route',
+                'path'              => 'LocationController\LocationControllerContentGetIndex',
+                'slug'              => 'locations',
+                'color'             => NULL,
+                'icon'              => 'images/navigation/location-icon.png',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 2
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Position',
+            ],
+            [
+                'name'              => 'Position',
+                'type'              => 'Route',
+                'path'              => 'PositionController\PositionControllerContentGetIndex',
+                'slug'              => 'positions',
+                'color'             => NULL,
+                'icon'              => 'images/navigation/position-icon.png',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 3
+            ]
+        );
+
+ 
     }
 
 }
