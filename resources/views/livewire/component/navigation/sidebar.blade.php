@@ -57,7 +57,7 @@
             </li>
           @endif
 
-        <div 
+          <div 
             x-data="{ menus: $wire.menus.map(menu => ({ ...menu, myDropdown: false, maxHeight: 0})), 
             closeOtherDropdowns(index) { 
                 this.menus.forEach((menu, i) => { 
@@ -66,8 +66,7 @@
                     } 
                 }); 
             }}"
-            x-init="console.log(menus)"
-        >
+            x-init="console.log(menus)">
           <template x-for="(menu, index) in menus">
             {{-- PARENT --}}
               <div class="navigation-div">
@@ -106,43 +105,41 @@
                 </template>
               </div>
           </template>
-      </div>
-
-         
-        {{-- IS ADMIN --}}
-        @if(App\Helpers\CommonHelpers::isSuperadmin())
-        <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold pt-2">Admin</span></li>
-          <li class="{{ Request::segment(2) == 'privilege' ? 'active' : '' }}">
-            <a href="{{ route('PrivilegesControllerGetIndex') }}">
-              <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">{{trans('ad_default.Privileges')}}</span>
-            </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
-            <a href="{{ route('AdminUsersControllerGetIndex') }}" wire:navigate>
-              <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">{{trans('ad_default.Users_Management')}}</span>
-            </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
-            <a href="{{ route('ModulsControllerGetIndex') }}" wire:navigate>
-              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
-            </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
-            <a href="{{ route('MenusControllerGetIndex') }}" wire:navigate>
-              <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">{{trans('ad_default.Menu_Management')}}</span>
-            </a>
-          </li>
-          <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
-            <a href="{{ route('log-user-access') }}" wire:navigate>
-              <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
-              <span class="menu-name">Log User Access</span>
-            </a>
-          </li>
-          @endif
+     
+          {{-- IS ADMIN --}}
+          @if(App\Helpers\CommonHelpers::isSuperadmin())
+          <li class="!pl-2 pr-0 hover:!bg-transparent"><span class="font-bold pt-2">Admin</span></li>
+            <li class="{{ Request::segment(1) == 'privileges' ? 'active' : '' }}">
+              <a href="{{ route('PrivilegesControllerGetIndex') }}">
+                <img src="{{asset('images/navigation/key-icon.png')}}" class="nav-icon" />
+                <span class="menu-name">{{trans('ad_default.Privileges')}}</span>
+              </a>
+            </li>
+            <li class="{{ Request::segment(1) == 'users' ? 'active' : '' }}">
+              <a href="{{ route('AdminUsersControllerGetIndex') }}">
+                <img src="{{asset('images/navigation/user-accounts-icon.png')}}" class="nav-icon" />
+                <span class="menu-name">{{trans('ad_default.Users_Management')}}</span>
+              </a>
+            </li>
+            <li class="{{ Request::segment(1) == 'module_generator' ? 'active' : '' }}">
+              <a href="{{ route('ModulsControllerGetIndex') }}">
+                <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+                <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
+              </a>
+            </li>
+            <li class="{{ Request::segment(1) == 'menu_management' ? 'active' : '' }}">
+              <a href="{{ route('MenusControllerGetIndex') }}">
+                <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+                <span class="menu-name">{{trans('ad_default.Menu_Management')}}</span>
+              </a>
+            </li>
+            <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
+              <a href="{{ route('log-user-access') }}">
+                <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
+                <span class="menu-name">Log User Access</span>
+              </a>
+            </li>
+            @endif
         </ul>
       </div>
 
