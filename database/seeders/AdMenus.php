@@ -88,11 +88,11 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_accounts',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/user-accounts-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 4
+                'sorting'           => 1
             ]
         );
 
@@ -107,11 +107,11 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_attendance',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/employee-attendance-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 5
+                'sorting'           => 2
             ]
         );
 
@@ -126,11 +126,11 @@ class AdMenus extends Seeder
                 'slug'              => 'employee_logs',
                 'color'             => NULL,
                 'icon'              => 'images/navigation/employee-logs-icon.png',
-                'parent_id'         => 0,
+                'parent_id'         => 1,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 6
+                'sorting'           => 3
             ]
         );
 
@@ -144,7 +144,7 @@ class AdMenus extends Seeder
                 'path'              => 'CompanyController\CompanyControllerContentGetIndex',
                 'slug'              => 'companies',
                 'color'             => NULL,
-                'icon'              => 'fa-solid',
+                'icon'              => 'images/navigation/company-icon.png',
                 'parent_id'         => 2,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
@@ -163,7 +163,7 @@ class AdMenus extends Seeder
                 'path'              => 'LocationController\LocationControllerContentGetIndex',
                 'slug'              => 'locations',
                 'color'             => NULL,
-                'icon'              => 'fa-solid',
+                'icon'              => 'images/navigation/location-icon.png',
                 'parent_id'         => 2,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
@@ -182,7 +182,7 @@ class AdMenus extends Seeder
                 'path'              => 'PositionController\PositionControllerContentGetIndex',
                 'slug'              => 'positions',
                 'color'             => NULL,
-                'icon'              => 'fa-solid',
+                'icon'              => 'images/navigation/position-icon.png',
                 'parent_id'         => 2,
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
