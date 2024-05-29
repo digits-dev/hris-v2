@@ -68,9 +68,13 @@ class EmployeeLogsContent extends Component
     }
 
     
+    // FOR FILTER MODAL
 
     
-    // FOR FILTER MODAL
+    public function updatedSearch(){
+        self::filterData();
+        $this->resetPage();
+    }
 
     public function filterData(){
         $data = [];
@@ -79,12 +83,13 @@ class EmployeeLogsContent extends Component
         $query_filter_params = self::generateFilterParams($requestFilters);
 
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
         ];
 
         $isFilter = 0;
 
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
 
@@ -102,12 +107,20 @@ class EmployeeLogsContent extends Component
 
     public function filteredData($query, $params){
         $filters = $params['filters'];
+        $search =  $params['search'] ?? '';
+
 
         if($filters){
             foreach ($filters as $filter) {
                 $query->{$filter['method']}(...$filter['params']);
             }
         }
+
+        if ($search)  {
+            $cleanVal = trim($search);
+            $query->whereRaw("CONCAT(users.first_name, ' ', users.middle_name, ' ', users.last_name) LIKE '%$cleanVal%'");
+        }
+        
         
         return $query;
     }
@@ -172,10 +185,12 @@ class EmployeeLogsContent extends Component
         $requestFilters = $this->all();
         $query_filter_params = self::generateFilterParams($requestFilters);
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
+
         ];
         $isFilter = 0;
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
         $alldatas = self::getAllData();
@@ -186,35 +201,17 @@ class EmployeeLogsContent extends Component
 
     public function render()
     {
+   
         $data = [];
-     
-        if($this->search){
-            $data['users'] =  User::search($this->search)
-            ->leftJoin('employee_logs as logs', 'users.employee_id', 'logs.employee_id')
-            ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
-            ->leftJoin('locations as current_location', 'current_location.id', 'logs.clock_in_terminal_id')
-            ->select([
-                'users.first_name',
-                'users.middle_name',
-                'users.last_name',
-                'hire_location.location_name as hire_location',
-                'current_location.location_name as current_location',
-                'logs.date_clocked_in',
-                'logs.date_clocked_out',
-                'logs.created_at'
-                ])
-            ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
-    
-            } else{
-                $filterData = self::filterData();
 
-                if($filterData['isFilter'] == 0){
-                    $data['employeeLogs'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
-                }else{
-                    $data['isFilter'] = $filterData['isFilter'];
-                    $data['employeeLogs'] =  $filterData['datas'];
-                }
-            }
+        $filterData = self::filterData();
+
+        if($filterData['isFilter'] == 0){
+            $data['employeeLogs'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        }else{
+            $data['isFilter'] = $filterData['isFilter'];
+            $data['employeeLogs'] =  $filterData['datas'];
+        }
 
 
         $data['locations'] = Location::get();

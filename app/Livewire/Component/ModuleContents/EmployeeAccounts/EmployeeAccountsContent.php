@@ -11,11 +11,7 @@ use App\Models\Companies;
 use App\Models\Location;
 use App\Models\Position;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\HeadingRowImport;
-use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\EmployeeLog;
 use App\Exports\EmployeesExport;
 
 class EmployeeAccountsContent extends Component
@@ -72,6 +68,12 @@ class EmployeeAccountsContent extends Component
 
     // FOR FILTER MODAL
 
+    public function updatedSearch(){
+        self::filterData();
+        $this->resetPage();
+
+    }
+
     public function filterData(){
         $data = [];
         $requestFilters = $this->all();
@@ -79,12 +81,13 @@ class EmployeeAccountsContent extends Component
         $query_filter_params = self::generateFilterParams($requestFilters);
 
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
         ];
 
         $isFilter = 0;
 
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
 
@@ -100,13 +103,20 @@ class EmployeeAccountsContent extends Component
       
     }
 
+
     public function filteredData($query, $params){
         $filters = $params['filters'];
+        $search =  $params['search'] ?? '';
 
         if($filters){
             foreach ($filters as $filter) {
                 $query->{$filter['method']}(...$filter['params']);
             }
+        }
+
+        if ($search)  {
+            $cleanVal = trim($search);
+            $query->whereRaw("CONCAT(users.first_name, ' ', users.middle_name, ' ', users.last_name) LIKE '%$cleanVal%'");
         }
         
         return $query;
@@ -191,10 +201,11 @@ class EmployeeAccountsContent extends Component
         $requestFilters = $this->all();
         $query_filter_params = self::generateFilterParams($requestFilters);
         $filter_params = [
-            'filters' => $query_filter_params
+            'filters' => $query_filter_params,
+            'search'  => $this->search
         ];
         $isFilter = 0;
-        if(sizeof($query_filter_params)){
+        if(sizeof($query_filter_params) || $this->search){
             $isFilter = 1;
         }
         $alldatas = self::getAllData();
@@ -246,10 +257,6 @@ class EmployeeAccountsContent extends Component
         $this->userIds = [];
     }
 
-    public function updatedSearch(){
-        $this->resetPage();
-    }
-
     public function resetUserIds($users)
     {
         $this->userIds = [];
@@ -261,46 +268,19 @@ class EmployeeAccountsContent extends Component
 
         $data = [];
 
-        if($this->search){
-        $data['users'] =  User::search($this->search)
-        ->leftJoin('companies', 'companies.id', 'users.company_id')
-        ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
-        ->select([
-            'users.id',
-            'users.employee_id',
-            'users.first_name',
-            'users.middle_name',
-            'users.last_name',
-            'users.email',
-            'companies.company_name as company',
-            'hire_location.location_name as hire_location',
-            'users.hire_date',
-            'users.position',
-            'users.status',
-            'users.image',
-            'users.created_at'
-            ])
-        ->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $filterData = self::filterData();
 
-        } else{
-            $filterData = self::filterData();
-
-            if($filterData['isFilter'] == 0){
-                $data['users'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
-            }else{
-                $data['isFilter'] = $filterData['isFilter'];
-                $data['users'] =  $filterData['datas'];
-            }
+        if($filterData['isFilter'] == 0){
+            $data['users'] =  self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        }else{
+            $data['isFilter'] = $filterData['isFilter'];
+            $data['users'] =  $filterData['datas'];
         }
     
-
-        // $data['users'] =  User::search($this->search)->with(['company', 'hireLocation'])->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
         $data['companies'] = Companies::get();
         $data['locations'] = Location::get();
         $data['positions'] = Position::get();
 
-
-   
         if ($this->selectedAll) {
             $this->userIds = $data['users']->pluck('id')->toArray();
         }
