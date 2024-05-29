@@ -231,3 +231,24 @@ input[type="checkbox"]:checked::after {
 .primary-btn:hover {
     opacity: 0.9;
 }
+
+.secondary-btn {
+    background-color: white;
+    color: var(--primary-color);
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 12px;
+    border: 1px solid var(--stroke-color);
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background: var(--primary-hover);
+    opacity: 0.9;
+}
+
+.error-text {
+    color: rgb(250, 48, 48);
+}
+

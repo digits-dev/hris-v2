@@ -1,0 +1,93 @@
+<?php
+namespace App\Livewire\Component\ModuleContents\PositionController;
+use Livewire\Component;
+use App\Models\Position;
+use App\Helpers\CommonHelpers;
+use Illuminate\Support\Facades\Auth;
+
+class PositionControllerContent extends Component{
+
+    
+    public $position_id;
+    public $position_name;
+    public $status;
+
+    public function editForm($positionId) {
+        $this->position_id = $positionId;
+
+        $position = Position::findOrFail($positionId);
+
+        $this->position_name = $position->position_name;
+        $this->status = $position->status;
+    }
+
+
+    public function save(){
+        
+        if (!CommonHelpers::isCreate()) {
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
+        }
+
+        $this->validate([
+            'position_name' => 'required|unique:positions,position_name'
+        ]);
+
+        Position::create([
+            'position_name' => $this->position_name,
+            'created_by' => Auth::user()->id,
+            'updated_by' => Auth::user()->id,
+
+        ]);
+
+        $this->reset('position_name');
+
+
+        session()->flash('message', 'Created position successfully.');
+        session()->flash('message_type', 'success');
+
+        return  $this->redirect('/positions', navigate:true);
+    }
+
+    public function update(){
+        
+        if (!CommonHelpers::isUpdate()) {
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
+        }
+
+        $attribute = $this->validate([
+            'position_name' => 'required|unique:positions,position_name,'. $this->position_id,
+            'status' => 'required',
+        ]);
+
+        Position::find($this->position_id)->update([
+            'position_name' => $this->position_name,
+            'status' => $this->status,
+            'updated_by' => Auth::user()->id,
+        ]);
+
+        $this->reset('position_name', 'status');
+
+
+        session()->flash('message', 'Updated position successfully.');
+        session()->flash('message_type', 'success');
+
+        return  $this->redirect('/positions', navigate:true);
+    }
+
+
+
+    public function index(){
+        if (!CommonHelpers::isView()) {
+            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), "danger");
+        }
+        return view("modules.position-controller.position-controller");
+    }
+
+   
+    public function render(){
+        $data = [];
+        $data['positions'] = Position::get();
+
+        return view("livewire.component.module-contents.position-controller.position-controller-content", $data);
+    }
+}

@@ -16,12 +16,16 @@ class Locations extends Seeder
         $data = [
             [
                 'location_name' => 'DW MOA',
-           
+                'created_by' => 1,
+                'updated_by' => 1,
+        
             ],
             [
                 'location_name' => 'Digits Headquarters',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
 
-            ]
        
         ];
         foreach ($data as $location) {

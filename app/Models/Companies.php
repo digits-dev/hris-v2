@@ -9,6 +9,8 @@ class Companies extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function users(){
         return $this->hasMany(User::class, 'company_id', 'id');
     }

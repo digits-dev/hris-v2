@@ -11,14 +11,11 @@ use App\Http\Controllers\Admin\MenusController;
 use App\Http\Controllers\Authentication\LoginAuthController;
 use App\Livewire\Component\ModuleContents\Dashboard\DashboardContent;
 use App\Livewire\Component\ModuleContents\LogUserAccess\LogUserAccessContent;
-
-use App\Livewire\Component\ModuleContents\EmployeeAccounts\EmployeeAccountsContent;
-use App\Livewire\Component\ModuleContents\Dashboard\AdminAttendanceStatisticsComponent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Edit as EditEmployeeAccount;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Show as ShowEmployeeAccount;
 use App\Livewire\Component\ModuleContents\EmployeeAttendance\Show as ShowEmployeeAttendance;
-use App\Livewire\Component\ModuleContents\EmployeeAttendance\EmployeeAttendanceContent;
 use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmployeeAccount;
+
 
 /*
 |--------------------------------------------------------------------------

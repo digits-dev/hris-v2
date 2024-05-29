@@ -133,6 +133,65 @@ class AdMenus extends Seeder
                 'sorting'           => 6
             ]
         );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Company',
+            ],
+            [
+                'name'              => 'Company',
+                'type'              => 'Route',
+                'path'              => 'CompanyController\CompanyControllerContentGetIndex',
+                'slug'              => 'companies',
+                'color'             => NULL,
+                'icon'              => 'fa-solid',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 1
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Location',
+            ],
+            [
+                'name'              => 'Location',
+                'type'              => 'Route',
+                'path'              => 'LocationController\LocationControllerContentGetIndex',
+                'slug'              => 'locations',
+                'color'             => NULL,
+                'icon'              => 'fa-solid',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 2
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Position',
+            ],
+            [
+                'name'              => 'Position',
+                'type'              => 'Route',
+                'path'              => 'PositionController\PositionControllerContentGetIndex',
+                'slug'              => 'positions',
+                'color'             => NULL,
+                'icon'              => 'fa-solid',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 3
+            ]
+        );
+
+ 
     }
 
 }

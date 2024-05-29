@@ -182,6 +182,39 @@ class AdModules extends Seeder
                 'is_protected' => 0,
                 'is_active' => 1,
             ],
+            [
+
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => 'Company',
+                'icon' => 'fa fa-icon',
+                'path' => 'companies',
+                'table_name' => 'companies',
+                'controller' => 'CompanyController\CompanyControllerContent',
+                'is_protected' => 0,
+                'is_active' => 1,
+            ],
+            [
+
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => 'Location',
+                'icon' => 'fa fa-icon',
+                'path' => 'locations',
+                'table_name' => 'locations',
+                'controller' => 'LocationController\LocationControllerContent',
+                'is_protected' => 0,
+                'is_active' => 1,
+            ],
+            [
+
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => 'Position',
+                'icon' => 'fa fa-icon',
+                'path' => 'positions',
+                'table_name' => 'positions',
+                'controller' => 'PositionController\PositionControllerContent',
+                'is_protected' => 0,
+                'is_active' => 1,
+            ],
         ];
 
         foreach ($data as $module) {
