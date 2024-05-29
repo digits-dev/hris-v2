@@ -1,15 +1,26 @@
 <?php
 namespace App\Livewire\Component\ModuleContents\CompanyController;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Companies;
+use Livewire\Attributes\Url;
 use App\Helpers\CommonHelpers;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyControllerContent extends Component{
+
+    
+    #[Url(history:true)]
+    public $search = null; 
+
+    #[Url(as:'per-page')]
+    public $perPage = 10;
+
 
     public $company_id;
     public $company_name;
     public $status;
+
+    
 
     
 
@@ -44,7 +55,7 @@ class CompanyControllerContent extends Component{
         session()->flash('message', 'Created company successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/companies', navigate:true);
+        return  $this->redirect('/companies');
     }
 
     public function update(){
@@ -70,7 +81,7 @@ class CompanyControllerContent extends Component{
         session()->flash('message', 'Updated company successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/companies', navigate:true);
+        return  $this->redirect('/companies');
     }
 
 
@@ -86,8 +97,7 @@ class CompanyControllerContent extends Component{
 
         $data = [];
 
-        $data['companies'] = Companies::get();
-
+        $data['companies'] = Companies::search($this->search)->latest()->paginate($this->perPage);
 
         return view("livewire.component.module-contents.company-controller.company-controller-content", $data);
     }

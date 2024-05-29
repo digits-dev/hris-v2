@@ -11,4 +11,11 @@ class Position extends Model
 
     protected $guarded = [];
 
+    public function scopeSearch($query, $value){
+
+        $cleanVal = trim($value);
+
+        return $query->where('position_name', 'like', "%$cleanVal%");
+    }
+
 }

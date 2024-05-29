@@ -92,35 +92,66 @@
     @include('errors/messages')
     <div class="main-container" x-data="{  isModalOpen: false, action: null }">
 
-        <div class="flex items-center gap-2 relative ">
-            <a role="button" class="primary-btn mt-2 inline-block" x-on:click="isModalOpen = true; action = 'create';  $wire.location_name = null">Add New Location</a>
+    
+        <div class="flex justify-between">
+            <div class="flex items-center gap-2">
+                <div class="search-form">
+                    <label for="search-input" class="search-form__label ">Search</label>
+                    <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input" placeholder="Search Location Name" id="search-input">
+                </div>
+
+                <div class="custom-select">
+                    <select wire:model.live="perPage" id="per-page">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
+                </div>
+            </div>
+
+            <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.location_name = null">Add New Location</a>
+        
         </div>
 
-        <table class="table">
-            <thead>
-             <tr>
-                <th>Location Name</th>
-                <th>Status</th>
-                <th>Action</th>
-             </tr>
-            </thead>
-    
-            <tbody>
-                @foreach ($locations as $location)
-                    <tr>
-                        <td>{{ $location->location_name }}</td>
-                        <td>
-                        <span class="status"
-                            @style([$location->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
-                            {{ $location->status }}
-                        </span>
+        @if (count($locations) == 0)
 
-                           </td>
-                        <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$location->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <div class="no-data-container">
+                <p>No data available in table</p>
+            </div>
+
+        @else
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Location Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+        
+                <tbody wire:loading.class="opacity-50">
+                    @foreach ($locations as $location)
+                        <tr>
+                            <td>{{ $location->location_name }}</td>
+                            <td>
+                            <span class="status"
+                                @style([$location->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
+                                {{ $location->status }}
+                            </span>
+
+                            </td>
+                            <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$location->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        @endif
+
 
 
         {{-- FORM MODAL --}}
@@ -206,5 +237,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+        
+    <div class="pagination">
+        {{ $locations->links() }}
     </div>
 </section>

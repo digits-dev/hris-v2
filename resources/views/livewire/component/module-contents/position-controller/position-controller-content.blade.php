@@ -92,36 +92,66 @@
     @include('errors/messages')
     <div class="main-container" x-data="{  isModalOpen: false, action: null }">
 
-        <div class="flex items-center gap-2 relative ">
-            <a role="button" class="primary-btn mt-2 inline-block" x-on:click="isModalOpen = true; action = 'create';  $wire.position_name = null">Add New Position</a>
+
+        <div class="flex justify-between">
+            <div class="flex items-center gap-2">
+                <div class="search-form">
+                    <label for="search-input" class="search-form__label ">Search</label>
+                    <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input" placeholder="Search Position Name" id="search-input">
+                </div>
+
+                <div class="custom-select">
+                    <select wire:model.live="perPage" id="per-page">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <img src="/images/table/asc.png" class="arrow-icon" alt="dropdown icon">
+                </div>
+            </div>
+
+            <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.position_name = null">Add New Position</a>
+        
         </div>
 
-        <table class="table">
-            <thead>
-             <tr>
-                <th>Position Name</th>
-                <th>Status</th>
-                <th>Action</th>
-             </tr>
-            </thead>
-    
-            <tbody>
-                @foreach ($positions as $position)
-                    <tr>
-                        <td>{{ $position->position_name }}</td>
-                        <td>
-                        <span class="status"
-                            @style([$position->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
-                            {{ $position->status }}
-                        </span>
+        @if (count($positions) == 0)
 
-                           </td>
-                        <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$position->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
-           
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <div class="no-data-container">
+                <p>No data available in table</p>
+            </div>
+        
+        @else
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Position Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+        
+                <tbody wire:loading.class="opacity-50">
+                    @foreach ($positions as $position)
+                        <tr>
+                            <td>{{ $position->position_name }}</td>
+                            <td>
+                            <span class="status"
+                                @style([$position->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
+                                {{ $position->status }}
+                            </span>
+
+                            </td>
+                            <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$position->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+            
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        @endif
 
 
         {{-- FORM MODAL --}}
@@ -206,5 +236,9 @@
                 </div>
             </div>
         </div>
+    </div>
+        
+    <div class="pagination">
+        {{ $positions->links() }}
     </div>
 </section>

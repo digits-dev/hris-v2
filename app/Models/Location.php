@@ -17,4 +17,11 @@ class Location extends Model
     public function employees(){
         return $this->hasMany(User::class, 'hire_location_id', 'id');
     }
+
+    public function scopeSearch($query, $value){
+
+        $cleanVal = trim($value);
+
+        return $query->where('location_name', 'like', "%$cleanVal%");
+    }
 }

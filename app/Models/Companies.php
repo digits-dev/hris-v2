@@ -14,4 +14,12 @@ class Companies extends Model
     public function users(){
         return $this->hasMany(User::class, 'company_id', 'id');
     }
+
+    public function scopeSearch($query, $value){
+
+        $cleanVal = trim($value);
+
+        return $query->where('company_name', 'like', "%$cleanVal%");
+    }
+
 }

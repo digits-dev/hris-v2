@@ -2,10 +2,17 @@
 namespace App\Livewire\Component\ModuleContents\PositionController;
 use Livewire\Component;
 use App\Models\Position;
+use Livewire\Attributes\Url;
 use App\Helpers\CommonHelpers;
 use Illuminate\Support\Facades\Auth;
 
 class PositionControllerContent extends Component{
+
+    #[Url(history:true)]
+    public $search = null; 
+
+    #[Url(as:'per-page')]
+    public $perPage = 10;
 
     
     public $position_id;
@@ -45,7 +52,7 @@ class PositionControllerContent extends Component{
         session()->flash('message', 'Created position successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/positions', navigate:true);
+        return  $this->redirect('/positions');
     }
 
     public function update(){
@@ -71,7 +78,7 @@ class PositionControllerContent extends Component{
         session()->flash('message', 'Updated position successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/positions', navigate:true);
+        return  $this->redirect('/positions');
     }
 
 
@@ -86,7 +93,8 @@ class PositionControllerContent extends Component{
    
     public function render(){
         $data = [];
-        $data['positions'] = Position::get();
+
+        $data['positions'] = Position::search($this->search)->latest()->paginate($this->perPage);
 
         return view("livewire.component.module-contents.position-controller.position-controller-content", $data);
     }

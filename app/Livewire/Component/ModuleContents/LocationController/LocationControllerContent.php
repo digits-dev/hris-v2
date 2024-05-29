@@ -2,17 +2,22 @@
 namespace App\Livewire\Component\ModuleContents\LocationController;
 use Livewire\Component;
 use App\Models\Location;
+use Livewire\Attributes\Url;
 use App\Helpers\CommonHelpers;
 use Illuminate\Support\Facades\Auth;
 
 class LocationControllerContent extends Component{
 
-    
+    #[Url(history:true)]
+    public $search = null; 
+
+    #[Url(as:'per-page')]
+    public $perPage = 10;
+
+
     public $location_id;
     public $location_name;
     public $status;
-
-    
 
     public function editForm($locationId) {
         $this->location_id = $locationId;
@@ -47,7 +52,7 @@ class LocationControllerContent extends Component{
         session()->flash('message', 'Created location successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/locations', navigate:true);
+        return  $this->redirect('/locations');
     }
 
     public function update(){
@@ -73,7 +78,7 @@ class LocationControllerContent extends Component{
         session()->flash('message', 'Updated location successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/locations', navigate:true);
+        return  $this->redirect('/locations');
     }
 
 
@@ -89,7 +94,7 @@ class LocationControllerContent extends Component{
 
         $data = [];
 
-        $data['locations'] = Location::get();
+        $data['locations'] = Location::search($this->search)->latest()->paginate($this->perPage);
 
         return view("livewire.component.module-contents.location-controller.location-controller-content", $data);
     }
