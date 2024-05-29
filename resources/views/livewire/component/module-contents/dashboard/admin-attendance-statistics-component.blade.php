@@ -76,7 +76,6 @@
     /* END OF SELECT */
 
     .employee-attendance-container{
-        margin-top: 1rem;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -200,40 +199,124 @@
         }
     }
 
+       /* SELECT */
+        
+       .filter-modal-select {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            min-width: 300px;
+            height: 40px;
+        }
+
+        .filter-modal-select-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .filter-modal-select-container p {
+            text-align: start;
+            margin-bottom: 5px;
+            font-size: 15px;
+            font-family: "Inter", sans-serif;
+            color: #113437;
+            font-weight: bold;
+        }
+        
+
+        .filter-modal-select select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 14px;
+            outline: none;
+            font-family: "Inter", sans-serif;
+            border: 2px solid var(--stroke-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            background-color: #fff;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .filter-modal-arrow-icon {
+            position: absolute;
+            top: 60%;
+            right: 15px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+        }
+
+        /* DATE */
+
+        .hire-date-container{
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid var(--stroke-color);
+            font-weight: 600;
+            font-size: 14px;
+            font-family: "Inter", sans-serif;
+            border-radius: 8px;
+            width: 100%;
+            overflow: hidden;
+            align-items: center;
+            position: relative;
+        }
+
+        .hire-date-container span{
+            padding: 12px 10px;
+            text-align: center;
+            width: 60px;
+            font-size: 12px;
+            color: var(--primary-color);
+            border-right: 2px solid var(--stroke-color);
+        }
+
+        .hire-date-container input{
+            flex: 1;
+            padding: 0 20px;
+            outline: none;
+            color: var(--primary-color);
+            -webkit-appearance: none; /* Hide the default calendar icon in Chrome, Safari, and Opera */
+            -moz-appearance: textfield; /* Hide the default calendar icon in Firefox */
+        }
+
+        .filter-containers{
+            display: flex;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
 </style>
 @endsection
 <div class="main-container relative">
-    <div 
-        class="max-w-96 w-full absolute bg-white mt-2" 
-        x-data="statisticsFilter" 
-    >
-        <button type="button" class="select-button" style="height: 55px;"
-            @click="selected !== 1 ? selected = 1 :selected = null"
-        >
-            <div class="flex items-center justify-between">
-                <span class="select-placeholder" x-text="truncateText(filterTitle)"></span>
-                <span class="menu-arrow-icon" x-html="selected === 1 ? `<img src='{{ asset('images/table/asc.png') }}' style='width: 10px;'>` : `<img src='{{ asset('images/table/desc.png') }}' style='width: 10px;'>`"></span>
-            </div>
-        </button>
-        <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: 200px' : ''">
-            <div style="overflow: auto; max-height: 200px; z-index: 10;">
-                <div class="p-3 border" >
-                    <button style="width: 100%; text-align:start" @click="selected !== 1 ? selected = 1 :selected = null, filterTitle='All Companies'">
-                        <p>All Companies</p>
-                    </button>
-                </div>
-                @foreach($companies as $company)
-                    <div class="p-3 border" >
-                        <button style="width: 100%; text-align:start" @click="selected !== 1 ? selected = 1 :selected = null, filterTitle='{{$company->company_name}}'"> 
-                            {{$company->company_name}}
-                        </button>
-                    </div>
+    <div class="filter-containers">
+        <div class="filter-modal-select">
+            <select wire:model.change="company_id">
+                <option disabled>Select Company</option>
+                <option value="0">All Employees</option>
+                @foreach ($companies as $company)
+                    <option value="{{$company->id}}">{{$company->company_name}}</option>
                 @endforeach
-            </div>
+            </select>
+            <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
         </div>
+        <div class="filter-modal-select-container">
+            <div class="hire-date-container mb-2">
+                <span>Date</span>
+                <input type="date" id="dateInput" wire:model.change="date">
+            </div>
+        </div> 
     </div>
-    <div class="employee-attendance-container mt-20">
-        <div class="statistics-content shadow-md shadow-slate-200">
+    <div class="employee-attendance-container">
+        <div class="statistics-content shadow-md shadow-slate-200" wire:ignore>
             <p class="content-title ">Statistics</p>
             <div class="chart-content">
                 <div class="chart-container">
@@ -249,7 +332,7 @@
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
                         <p class="item-title"> Clocked In</p>
-                        <p class="clocked-in-value">1234</p>
+                        <p class="clocked-in-value">{{$clocked_in_count}}</p>
                     </div>
                 </div>
                 {{-- NOT CLOCKED IN --}}
@@ -257,7 +340,7 @@
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
                         <p class="item-title"> Not Clocked In</p>
-                        <p class="not-clocked-in-value">250</p>
+                        <p class="not-clocked-in-value">{{$not_clocked_in_count}}</p>
                     </div>
                 </div>
                 {{-- CLOCKED OUT --}}
@@ -265,7 +348,7 @@
                     <div class="attendance-items">
                         <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
                         <p class="item-title"> Clocked Out</p>
-                        <p class="clocked-out-value">2346</p>
+                        <p class="clocked-out-value">{{$clocked_out_count}}</p>
                     </div>
                 </div>
                 {{-- ON VACATION LEAVE --}}
@@ -296,7 +379,6 @@
 <script >
     document.addEventListener('livewire:navigated', () => {
         const ctx = document.getElementById('statistics-chart');
-     
          new Chart(ctx, {
              type: 'doughnut',
              data: {
@@ -309,7 +391,7 @@
                  ],
                  datasets: [{
                      label: 'Employees',
-                     data: [1234, 250, 2346, 212, 252],
+                     data: [1, 1, 0, 0, 0],
                      backgroundColor: [
                          '#2196F3',
                          '#FF6174',
@@ -332,32 +414,14 @@
                  
              }
          });
-     
-         var date = new Date();
+       
+
+    })
+
+    var date = new Date();
          var formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
          var fullDate = 'Today: ' + formattedDate;
          document.getElementById('Date').innerText = fullDate;
 
-    })
-
-    function statisticsFilter(){
-
-        return {
-            selected:null,
-            filterTitle:'Select Company',
-            
-            truncateText(text) {
-                const maxLength = 40;
-        
-                if (text.length > maxLength) {
-                    return text.substring(0, maxLength) + '...';
-                }
-        
-                // If the length of the text is within the limit, return the original text
-                return text;
-            }
-        }
-    }
-    
   </script>
 @endsection

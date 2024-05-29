@@ -520,7 +520,7 @@
             position: absolute;
             top: 60%;
             right: 15px;
-            transform: translateY(-50%); /* Adjusted for perfect centering */
+            transform: translateY(-50%);
             width: 10px;
             height: 10px;
             pointer-events: none;
