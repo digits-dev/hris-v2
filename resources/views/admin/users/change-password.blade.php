@@ -214,7 +214,7 @@
                 title: 'Are you sure ?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#1F6268',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Save',
                 returnFocus: false,
