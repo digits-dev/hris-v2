@@ -12,7 +12,19 @@
         @click="isProfileOpen=!isProfileOpen"
         @click.outside="isProfileOpen=false"
     >
-        <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
+
+        @if (auth()->user()->image)
+            @php
+                $profileImagePath = public_path('storage/' . auth()->user()->image);
+                list($width, $height) = getimagesize($profileImagePath);
+                $isLandscape = $width > $height;
+            @endphp
+            
+            <img src="{{ asset('storage/' . auth()->user()->image) }}" class="settings-image" @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+        @else
+            <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
+        @endif
+
     </div>
     <div class="setting-popup z-50" 
          x-show="isProfileOpen"
@@ -20,9 +32,20 @@
          x-cloak
     >
         <div class="header-info">
-            <img src="{{asset('images/navigation/user.png')}}" class="profile-info-image">
+            @if (auth()->user()->image)
+                @php
+                    $profileImagePath = public_path('storage/' . auth()->user()->image);
+                    list($width, $height) = getimagesize($profileImagePath);
+                    $isLandscape = $width > $height;
+                @endphp
+            
+                <img src="{{ asset('storage/' . auth()->user()->image) }}" class="settings-image" @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+            @else
+                <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
+            @endif
             <p>{{auth()->user()->full_name}}</p>
         </div>
+
         <a href="{{route('profile')}}" class="logout-content">
             <i class="fa-regular fa-user mx-2"></i>
             <p>Profile</p>
