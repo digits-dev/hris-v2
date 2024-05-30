@@ -158,9 +158,10 @@
 
         /* position */
 
-        .table th:nth-child(11),
+        .table th:nth-child(11) button,
         .table td:nth-child(11) {
             text-align: center;
+            margin:auto;
         }
 
         /* status */
@@ -930,12 +931,12 @@
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'company_id',
+                            'colName' => 'company',
                             'displayName' => 'Company',
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'hire_location_id',
+                            'colName' => 'hire_location',
                             'displayName' => 'Hire Location',
                         ])
 
@@ -944,10 +945,10 @@
                             'displayName' => 'Hire Date',
                         ])
 
-                        <th> <Button class="th-sort  mx-auto">Position
-                                <img src="/images/table/sort.png" width="10" alt="sorting icons">
-                            </Button>
-                        </th>
+                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
+                            'colName' => 'position',
+                            'displayName' => 'Position',
+                        ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'status',

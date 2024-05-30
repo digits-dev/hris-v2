@@ -713,22 +713,22 @@
                     ['colName'=>'last_name', 'displayName' => 'Last Name' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'hire_location_id', 'displayName' => 'Location' ])
+                    ['colName'=>'hire_location', 'displayName' => 'Location' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'current_location_id', 'displayName' => 'Current Location' ])
+                    ['colName'=>'current_location', 'displayName' => 'Current Location' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'time_in', 'displayName' => 'Time In' ])
+                    ['colName'=>'date_clocked_in', 'displayName' => 'Time In' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'Time Out' ])
+                    ['colName'=>'date_clocked_out', 'displayName' => 'Time Out' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'created_at', 'displayName' => 'Date' ])
+                    ['colName'=>'date', 'displayName' => 'Date' ])
         
                     @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'Bio Duration' ])
+                    ['colName'=>'time_difference_seconds', 'displayName' => 'Bio Duration' ])
         
                  </tr>
                 </thead>
