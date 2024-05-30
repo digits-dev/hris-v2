@@ -15,10 +15,23 @@ class CompanyControllerContent extends Component{
     #[Url(as:'per-page')]
     public $perPage = 10;
 
+    public $sortBy = "created_at";
+    public $sortDir = 'DESC';
 
     public $company_id;
     public $company_name;
     public $status;
+
+
+    public function setSortBy($fieldName){
+        if($this->sortBy === $fieldName) {
+            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
+            return;
+        }
+
+        $this->sortBy = $fieldName;
+        $this->sortDir = "DESC";
+    }
 
     
 
@@ -97,7 +110,7 @@ class CompanyControllerContent extends Component{
 
         $data = [];
 
-        $data['companies'] = Companies::search($this->search)->latest()->paginate($this->perPage);
+        $data['companies'] = Companies::search($this->search)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
 
         return view("livewire.component.module-contents.company-controller.company-controller-content", $data);
     }

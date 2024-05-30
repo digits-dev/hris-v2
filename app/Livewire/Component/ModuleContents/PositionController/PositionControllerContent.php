@@ -14,10 +14,23 @@ class PositionControllerContent extends Component{
     #[Url(as:'per-page')]
     public $perPage = 10;
 
-    
+    public $sortBy = "created_at";
+    public $sortDir = 'DESC';
+
     public $position_id;
     public $position_name;
     public $status;
+
+
+    public function setSortBy($fieldName){
+        if($this->sortBy === $fieldName) {
+            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
+            return;
+        }
+
+        $this->sortBy = $fieldName;
+        $this->sortDir = "DESC";
+    }
 
     public function editForm($positionId) {
         $this->position_id = $positionId;
@@ -94,7 +107,7 @@ class PositionControllerContent extends Component{
     public function render(){
         $data = [];
 
-        $data['positions'] = Position::search($this->search)->latest()->paginate($this->perPage);
+        $data['positions'] = Position::search($this->search)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
 
         return view("livewire.component.module-contents.position-controller.position-controller-content", $data);
     }

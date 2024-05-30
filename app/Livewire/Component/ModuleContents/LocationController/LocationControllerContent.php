@@ -14,10 +14,24 @@ class LocationControllerContent extends Component{
     #[Url(as:'per-page')]
     public $perPage = 10;
 
+    public $sortBy = "created_at";
+    public $sortDir = 'DESC';
+
 
     public $location_id;
     public $location_name;
     public $status;
+
+
+    public function setSortBy($fieldName){
+        if($this->sortBy === $fieldName) {
+            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
+            return;
+        }
+
+        $this->sortBy = $fieldName;
+        $this->sortDir = "DESC";
+    }
 
     public function editForm($locationId) {
         $this->location_id = $locationId;
@@ -94,7 +108,7 @@ class LocationControllerContent extends Component{
 
         $data = [];
 
-        $data['locations'] = Location::search($this->search)->latest()->paginate($this->perPage);
+        $data['locations'] = Location::search($this->search)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
 
         return view("livewire.component.module-contents.location-controller.location-controller-content", $data);
     }

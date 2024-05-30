@@ -127,7 +127,9 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Position Name</th>
+                    @include('livewire.component.module-contents.position-controller.includes.th-sort', 
+                    ['colName'=>'position_name', 'displayName' => 'Position Name' ])
+
                     <th>Status</th>
                     <th>Action</th>
                 </tr>

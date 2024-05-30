@@ -127,11 +127,15 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Location Name</th>
+                    @include('livewire.component.module-contents.location-controller.includes.th-sort', 
+                    ['colName'=>'location_name', 'displayName' => 'Location Name' ])
+
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
+
+     
         
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($locations as $location)

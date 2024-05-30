@@ -126,7 +126,9 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Company Name</th>
+                    @include('livewire.component.module-contents.company-controller.includes.th-sort', 
+                    ['colName'=>'company_name', 'displayName' => 'Company Name' ])
+
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
