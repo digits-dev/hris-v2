@@ -807,7 +807,7 @@
 
         <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
             @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
-                <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
+                <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
                 <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
                     Actions</button>
 

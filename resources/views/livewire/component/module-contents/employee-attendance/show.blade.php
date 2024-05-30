@@ -194,5 +194,5 @@
 
     </form>
 
-    <a role="button" href="/employee-attendance" class="back-btn" wire:navigate>Go back</a>
+    <a role="button" href="/employee-attendance" class="back-btn" >Go back</a>
 </section>

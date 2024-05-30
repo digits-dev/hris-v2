@@ -324,8 +324,14 @@
                     @enderror
 
                     <label for="position" class="flex flex-col mt-2">Position
-                        <input type="text" id="position" wire:model.blur="position">
+                        <select id="position" wire:model.blur="position_id" class="text-primary-text">
+                            <option value="" selected>Select Position</option>
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->id }}">{{ $position->position_name }}</option>
+                            @endforeach
+                        </select>
                     </label>
+
                     @error('position')
                         <em>
                             <p class="error-text">{{ $message }}</p>
@@ -375,7 +381,7 @@
         </fieldset>
 
         <div class="flex w-full justify-between">
-            <a role="button" href="/employee-accounts" class="table-btn" wire:navigate>Cancel</a>
+            <a role="button" href="/employee-accounts" class="table-btn">Cancel</a>
             <input type="submit" value="Save" class="table-btn">
         </div>
     </form>

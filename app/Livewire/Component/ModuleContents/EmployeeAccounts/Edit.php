@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
 
+use App\Models\Position;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Location;
@@ -47,7 +48,7 @@ class Edit extends Component
     public $company_id;
 
     #[Validate('required')]
-    public $position;
+    public $position_id;
 
     #[Validate('required', as:'system privilege')]
     public $privilege_id;
@@ -74,7 +75,7 @@ class Edit extends Component
         $this->location_id = $this->user->hire_location_id;
         $this->email = $this->user->email;
         $this->company_id = $this->user->company_id;
-        $this->position = $this->user->position;
+        $this->position_id = $this->user->position_id;
         $this->privilege_id = $this->user->id_ad_privileges;
         $this->hire_date = date('Y-m-d', strtotime($this->user->hire_date)) ;
         $this->status = $this->user->status;
@@ -114,7 +115,7 @@ class Edit extends Component
             'email' => $this->email,
             'hire_location_id' => $this->location_id,
             'company_id' => $this->company_id,
-            'position' => $this->position,
+            'position_id' => $this->position_id,
             'id_ad_privileges' => $this->privilege_id,
             'hire_date' => $this->hire_date,
         ]);
@@ -169,7 +170,8 @@ class Edit extends Component
         [
         'locations' => Location::all(), 
         'privileges' => Privileges::all(),
-        'companies' => Companies::all()
+        'companies' => Companies::all(),
+        'positions' => Position::all()
         ]
         );
     }

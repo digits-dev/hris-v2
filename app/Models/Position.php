@@ -18,4 +18,8 @@ class Position extends Model
         return $query->where('position_name', 'like', "%$cleanVal%");
     }
 
+    public function users(){
+        return $this->hasMany(User::class, 'position_id', 'id');
+    }
+
 }

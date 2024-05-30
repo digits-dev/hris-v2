@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('position_id')->nullable()->default(null)->change();
-            $table->date('hire_date')->nullable()->default(null)->change();
+            $table->integer('position_id')->nullable()->change();
+            $table->date('hire_date')->nullable()->change();
         });
     }
 
