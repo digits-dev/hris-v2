@@ -127,6 +127,7 @@ class EmployeeAccountsContent extends Component
         $query = DB::table('users')
         ->leftJoin('companies', 'companies.id', 'users.company_id')
         ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
+        ->leftJoin('positions', 'positions.id', 'users.position_id')
         ->select([
             'users.id',
             'users.employee_id',
@@ -137,7 +138,7 @@ class EmployeeAccountsContent extends Component
             'companies.company_name as company',
             'hire_location.location_name as hire_location',
             'users.hire_date',
-            'users.position',
+            'positions.position_name as position',
             'users.status',
             'users.image',
             'users.created_at'
@@ -172,7 +173,7 @@ class EmployeeAccountsContent extends Component
         if (sizeof($positions)) {
             $query_filter_params[] = [
                 'method' => 'whereIn',
-                'params' => ['position', $positions]
+                'params' => ['positions.id', $positions]
             ];
         }
         if (sizeof($hire_locations)) {

@@ -40,11 +40,17 @@
     background-color: #398187e1;
 }
 
-
-
 .settings-image{
     margin-right: 20px;
+    border-radius: 100%;
+    overflow: hidden;
+    height: 40px;
+    width: 40px;
+    display: grid;
+    place-content: center;
+    object-fit: cover;
 }
+
 .settings-button:hover{
     cursor: pointer;
 }

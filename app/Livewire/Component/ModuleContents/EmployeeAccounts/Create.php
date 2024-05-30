@@ -3,6 +3,7 @@
 namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
 
 use App\Models\Companies;
+use App\Models\Position;
 use App\Models\Privileges;
 use App\Models\User;
 use Livewire\Attributes\Validate;
@@ -40,7 +41,7 @@ class Create extends Component
     public $company_id;
 
     #[Validate('required')]
-    public $position;
+    public $position_id;
 
     #[Validate('required', as:'system privilege')]
     public $privilege_id;
@@ -84,7 +85,7 @@ class Create extends Component
             'email' => $this->email,
             'hire_location_id' => $this->location,
             'company_id' => $this->company_id,
-            'position' => $this->position,
+            'position_id' => $this->position_id,
             'id_ad_privileges' => $this->privilege_id,
             'hire_date' => $this->hire_date,
             'image' => $photo,
@@ -94,7 +95,7 @@ class Create extends Component
         session()->flash('message', 'Created user successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/employee-accounts', navigate:true);
+        return  $this->redirect('/employee-accounts');
      }
 
      public function updatedProfileImage()
@@ -126,8 +127,11 @@ class Create extends Component
     public function render()
     {
         return view('livewire.component.module-contents.employee-accounts.create', 
-        ['locations' => Location::all(), 
+        [
+        'locations' => Location::all(), 
          'privileges' => Privileges::all(),
-         'companies' => Companies::all()]);
+         'companies' => Companies::all(),
+         'positions' => Position::all(),
+        ]);
     }
 }

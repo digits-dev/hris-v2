@@ -236,7 +236,7 @@
                     </label>
 
                     <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="{{ $user->position }}" disabled>
+                        <input type="text" name="" id="" value="{{ $user->position->position_name }}" disabled>
                     </label>
 
                     <label for="" class="block mt-3">
@@ -257,5 +257,5 @@
     </form>
 
 
-    <a role="button" href="/employee-accounts" class="back-btn" wire:navigate>Go back</a>
+    <a role="button" href="/employee-accounts" class="back-btn">Go back</a>
 </section>

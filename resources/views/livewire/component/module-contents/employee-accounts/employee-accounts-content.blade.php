@@ -268,7 +268,7 @@
         /* hire date */
         .table th:nth-child(10),
         .table td:nth-child(10) {
-            width:150px;
+            width:100px;
         }
         /* position */
         .table th:nth-child(11),
@@ -807,7 +807,7 @@
 
         <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
             @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
-                <a href="{{ route('employee.create') }}" class="primary-btn" wire:navigate>Add User</a>
+                <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
                 <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
                     Actions</button>
 
@@ -984,8 +984,8 @@
                             <td>{{ $user->company }}</td>
                             <td>{{ $user->hire_location }}</td>
                             <td>{{ $user->hire_date }}</td>
-                            {{-- <td><span class="role">{{ $user->position }}</span></td> --}}
-                            <td><span class="role">Employee</span></td>
+                            <td><span class="role">{{ $user->position }}</span></td>
+                            {{-- <td><span class="role">Employee</span></td> --}}
                             <td><span class="status"
                                     @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
