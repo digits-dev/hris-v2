@@ -8,36 +8,44 @@
 </head>
     <style>
         .modal {
-            display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
         }
         .modal-session {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 60px;
+            z-index: 10000;
         }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+
+        .session-modal-content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 15px;
         }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+
+        .modal-image{
+            object-fit: contain;
+            width: 100%;
+            max-width: 150px;
+            pointer-events: none;
+            margin-bottom: 10px;
         }
     </style>
 <body>
@@ -48,8 +56,11 @@
         <!-- resources/views/components/inactivity-modal.blade.php -->
         <div id="inactivityModal" class="modal" style="display:none; z-index:999999999">
             <div class="modal-session">
-                {{-- <span class="close">&times;</span> --}}
-                <p>You have been inactive for a while. You will be logged out in <span id="countdown">10</span> seconds if there is no activity.</p>
+                <div class="session-modal-content">
+                    <img src="{{asset('images/others/session-expire-logo.png')}}" alt="" class="modal-image">
+                    <p class="mb-5">You have been inactive for a while</p>
+                    <p>You will be logged out in <span id="countdown" class="font-semibold">10</span> <span class="font-semibold">seconds</span> if there is no activity.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -99,7 +110,7 @@
             function resetTimer() {
                 hideModal();
                 clearTimeout(time);
-                time = setTimeout(showModal, 900000); // 5 minutes (300000 ms)
+                time = setTimeout(showModal, 1000 * 60 * 15); // 15 minutes
             }
     
             // Close modal on close button click
