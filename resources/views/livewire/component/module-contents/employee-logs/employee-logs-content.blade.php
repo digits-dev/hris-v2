@@ -742,17 +742,9 @@
                             <td>{{ $employeeLog->hire_location ?? '' }}</td>
                             <td>{{ $employeeLog->current_location ?? '' }}</td>
                             <td>{{ $employeeLog->date_clocked_in }}</td>
-                            <td>{{ $employeeLog->date_clocked_out }}</td>
-        
-                            @php
-                                $timeIn = \Carbon\Carbon::parse($employeeLog->date_clocked_in);
-                                $timeOut = \Carbon\Carbon::parse($employeeLog->date_clocked_out);
-                            
-                            @endphp     
-
-                            <td>{{ \Carbon\Carbon::parse($employeeLog->date_clocked_in)->format('Y-m-d') }}</td>
-                            <td>{{ sprintf("%02d:%02d", $timeIn->diff($timeOut)->h, $timeIn->diff($timeOut)->i) }}</td>
-        
+                            <td>{{ $employeeLog->date_clocked_out }}</td>        
+                            <td>{{ $employeeLog->date }}</td>
+                            <td>{{ $employeeLog->time_difference_seconds }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -139,7 +139,9 @@ class EmployeeLogsContent extends Component
             'current_location.location_name as current_location',
             'logs.date_clocked_in',
             'logs.date_clocked_out',
-            'logs.created_at'
+            DB::raw('DATE(logs.date_clocked_in) as date'),
+            DB::raw('TIMEDIFF(logs.date_clocked_out, logs.date_clocked_in) as time_difference_seconds'),
+            'logs.created_at',
         ]);
         return $query;
     }

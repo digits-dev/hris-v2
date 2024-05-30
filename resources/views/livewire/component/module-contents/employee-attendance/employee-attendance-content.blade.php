@@ -729,28 +729,30 @@
                     ['colName'=>'last_name', 'displayName' => 'Last Name' ])
 
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'company_id', 'displayName' => 'Company' ])
+                    ['colName'=>'company', 'displayName' => 'Company' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'hire_location_id', 'displayName' => 'Hire Location' ])
+                    ['colName'=>'hire_location', 'displayName' => 'Hire Location' ])
+        
+                    {{-- @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
+                    ['colName'=>'current_location_id', 'displayName' => 'Time in Location/s' ]) --}}
+
+                    <th class="text-left">Time in Location/s</th>
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'current_location_id', 'displayName' => 'Time in Location/s' ])
+                    ['colName'=>'first_clock_in', 'displayName' => 'First Time In' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_in', 'displayName' => 'First Time In' ])
+                    ['colName'=>'last_clock_out', 'displayName' => 'Last Time Out' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'Last Time Out' ])
+                    ['colName'=>'date', 'displayName' => 'Date' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'date_clocked_in', 'displayName' => 'Date' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'Bio Duration' ])
+                    ['colName'=>'total_time_bio_diff', 'displayName' => 'Bio Duration' ])
 
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'time_out', 'displayName' => 'FILO Duration' ])
+                    ['colName'=>'total_time_filo_diff', 'displayName' => 'FILO Duration' ])
 
                     <th>Action</th>
         
@@ -766,7 +768,8 @@
                             <td>{{ $employeeLog->company ?? '' }}</td>
                             <td>{{ $employeeLog->hire_location ?? '' }}</td>
 
-                            <td>{{ $employeeLog->current_location ?? '' }}
+                            {{-- Time in Location  --}}
+                            <td>
                                 @php
                                     $currentLocationIdsIn = explode(",", $employeeLog->combined_terminal_in_ids);
                                     $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
@@ -774,7 +777,7 @@
                                 @endphp
                                 
                                 @foreach ($locations as $location)
-                                    @if (in_array($location->id, $allLocations))
+                                    @if (in_array($location->id, $currentLocationIdsIn))
                                         @if ($loop->last)
                                         {{ $location->location_name }}
                                         @else
@@ -783,16 +786,32 @@
                                     @endif
                                 @endforeach
                             </td>
+                            {{-- Time out Location  --}}
+                            {{-- <td>
+                                @php
+                                    $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
+                                @endphp
+                                
+                                @foreach ($locations as $location)
+                                    @if (in_array($location->id, $currentLocationIdsOut))
+                                        @if ($loop->last)
+                                        {{ $location->location_name }}
+                                        @else
+                                        {{ $location->location_name }}, 
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </td> --}}
 
 
                             <td>{{ $employeeLog->first_clock_in }}</td>
                             <td>{{ $employeeLog->last_clock_out }}</td>
-                            <td>{{ $employeeLog->date_clocked_in }}</td>
+                            <td>{{ $employeeLog->date }}</td>
                             <td>{{ $employeeLog->total_time_bio_diff }}</td>
                             <td>{{ $employeeLog->total_time_filo_diff }}</td>
                             <td>
                                 <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee-attendance.show', ['employeeId'=>$employeeLog->employee_id, 'date'=> $employeeLog->date_clocked_in]) }}"
+                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
                                         class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                 </div>
 

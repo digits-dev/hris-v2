@@ -13,20 +13,18 @@ class Show extends Component
 
     
     public $employeeId;
-    public $dateClockedIn;
 
 
-    public function mount($employeeId, $dateClockedIn){
+    public function mount($employeeId){
         $this->employeeId = $employeeId;
-        $this->dateClockedIn = $dateClockedIn;
     }
 
-    public function index($employeeId, $dateClockedIn){
+    public function index($employeeId){
         if (!CommonHelpers::isView()) {
             CommonHelpers::redirect(CommonHelpers::adminPath(), trans("ad_default.denied_access"));
         }
 
-        return view('modules.employee-attendance.employee-attendance', ['routeName'=>'show', 'employeeId' =>$employeeId, 'dateClockedIn'=>$dateClockedIn]);
+        return view('modules.employee-attendance.employee-attendance', ['routeName'=>'show', 'employeeId' => $employeeId]);
     } 
 
     public function render()
@@ -52,11 +50,11 @@ class Show extends Component
             'logs_duration.total_time_bio_diff',
             'logs_duration.total_time_filo_diff',
             'logs_duration.total_time_filo_diff',
-            'logs_duration.combined_terminal_ids',
+            'logs_duration.combined_terminal_in_ids',
+            'logs_duration.combined_terminal_out_ids',
 
         ])
-        ->where('users.employee_id', $this->employeeId)
-        ->where('logs_duration.date_clocked_in', $this->dateClockedIn)->first();
+        ->where('users.employee_id', $this->employeeId)->first();
 
 
         $data['locations'] = Location::get();

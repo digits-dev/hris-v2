@@ -118,7 +118,9 @@
 
     <form action="" class="space-y-10">
 
+
         {{-- Personal  Information  --}}
+
         <fieldset>
             <legend class="legend">Employee Attendance Summary Details</legend>
             <div class="personal-content">
@@ -146,21 +148,31 @@
 
               
                     @php
-                        $currentLocationIds = explode(",", $employeeData->combined_terminal_ids);
-                        $showLocations = [];
+                        $currLocInIds = explode(",", $employeeData->combined_terminal_in_ids);
+                        $currLocOutIds = explode(",", $employeeData->combined_terminal_out_ids);
+                        $showInLocations = [];
+                        $showOutLocations = [];
 
                         foreach ($locations as $location) {
-                            if (in_array($location->id, $currentLocationIds)) {
+                            if (in_array($location->id, $currLocInIds)) {
                                 $showLocations[] = $location->location_name;
+                            }
+                            if (in_array($location->id, $currLocOutIds)) {
+                                $showOutLocations[] = $location->location_name;
                             }
                         }
 
-                        $locationsString = implode(', ', $showLocations);
+                        $locationsIn = implode(', ', $showInLocations);
+                        $locationsIn = implode(', ', $showOutLocations);
                     @endphp
 
 
                     <label for="time-in-location">Time in Location/s
-                        <input type="text" id="time-in-location" value="{{$locationsString}}" disabled>
+                        <input type="text" id="time-in-location" value="{{$locationsIn}}" disabled>
+                    </label>
+
+                    <label for="time-in-location">Time Out Location/s
+                        <input type="text" id="time-in-location" value="{{$locationsIn}}" disabled>
                     </label>
                 </div>
 
