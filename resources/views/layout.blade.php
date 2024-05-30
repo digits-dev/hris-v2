@@ -99,7 +99,7 @@
             function resetTimer() {
                 hideModal();
                 clearTimeout(time);
-                time = setTimeout(showModal, 5000); // 5 minutes (300000 ms)
+                time = setTimeout(showModal, 900000); // 5 minutes (300000 ms)
             }
     
             // Close modal on close button click
