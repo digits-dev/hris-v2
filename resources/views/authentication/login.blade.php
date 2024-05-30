@@ -267,7 +267,7 @@
                 </div>
             </div>
             <div class="container2">
-                <div class="login-text">Login</div>
+            <div class="login-text">Login</div>
                 <form action="{{ route('login') }}" method="POST" autocomplete="off">
                     @csrf
                     <div class="inputs-container">
