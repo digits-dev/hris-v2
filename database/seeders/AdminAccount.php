@@ -26,7 +26,7 @@ class AdminAccount extends Seeder
             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
-            'position' => 'Dev'
+            'position_id' => fake()->numberBetween(1,2),
         ]);
 
         User::updateOrInsert(['email' => 'joelricmisa@digits.ph'],
@@ -42,7 +42,7 @@ class AdminAccount extends Seeder
             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
-            'position' => 'Dev'
+            'position_id' => fake()->numberBetween(1,2),
         ]);
 
         User::updateOrInsert(['email' => 'marvinmosico@digits.ph'],
@@ -58,7 +58,7 @@ class AdminAccount extends Seeder
             'company_id' => fake()->numberBetween(1,2),
             'password' => bcrypt('qwerty'),
             'id_ad_privileges' => 1,
-            'position' => 'Dev'
+            'position_id' => fake()->numberBetween(1,2),
         ]);
     }
 }

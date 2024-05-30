@@ -268,7 +268,7 @@
         /* hire date */
         .table th:nth-child(10),
         .table td:nth-child(10) {
-            width:150px;
+            width:100px;
         }
         /* position */
         .table th:nth-child(11),
@@ -984,8 +984,8 @@
                             <td>{{ $user->company }}</td>
                             <td>{{ $user->hire_location }}</td>
                             <td>{{ $user->hire_date }}</td>
-                            {{-- <td><span class="role">{{ $user->position }}</span></td> --}}
-                            <td><span class="role">Employee</span></td>
+                            <td><span class="role">{{ $user->position }}</span></td>
+                            {{-- <td><span class="role">Employee</span></td> --}}
                             <td><span class="status"
                                     @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
