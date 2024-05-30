@@ -32,6 +32,11 @@ class LoginAuthController extends Controller
             $error = 'No privilege set, Please contact administrator!';
             return redirect('login')->withErrors(['no_priv' => $error]);
         }
+        if($users->status == 0 || $users->status == 'INACTIVE'){
+            $accDeact = "Account Doesn't Exist/Deactivated";
+            Session::flush();
+            return redirect('login')->withErrors(['acc_deact'=>$accDeact]);
+        }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Session::put('admin_id', $users->id);

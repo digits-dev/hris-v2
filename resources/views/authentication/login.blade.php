@@ -297,6 +297,9 @@
                             @if ($errors->has('no_priv'))
                                 <span class="text-danger">{{ $errors->first('no_priv') }}</span>
                             @endif
+                            @if ($errors->has('acc_deact'))
+                                <span class="text-danger">{{ $errors->first('acc_deact') }}</span>
+                            @endif
                             @if(session('rejected'))
                                 <span class="text-danger">
                                     {{ session('rejected') }}
