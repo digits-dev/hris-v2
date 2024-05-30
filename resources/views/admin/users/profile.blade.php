@@ -46,17 +46,21 @@
 
         /* Basic Information */
 
-        .basic-info{
+        .content-data-container{
             padding:20px;
-        
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             gap:20px;
         }
 
-        .basic-info-content{
+        .content-data-container-content{
+            width: 100%;
             display: grid;
             flex: 1;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr;
+
         }
 
 
@@ -70,6 +74,17 @@
             border: 5px solid var(--stroke-color);
 
 
+        }
+
+        @media screen and (min-width: 900px) {
+
+            .content-data-container {
+                flex-direction: row;
+            }
+
+            .content-data-container-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .form-group{
@@ -99,11 +114,13 @@
     @endsection
 @section('content')
 <section>
+
+    {{-- Basic Information  --}}
       <div class='row'>
         <h3 class='header' id="header-bi"><i class="fa fa-user mr-1"></i> Basic Information</h3>
         <div class='content' id="content-bi">
 
-            <div class="basic-info">
+            <div class="content-data-container">
                 <div class="profile-img-container">
 
                     @if (auth()->user()->image)
@@ -120,7 +137,7 @@
 
                 </div>
 
-                <div class="basic-info-content">
+                <div class="content-data-container-content">
                     <div class="form-group">
                         <label for="first-name">First Name</label>
                         <input type="text" name="" id="" value="{{auth()->user()->first_name}}" class="form-control" disabled>
@@ -146,11 +163,41 @@
     
         </div>
       </div>
+
+      {{-- Work Information  --}}
       
       <div class='row'>
         <h3 class='header' id="header-wi"><i class="fa-solid fa-briefcase mr-1"></i> Work Information</h3>
-        <p class='content' id="content-wi"></p>
+            <div class="content">
+                <div class="content-data-container">
+              
+                    <div class="content-data-container-content">
+                        <div class="form-group">
+                            <label for="">Company</label>
+                            <input type="text" name="" id="" value="{{auth()->user()->company->company_name}}" class="form-control" disabled>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="">Hire Location</label>
+                            <input type="text" name="" id="" value="{{auth()->user()->hireLocation->location_name}}" class="form-control" disabled>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="">Hire Date</label>
+                            <input type="text" name="" id="" value="{{auth()->user()->hire_date}}" class="form-control" disabled>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="">Position</label>
+                            <input type="text" name="" id="" value="{{auth()->user()->position->position_name}}" class="form-control" disabled>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
       </div>
+
+      {{-- Work Schedule  --}}
 
       <div class='row'>
         <h3 class='header' id="header-wi"><i class="fa fa-calendar mr-1"></i> Work Schedule</h3>
