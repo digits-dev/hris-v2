@@ -6,9 +6,12 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use CRUDBooster;
 
-class EmployeesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
+class EmployeesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithStyles
 {
     use Exportable;
     private $userReport;
@@ -20,10 +23,10 @@ class EmployeesExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
 
     public function headings(): array {
         $headers = [
+                    "Employee Id",
                     "First Name",
                     "Middle Name",
                     "Last Name",
-                    "Employee Id",
                     "Email Address",
                     "Company",
                     "Hire Location",
@@ -39,16 +42,15 @@ class EmployeesExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
     public function map($item): array {
 
        $employees = [
+                    $item->employee_id,
                     $item->first_name,
                     $item->middle_name,
                     $item->last_name,
-                    $item->employee_id,
                     $item->email,
                     $item->company,
                     $item->hire_location,
                     $item->hire_date,
-                    // $item->position,
-                    'Employee',
+                    $item->position,
                     $item->status ? "Active" : "Inactive",
                     ];
        
@@ -57,5 +59,14 @@ class EmployeesExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
 
     public function query(){       
         return $this->query;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+
+            'A' => ['alignment' => ['horizontal' => Alignment::HORIZONTAL_LEFT]],
+        ];
     }
 }

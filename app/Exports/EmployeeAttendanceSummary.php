@@ -3,13 +3,16 @@
 namespace App\Exports;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use CRUDBooster;
 use App\Models\Location;
 
-class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
+class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithStyles
 {
     use Exportable;
     private $userReport;
@@ -23,6 +26,7 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
         $headers = [
                     'Employee ID',
                     'First Name',
+                    'Middle Name',
                     'Last Name',
                     'Company',
                     'Hire Location',
@@ -30,6 +34,7 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
                     'First Time in',
                     'Last Time out',
                     'Date',
+                    'Day',
                     'Bio Duration',
                     'Filo Duration'
                     ];
@@ -52,13 +57,15 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
         $employees = [
                         $item->employee_id,
                         $item->first_name,
+                        $item->middle_name,
                         $item->last_name,
                         $item->company,
                         $item->hire_location,
                         $allLocationsString,
                         $item->first_clock_in,
                         $item->last_clock_out,
-                        $item->date_clocked_in,
+                        $item->date,
+                        $item->day,
                         $item->total_time_bio_diff,
                         $item->total_time_filo_diff
                     ];
@@ -68,5 +75,14 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping
 
     public function query(){       
         return $this->query;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+
+            'A' => ['alignment' => ['horizontal' => Alignment::HORIZONTAL_LEFT]],
+        ];
     }
 }
