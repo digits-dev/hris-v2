@@ -66,6 +66,10 @@ class EmployeeLogsContent extends Component
 
     public function index()
     {
+        if (!CommonHelpers::isView()) {
+            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
+        }
+        
         return view('modules.employee-logs.employee-logs-module');
     }
 

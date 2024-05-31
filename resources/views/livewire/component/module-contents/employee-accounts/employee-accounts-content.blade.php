@@ -731,7 +731,6 @@
 @endsection
 
 <section>
-    @include('errors/messages')
     <div class="header ">
         <div class="header__left-container">
             <div class="search-form">

@@ -442,6 +442,7 @@ class CommonHelpers {
             $resp->send();
             exit;
         }
+
     }
 
     public static function deleteConfirm($redirectTo)

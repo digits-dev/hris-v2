@@ -52,7 +52,12 @@
     @livewire('component.navigation.sidebar')
     <div class="body-content" style="display: flex; flex-direction: column; flex: 1; overflow-x:hidden;">
         @livewire('component.navigation.navbar')
+        
+        {{-- response message --}}
+        @include('errors/messages')
+
         @yield('content')
+
         <!-- resources/views/components/inactivity-modal.blade.php -->
         <div id="inactivityModal" class="modal" style="display:none; z-index:999999999">
             <div class="modal-session">

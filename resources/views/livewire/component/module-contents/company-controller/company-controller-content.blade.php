@@ -88,7 +88,6 @@
 @endsection
 
 <section>
-    @include('errors/messages')
     <div class="main-container" x-data="{  isModalOpen: false, action: null }">
 
 

@@ -36,7 +36,6 @@
 
 @section('content')
 <section>
-    @include('errors/messages')
     <div class="main-container">
         <p class="header-title">{{trans('ad_default.Privileges')}}</p>
 

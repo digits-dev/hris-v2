@@ -99,7 +99,7 @@ class LocationControllerContent extends Component{
 
     public function index(){
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), "danger");
+            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
         }
         return view("modules.location-controller.location-controller");
     }

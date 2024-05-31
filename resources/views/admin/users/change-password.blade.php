@@ -124,7 +124,7 @@
 </style>
 <section>
     <p style="margin: 1rem 2.5rem;" class="header-title">Change Password</p>
-    <div style="margin: 1rem 2.5rem;">@include('errors/messages')</div>
+    {{-- <div style="margin: 1rem 2.5rem;">@include('errors/messages')</div> --}}
     <form method="POST" action="{{ route('update_password') }}" id="submitForm">
         <div class="change-password-container">
             <div class="change_account_password">Change Account Password?</div>

@@ -21,7 +21,7 @@ class Show extends Component
 
     public function index($employeeId){
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(CommonHelpers::adminPath(), trans("ad_default.denied_access"));
+            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
         }
 
         return view('modules.employee-attendance.employee-attendance', ['routeName'=>'show', 'employeeId' => $employeeId]);
