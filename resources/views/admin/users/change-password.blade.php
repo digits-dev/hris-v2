@@ -8,6 +8,7 @@
     :root{
         --primary-color: #599297;
         --button-color: #1F6268;
+        --disabled-btn-color: #b5c6c7;
     }
     *{
         font-family: "Inter", sans-serif;
@@ -121,6 +122,13 @@
         color: white;
     }
 
+    .primary-btn:disabled {
+        background: var(--button-color);
+        opacity: 0.9;
+        color: white;
+        cursor: not-allowed;
+    }
+
 </style>
 <section>
     <p style="margin: 1rem 2.5rem;" class="header-title">Change Password</p>
@@ -138,18 +146,19 @@
                     <div class="input-text">Current Password</div>
                     <div class="input-field-container">
                         <img src="{{asset('images/login/password-icon.png')}}">
-                        <input type="password" name="current_password" required style="" placeholder="Current Password">
+                        <input type="password" name="current_password" class="inputs" id="current_password" required placeholder="Current Password">
                     </div>
                     <div class="input-text">New Password</div>
-                    <div class="input-field-container">
+                    <div class="input-field-container confirm-input">
                         <img src="{{asset('images/login/password-icon.png')}}">
-                        <input type="password" name="new_password" required style="" placeholder="New Password">
+                        <input type="password" name="new_password" class="inputs" required id="new_password" placeholder="New Password">
                     </div>
                     <div class="input-text">Confirm New Password</div>
-                    <div class="input-field-container">
+                    <div class="input-field-container confirm-input">
                         <img src="{{asset('images/login/password-icon.png')}}">
-                        <input type="password" name="confirmation_password" required style=""placeholder="Confirm New Password">
+                        <input type="password" name="confirmation_password" class="inputs" id="confirmation_password" required placeholder="Confirm New Password">
                     </div>
+                    <span id="pass_not_match" class="p-2 mx-10 my-5 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-600 dark:text-white" style="display: none">Password not match!</span>
                     <div class="buttons-container mt-5">
                         <button type='button' onclick="location.href='{{App\Helpers\CommonHelpers::mainpath()}}'" class='secondary-btn'>{{trans('ad_default.button_cancel')}}</button>
                         <button class="primary-btn" type='button' class='btn btn-primary' id="btnSubmit"> {{trans('ad_default.save_changes')}}</button>
@@ -164,68 +173,75 @@
 
 @section('script')
     <script>
-        const msg_type = "{{ session('message_type') }}";
-        if (msg_type == 'success'){
-            setTimeout(function(){
-                window.location.href = "{{ route('logout') }}"
-            }, 2000);
-        }
-
-        $('#btnSubmit').on('click', function(event) {
-            event.preventDefault();
-            if($('#name').val() === ''){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Module Name Required!',
-                    icon: 'error',
-                    confirmButtonColor: '#3c8dbc',
-                });
-                event.preventDefault();
-                return false;
-            }else if($('#path').val() === ''){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Path Required!',
-                    icon: 'error',
-                    confirmButtonColor: '#3c8dbc',
-                });
-                event.preventDefault();
-                return false;
-            }else if($('#icon').val() === ''){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Icon Required!',
-                    icon: 'error',
-                    confirmButtonColor: '#3c8dbc',
-                });
-                event.preventDefault();
-                return false;
-            }else if($('#route_type').val() === ''){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Route Type Required!',
-                    icon: 'error',
-                    confirmButtonColor: '#3c8dbc',
-                });
-                event.preventDefault();
-                return false;
-            }
-            Swal.fire({
-                title: 'Are you sure ?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#1F6268',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Save',
-                returnFocus: false,
-                reverseButtons: true,
-                showLoaderOnConfirm: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#submitForm').submit();
+         $(document).ready(function() {
+       
+                const msg_type = "{{ session('message_type') }}";
+                if (msg_type == 'success'){
+                    setTimeout(function(){
+                        window.location.href = "{{ route('logout') }}"
+                    }, 2000);
                 }
+
+                $(document).on('input', '#current_password, #new_password, #confirmation_password', function() {
+                    validateInputs();
+                });
+
+                $(document).on('input', '#confirmation_password', function() {
+                    confirmPassword();
+                });
+
+                $('#btnSubmit').on('click', function(event) {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: 'Are you sure ?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#1F6268',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Save',
+                        returnFocus: false,
+                        reverseButtons: true,
+                        showLoaderOnConfirm: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#submitForm').submit();
+                        }
+                    });
+                    
+                });
+                
+                function validateInputs(){
+                    const inputs = $('.inputs').get();
+                    let isDisabled = true;
+                    inputs.forEach(input =>{
+                        const currentVal = $(input).val(); 
+                        if(!currentVal){
+                            isDisabled = false;
+                        }
+                    });
+                    $('#btnSubmit').attr('disabled',!isDisabled);
+                }
+
+                function confirmPassword(){
+             
+                    let isDisabled = true;
+                    const new_pass = $('#new_password').val();
+                    const confirm_pass = $('#confirmation_password').val();
+                    console.log(new_pass);
+                    if(new_pass != confirm_pass){
+                        isDisabled = false;
+                        $('.confirm-input').css('border', '2px solid red');
+                        $('#pass_not_match').show();
+                    }else{
+                        $('.confirm-input').css('border', '');
+                        $('#pass_not_match').hide();
+                    }
+                  
+                    $('#btnSubmit').attr('disabled',!isDisabled);
+                }
+
+                $('#btnSubmit').attr('disabled',true);
+
             });
-            
-        });
     </script>
 @endsection
