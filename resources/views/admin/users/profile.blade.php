@@ -132,7 +132,8 @@
                         
                         <img src="{{ asset('storage/' . auth()->user()->image) }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
                     @else
-                        <img src="/images/table/file-upload.png" height="auto" class="object-contain" alt="default profile image">
+              
+                        <img src="/images/navigation/user.png" height="auto" class="object-contain" alt="default profile image">
                     @endif
 
                 </div>
