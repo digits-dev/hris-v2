@@ -35,6 +35,7 @@ class EmployeeAttendanceContent extends Component{
     protected $listeners = ['toggleFilterExportModal', 'toggleFilterModal'];
 
     public function mount(){
+        date_default_timezone_set('Asia/Manila');
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
     }
 
@@ -150,6 +151,7 @@ class EmployeeAttendanceContent extends Component{
             'logs_duration.first_clock_in',
             'logs_duration.last_clock_out',
             DB::raw('DATE(logs_duration.first_clock_in) as date'),
+            DB::raw('DATE_FORMAT(logs_duration.first_clock_in, "%a") as day'),
             'logs_duration.total_time_bio_diff',
             'logs_duration.total_time_filo_diff',
             'users.hire_date',

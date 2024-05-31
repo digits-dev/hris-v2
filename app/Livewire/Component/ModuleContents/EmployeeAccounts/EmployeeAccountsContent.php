@@ -49,6 +49,7 @@ class EmployeeAccountsContent extends Component
 
     public function mount()
     {
+        date_default_timezone_set('Asia/Manila');
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
         $this->filters =  ['company_id'=>'',
                            'position'=> '',

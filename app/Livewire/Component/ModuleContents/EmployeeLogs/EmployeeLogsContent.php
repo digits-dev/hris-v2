@@ -43,7 +43,9 @@ class EmployeeLogsContent extends Component
 
     public function mount()
     {
+        date_default_timezone_set('Asia/Manila');
         $this->filename = 'Export '.CommonHelpers::getCurrentModule()->name.' - '.date('Y-m-d H:i:s');
+        
         $this->filters =  ['current_location_id'=>'',
                            'hire_location_id'=>'',
                            'date_from'=>'',
@@ -132,6 +134,7 @@ class EmployeeLogsContent extends Component
         ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
         ->leftJoin('locations as current_location', 'current_location.id', 'logs.clock_in_terminal_id')
         ->select([
+            'logs.employee_id',
             'users.first_name',
             'users.middle_name',
             'users.last_name',
@@ -140,6 +143,7 @@ class EmployeeLogsContent extends Component
             'logs.date_clocked_in',
             'logs.date_clocked_out',
             DB::raw('DATE(logs.date_clocked_in) as date'),
+            DB::raw('DATE_FORMAT(logs.date_clocked_in, "%a") as day'),
             DB::raw('TIMEDIFF(logs.date_clocked_out, logs.date_clocked_in) as time_difference_seconds'),
             'logs.created_at',
         ]);
