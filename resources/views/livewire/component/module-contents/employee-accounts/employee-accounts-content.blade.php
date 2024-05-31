@@ -7,6 +7,8 @@
             --primary-text: #113437;
             --primary-hover: #DDFAFD;
             --tertiary-color: #27C1CE;
+            --active-color: #20921e;
+            --inactive-color: #e13333;
         }
 
         section {
@@ -151,7 +153,13 @@
             text-align: center;
         }
 
-        /* position */
+
+        .table th:nth-child(10) button,
+        .table td:nth-child(10) {
+            text-align: center;
+            margin:auto;
+        }
+      
 
         .table th:nth-child(11) button,
         .table td:nth-child(11) {
@@ -159,7 +167,7 @@
             margin:auto;
         }
 
-        /* status */
+ 
         .table th:nth-child(12) button,
         .table td:nth-child(12) {
             text-align: center;
@@ -211,77 +219,90 @@
         .table th:nth-child(1),
         .table td:nth-child(1) {
             width:50px;
+            width:auto;
         }
 
         /* image  */
         .table th:nth-child(2),
         .table td:nth-child(2) {
             width:60px;
+            width:auto;
         }
 
         /* first name */
         .table th:nth-child(3),
         .table td:nth-child(3) {
             width:130px;
+            width:auto;
         }
 
         /* middle name */
         .table th:nth-child(4),
         .table td:nth-child(4) {
             width:140px;
+            width:auto;
         }
 
         /* last name */
         .table th:nth-child(5),
         .table td:nth-child(5) {
             width:130px;
+            width:auto;
         }
 
         /* employee id */
         .table th:nth-child(6),
         .table td:nth-child(6) {
             width:150px;
+            width:auto;
         }
 
         /* email address */
         .table th:nth-child(7),
         .table td:nth-child(7) {
             width:120px;
+            width:auto;
         }
 
         /* company */
         .table th:nth-child(8),
         .table td:nth-child(8) {
             width:150px;
+            width:auto;
         }
 
         /* hire location */
         .table th:nth-child(9),
         .table td:nth-child(9) {
             width:150px;
+            width:auto;
         }
 
         /* hire date */
         .table th:nth-child(10),
         .table td:nth-child(10) {
             width:100px;
+            width:auto;
         }
         /* position */
         .table th:nth-child(11),
         .table td:nth-child(11) {
             width:100px;
+            width:auto;
         }
 
         /* status */
         .table th:nth-child(12),
         .table td:nth-child(12) {
             width:100px;
+            width:auto;
         }
 
         /* action */
         .table th:nth-child(13),
         .table td:nth-child(13) {
             width:100px;
+            width:auto;
         }
 
         /* End of Table Column Widths  */
@@ -407,11 +428,11 @@
             border: 2px solid var(--stroke-color);
         }
 
-        .status {
-            color: white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--stroke-color);
+        .status{
+            color:white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid rgba(0,0,0,0.3);
         }
 
         .th-sort {
@@ -848,50 +869,59 @@
             </div>
         </div>
 
+
         <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
-            @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
-                <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
-                <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
-                    Actions</button>
+                @if(App\Helpers\CommonHelpers::isCreate())
+                
+                    <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
 
-                <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
-                    <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
-                        <i class="fa-solid fa-user-check mx-2"></i>
-                        <p>Set to Active </p>
-                    </button>
+                @endif
 
-                    <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
-                        <i class="fa-solid fa-user-xmark mx-2"></i>
-                        <p>Set to Inactive </p>
-                    </button>
-                </div>
-            
-                {{-- BULK ACTIONS MODAL --}}
-                <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
-                    <!-- Modal backdrop -->
-                    <div class="modal-backdrop" x-on:click="openBulkModal = false">
+                @if(App\Helpers\CommonHelpers::isUpdate())
+
+                    <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
+                        Actions</button>
+
+                    <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
+                        <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
+                            <i class="fa-solid fa-user-check mx-2"></i>
+                            <p>Set to Active </p>
+                        </button>
+
+                        <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
+                            <i class="fa-solid fa-user-xmark mx-2"></i>
+                            <p>Set to Inactive </p>
+                        </button>
                     </div>
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <div class="modal-header">
+                
+                    {{-- BULK ACTIONS MODAL --}}
+                    <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
+                        <!-- Modal backdrop -->
+                        <div class="modal-backdrop" x-on:click="openBulkModal = false">
                         </div>
-                        <div class="modal-body">
-                            <!-- Modal content goes here -->
-                            <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <p>Are you sure that you want to set the selected user to <span x-text="status"></span>?</p>
-                        </div>
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            </div>
+                            <div class="modal-body">
+                                <!-- Modal content goes here -->
+                                <svg class="mx-auto mb-4 w-20 h-20 text-[#319ba5]" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <p>Are you sure that you want to set the selected user to <span x-text="status"></span>?</p>
+                            </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
-                            <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
+                            <div class="modal-footer">
+                                <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
+                                <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
+
+                @endif
+     
 
 
             <div x-data="{openExportModal:false}">
@@ -940,60 +970,69 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
+                        @if(App\Helpers\CommonHelpers::isUpdate())
+                            <th><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
+                        @endif
+
                         <th></th>
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'first_name',
-                            'displayName' => 'First Name',
+                            'displayName' => 'First Name'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'middle_name',
-                            'displayName' => 'Middle Name',
+                            'displayName' => 'Middle Name'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'last_name',
-                            'displayName' => 'Last Name',
+                            'displayName' => 'Last Name'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'employee_id',
-                            'displayName' => 'Employee Id',
+                            'displayName' => 'Employee Id'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'email',
-                            'displayName' => 'Email Address',
+                            'displayName' => 'Email Address'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'company',
-                            'displayName' => 'Company',
+                            'displayName' => 'Company'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'hire_location',
-                            'displayName' => 'Hire Location',
+                            'displayName' => 'Hire Location'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'hire_date',
-                            'displayName' => 'Hire Date',
+                            'displayName' => 'Hire Date'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'position',
                             'displayName' => 'Position',
+                            'addClass' => 'mx-auto'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'status',
                             'displayName' => 'Status',
+                            'addClass' => 'mx-auto'
                         ])
 
+                        @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
+                        
                         <th>Action</th>
+
+                        @endif
                     </tr>
                 </thead>
 
@@ -1002,14 +1041,16 @@
                     @foreach ($users as $user)
                         <tr wire:key="{{ $user->id }}">
 
-                            @if ($selectedAll)
-                                <td>
-                                    <input type="checkbox" value="{{ $user->id }}" checked>
-                                </td>
-                            @else
-                                <td>
-                                    <input type="checkbox" wire:model="userIds" value="{{ $user->id }}">
-                                </td>
+                            @if(App\Helpers\CommonHelpers::isUpdate())
+                                @if ($selectedAll)
+                                    <td>
+                                        <input type="checkbox" value="{{ $user->id }}" checked>
+                                    </td>
+                                @else
+                                    <td>
+                                        <input type="checkbox" wire:model="userIds" value="{{ $user->id }}">
+                                    </td>
+                                @endif
                             @endif
 
                             <td><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
@@ -1025,21 +1066,32 @@
                             <td>{{ $user->hire_date }}</td>
                             <td><span class="role">{{ $user->position }}</span></td>
                             {{-- <td><span class="role">Employee</span></td> --}}
+
                             <td><span class="status"
-                                    @style([$user->status ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
+                                    @style([$user->status ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
+
+                     
+
+                            @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
+
                             <td>
                              
                                     <div class="tbl-btns">
-                                        <a role="button" href="{{ route('employee.show', $user->id) }}"
-                                            class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
-                                            @if(in_array(App\Helpers\CommonHelpers::myPrivilegeId(),[1]))
-                                             <a role="button" href="{{ route('employee.edit', $user->id) }}"
+                                        @if(App\Helpers\CommonHelpers::isRead())
+                                            <a role="button" href="{{ route('employee.show', $user->id) }}"
+                                                class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
+                                        @endif
+
+                                        @if(App\Helpers\CommonHelpers::isUpdate())
+                                            <a role="button" href="{{ route('employee.edit', $user->id) }}"
                                                 class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
-                                            @endif
+                                        @endif
                                     </div>
                               
                             </td>
+
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

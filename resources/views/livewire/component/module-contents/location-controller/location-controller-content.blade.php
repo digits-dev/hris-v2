@@ -7,18 +7,21 @@
      
     /* Table Column Widths  */
 
-    /* 1st Col  */
-    .table th:nth-child(1), .table td:nth-child(1){
+    /* 1st Col  */ 
+     .table th:nth-child(1), .table td:nth-child(1){
         width: 20%;
+        width: auto;
     }
 
     /* 2nd Col */
     .table th:nth-child(2), .table td:nth-child(2){
         width: 10%;
+        width: auto;
     }
     /* 3rd Col */
     .table th:nth-child(3), .table td:nth-child(3){
         width: 10%;
+        width: auto;
     }
 
     /* End of Table Column Widths  */
@@ -111,8 +114,11 @@
                 </div>
             </div>
 
-            <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.location_name = null">Add New Location</a>
+            @if(App\Helpers\CommonHelpers::isCreate())
+
+                <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.location_name = null">Add New Location</a>
         
+            @endif
         </div>
 
         @if (count($locations) == 0)
@@ -130,7 +136,12 @@
                     ['colName'=>'location_name', 'displayName' => 'Location Name' ])
 
                     <th>Status</th>
+
+                    @if(App\Helpers\CommonHelpers::isUpdate())
+
                     <th>Action</th>
+
+                    @endif
                 </tr>
                 </thead>
 
@@ -141,13 +152,17 @@
                         <tr>
                             <td>{{ $location->location_name }}</td>
                             <td>
+                      
                             <span class="status"
-                                @style([$location->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
-                                {{ $location->status }}
+                                @style([$location->status == "ACTIVE" ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
+                                {{ $location->status == "ACTIVE" ? 'Active' : 'Inactive'}}
                             </span>
 
                             </td>
-                            <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$location->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+
+                            @if(App\Helpers\CommonHelpers::isUpdate())
+                                <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$location->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

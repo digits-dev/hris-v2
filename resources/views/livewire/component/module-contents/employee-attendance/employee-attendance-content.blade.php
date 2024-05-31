@@ -795,7 +795,9 @@
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
                     ['colName'=>'total_time_filo_diff', 'displayName' => 'FILO Duration' ])
 
-                    <th>Action</th>
+                    @if(App\Helpers\CommonHelpers::isRead())
+                        <th>Action</th>
+                    @endif
         
                  </tr>
                 </thead>
@@ -850,13 +852,16 @@
                             <td>{{ $employeeLog->date }}</td>
                             <td>{{ $employeeLog->total_time_bio_diff }}</td>
                             <td>{{ $employeeLog->total_time_filo_diff }}</td>
-                            <td>
-                                <div class="tbl-btns">
-                                    <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
-                                        class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
-                                </div>
 
-                            </td>
+                            @if(App\Helpers\CommonHelpers::isRead())
+                                <td>
+                                    <div class="tbl-btns">
+                                        <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
+                                            class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
+                                    </div>
+
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

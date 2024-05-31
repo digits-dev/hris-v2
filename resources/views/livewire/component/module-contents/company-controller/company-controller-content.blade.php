@@ -10,15 +10,18 @@
     /* 1st Col  */
     .table th:nth-child(1), .table td:nth-child(1){
         width: 20%;
+        width: auto;
     }
 
     /* 2nd Col */
     .table th:nth-child(2), .table td:nth-child(2){
         width: 10%;
+        width: auto;
     }
     /* 3rd Col */
     .table th:nth-child(3), .table td:nth-child(3){
         width: 10%;
+        width: auto;
     }
 
     /* End of Table Column Widths  */
@@ -110,8 +113,9 @@
                 </div>
             </div>
 
-            <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.company_name = null">Add New Company</a>
-        
+            @if(App\Helpers\CommonHelpers::isCreate())
+              <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.company_name = null">Add New Company</a>
+            @endif
         </div>
 
         @if (count($companies) == 0)
@@ -129,7 +133,10 @@
                     ['colName'=>'company_name', 'displayName' => 'Company Name' ])
 
                     <th>Status</th>
-                    <th>Action</th>
+
+                    @if(App\Helpers\CommonHelpers::isUpdate())
+                        <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
         
@@ -138,14 +145,17 @@
                         <tr>
                             <td>{{ $company->company_name }}</td>
                             <td>
+                   
                             <span class="status"
-                                @style([$company->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
-                                {{ $company->status }}
+                                @style([$company->status == "ACTIVE" ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
+                                {{ $company->status == "ACTIVE" ? 'Active' : 'Inactive'}}
                             </span>
 
                             </td>
-                            <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$company->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
-            
+                            
+                            @if(App\Helpers\CommonHelpers::isUpdate())
+                                <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$company->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

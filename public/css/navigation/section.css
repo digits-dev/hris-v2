@@ -5,7 +5,10 @@
     --primary-text: #113437;
     --primary-hover: #DDFAFD;
     --tertiary-color: #27C1CE;
+    --active-color: #20921e;
+    --inactive-color: #e13333;
 }
+
 
 section {
     margin: 1rem 2.5rem;
@@ -120,8 +123,8 @@ section {
     color: var(--primary-text);
     font-weight: 500;
     font-family: "Inter", sans-serif;
-    padding: 10px;
-    font-size: 12px;
+    padding: 15px;
+    font-size: 13px;
 }
 
 
@@ -205,9 +208,9 @@ input[type="checkbox"]:checked::after {
 .status{
     background: var(--tertiary-color);
     color:white;
-    padding: 5px 20px;
-    border-radius: 15px;
-    border: 2px solid var(--stroke-color);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 2px solid rgba(0,0,0,0.3);
 }
 
 .th-sort{

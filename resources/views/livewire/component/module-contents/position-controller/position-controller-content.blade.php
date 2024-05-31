@@ -7,20 +7,23 @@
      
     /* Table Column Widths  */
 
-    /* 1st Col  */
+  
+    /* 1st Col  */ 
     .table th:nth-child(1), .table td:nth-child(1){
         width: 20%;
+        width: auto;
     }
 
     /* 2nd Col */
     .table th:nth-child(2), .table td:nth-child(2){
         width: 10%;
+        width: auto;
     }
     /* 3rd Col */
     .table th:nth-child(3), .table td:nth-child(3){
         width: 10%;
+        width: auto;
     }
-
     /* End of Table Column Widths  */
 
     .table{
@@ -111,8 +114,9 @@
                 </div>
             </div>
 
-            <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.position_name = null">Add New Position</a>
-        
+            @if(App\Helpers\CommonHelpers::isCreate())
+                <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.position_name = null">Add New Position</a>
+            @endif
         </div>
 
         @if (count($positions) == 0)
@@ -130,23 +134,28 @@
                     ['colName'=>'position_name', 'displayName' => 'Position Name' ])
 
                     <th>Status</th>
-                    <th>Action</th>
+
+                    @if(App\Helpers\CommonHelpers::isUpdate())
+                        <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
         
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($positions as $position)
-                        <tr>
+                        <tr >
                             <td>{{ $position->position_name }}</td>
                             <td>
                             <span class="status"
-                                @style([$position->status == "ACTIVE" ? 'background: var(--tertiary-color)' : 'background: #FF6174'])>
-                                {{ $position->status }}
+                                @style([$position->status == "ACTIVE" ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
+                                {{ $position->status == "ACTIVE" ? 'Active' : 'Inactive'}}
                             </span>
 
                             </td>
-                            <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$position->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
-            
+
+                            @if(App\Helpers\CommonHelpers::isUpdate())
+                                <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$position->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
