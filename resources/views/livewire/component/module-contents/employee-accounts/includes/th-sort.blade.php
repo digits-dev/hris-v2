@@ -1,6 +1,6 @@
 
-<th scope="col" >
-    <button class="flex items-center gap-2 "  wire:click="setSortBy('{{ $colName }}')">
+<th scope="col"  class="{{$class}}">
+    <button class="flex items-center gap-2"  wire:click="setSortBy('{{ $colName }}')">
         {{ $displayName }}
 
         @if ($sortBy !== $colName)

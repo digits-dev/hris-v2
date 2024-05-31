@@ -1,4 +1,4 @@
-<th scope="col" >
+<th scope="col" class="{{$class}}" >
     <button class="flex items-center gap-2"  wire:click="setSortBy('{{ $colName }}')">
         {{ $displayName }}
 

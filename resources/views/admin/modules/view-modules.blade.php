@@ -1,5 +1,5 @@
 @extends('layout')
-<link rel="stylesheet" href="{{ asset('css/navigation/section.css') }}">
+<link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 @section('content')
     <section>
         <div class="main-container">

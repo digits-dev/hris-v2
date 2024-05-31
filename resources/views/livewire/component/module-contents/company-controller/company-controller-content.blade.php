@@ -1,7 +1,7 @@
 
 @section('css')
 
-    <link rel="stylesheet" href="{{ asset('css/navigation/section.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
      
@@ -154,7 +154,7 @@
                             </td>
                             
                             @if(App\Helpers\CommonHelpers::isUpdate())
-                                <td><a role="button" class="table-btn table-btn--green" x-on:click="$wire.editForm({{$company->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
+                                <td><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="$wire.editForm({{$company->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
                             @endif
                         </tr>
                     @endforeach

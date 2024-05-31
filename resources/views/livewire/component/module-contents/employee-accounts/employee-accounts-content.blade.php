@@ -1,135 +1,9 @@
 @section('css')
+
+    <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
+
     <style>
-        :root {
-            --primary-color: #1F6268;
-            --stroke-color: #599297;
-            --secondary-color: #cbfaff;
-            --primary-text: #113437;
-            --primary-hover: #DDFAFD;
-            --tertiary-color: #27C1CE;
-            --active-color: #20921e;
-            --inactive-color: #e13333;
-        }
-
-        section {
-            margin: 1rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .module {
-            font-size: 20px;
-            font-weight: bold;
-            font-family: "Inter", sans-serif;
-        }
-
-        .pagination {
-            margin-top: auto;
-        }
-
-        .inter {
-            font-family: "Inter", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: bold;
-            font-style: normal;
-            font-variation-settings:
-                "slnt" 0;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        @media screen and (min-width: 1100px) {
-            .header {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-        }
-
-        .header__left-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            width: 100%;
-            max-width: 550px;
-        }
-
-        .search-form {
-            border-radius: 8px;
-            display: flex;
-            gap: 5px;
-            border: 1px solid var(--stroke-color);
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .search-form__label {
-            background: var(--primary-color);
-            color: white;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 3px;
-            border-top-right-radius: unset;
-            border-bottom-right-radius: unset;
-            border: 1px solid var(--stroke-color);
-            border-right: 2px solid var(--stroke-color);
-            font-weight: 500;
-            font-family: "Inter", sans-serif;
-            display: grid;
-            place-content: center;
-
-        }
-
-        .search-form__input {
-            padding: 10px;
-            outline: none;
-            border: none;
-            font-weight: normal;
-            font-size: 14px;
-            flex: 1;
-        }
-
-
-        .custom-select {
-            position: relative;
-            width: 65px;
-            min-width: 65px;
-            height: 40px;
-        }
-
-        .custom-select select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding: 9px;
-            font-size: 14px;
-            outline: none;
-            font-family: "Inter", sans-serif;
-            border: 1px solid var(--stroke-color);
-            color: var(--primary-color);
-            border-radius: 8px;
-            background-color: #fff;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .arrow-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-20%);
-            width: 10px;
-            height: 10px;
-            pointer-events: none;
-        }
-
+       
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -146,301 +20,73 @@
             text-align: left;
         }
 
-        /* checkbox */
-
-        .table th:nth-child(1),
-        .table td:nth-child(1) {
-            text-align: center;
-        }
-
-
-        .table th:nth-child(10) button,
-        .table td:nth-child(10) {
-            text-align: center;
-            margin:auto;
-        }
-      
-
-        .table th:nth-child(11) button,
-        .table td:nth-child(11) {
-            text-align: center;
-            margin:auto;
-        }
-
- 
-        .table th:nth-child(12) button,
-        .table td:nth-child(12) {
-            text-align: center;
-            margin: auto;
-        }
-
-        .table thead {
-            background: var(--secondary-color);
-
-        }
-
-        .table th {
-            color: var(--primary-text);
-            font-weight: bold;
-            font-family: "Inter", sans-serif;
-            padding: 12px 10px;
-            font-size: 13px;
-            box-sizing: border-box;
-        }
-
-        .table thead tr {
-            border-bottom: unset;
-            border-radius: 10px;
-        }
-
-        .table tr {
-            color: var(--primary-text);
-            font-weight: 600;
-            font-family: "Inter", sans-serif;
-            border-bottom: 0.1px solid var(--stroke-color);
-        }
-
-        .table tbody tr:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .table td {
-            color: var(--primary-text);
-            font-weight: 500;
-            font-family: "Inter", sans-serif;
-            padding: 10px;
-            font-size: 12px;
-            box-sizing: border-box;
-        }
-
+       
         /* Table Column Widths  */
-
-        /* checkbox  */
-        .table th:nth-child(1),
-        .table td:nth-child(1) {
+        .checkbox-col {
             width:50px;
-            width:auto;
+            text-align: center;
         }
-
-        /* image  */
-        .table th:nth-child(2),
-        .table td:nth-child(2) {
+        .image-col{
             width:60px;
-            width:auto;
         }
-
-        /* first name */
-        .table th:nth-child(3),
-        .table td:nth-child(3) {
+    
+        .first-name-col {
             width:130px;
-            width:auto;
         }
 
-        /* middle name */
-        .table th:nth-child(4),
-        .table td:nth-child(4) {
+        .middle-name-col {
             width:140px;
-            width:auto;
         }
 
-        /* last name */
-        .table th:nth-child(5),
-        .table td:nth-child(5) {
+        .last-name-col {
             width:130px;
-            width:auto;
         }
 
-        /* employee id */
-        .table th:nth-child(6),
-        .table td:nth-child(6) {
+        .employee-id-col {
             width:150px;
-            width:auto;
         }
 
-        /* email address */
-        .table th:nth-child(7),
-        .table td:nth-child(7) {
+        .email-col {
             width:120px;
-            width:auto;
         }
 
-        /* company */
-        .table th:nth-child(8),
-        .table td:nth-child(8) {
+        .company-col {
             width:150px;
-            width:auto;
         }
 
-        /* hire location */
-        .table th:nth-child(9),
-        .table td:nth-child(9) {
+        .hire-location-col {
             width:150px;
-            width:auto;
         }
 
-        /* hire date */
-        .table th:nth-child(10),
-        .table td:nth-child(10) {
+        .hire-date-col {
             width:100px;
-            width:auto;
         }
-        /* position */
-        .table th:nth-child(11),
-        .table td:nth-child(11) {
-            width:100px;
-            width:auto;
+        .position-col {
+            width:150px;
+            text-align: center;
+            button{
+                margin:auto;
+            }
         }
 
-        /* status */
-        .table th:nth-child(12),
-        .table td:nth-child(12) {
+        .status-col {
             width:100px;
-            width:auto;
+            text-align: center;
+
+            button{
+                margin:auto;
+            }
         }
 
-        /* action */
-        .table th:nth-child(13),
-        .table td:nth-child(13) {
+        .action-col {
             width:100px;
-            width:auto;
         }
 
         /* End of Table Column Widths  */
 
-        .table input {
-            display: inline-block;
-        }
+       
 
-        ::placeholder {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        .primary-btn {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 12px;
-            border: 2px solid var(--stroke-color);
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .primary-btn:hover {
-            opacity: 0.9;
-        }
-
-        .secondary-btn {
-            background-color: white;
-            color: var(--primary-color);
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 12px;
-            border: 1px solid var(--stroke-color);
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .secondary-btn:hover {
-            background: var(--primary-hover);
-            opacity: 0.9;
-        }
-
-        input[type="checkbox"] {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-color: white;
-            appearance: none;
-            margin-top: 5px;
-            width: 15px;
-            height: 15px;
-            border: 2px solid var(--stroke-color);
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-        }
-
-        /* Custom checkbox when checked */
-        input[type="checkbox"]:checked {
-            background-color: var(--primary-color);
-            padding: 5px;
-
-        }
-
-        /* Custom checkbox when checked - checkmark */
-        input[type="checkbox"]:checked::after {
-            content: "\2714";
-            color: white;
-            font-size: 8px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            visibility: hidden;
-        }
-
-        input[type="checkbox"]:checked::after {
-            visibility: visible;
-        }
-
-        .tbl-btns {
-            display: flex;
-        }
-
-        .table-btn {
-            height: 25px;
-            width: 25px;
-            border-radius: 5px;
-            display: grid;
-            place-content: center;
-            font-size: 10px;
-            color: white;
-            border: 2px solid var(--secondary-color);
-        }
-
-        .table-btn--blue {
-            background: #2196F3;
-        }
-
-        .table-btn--green {
-            background: #0F901B;
-        }
-
-        .user-img {
-            display: block;
-            width: 30px;
-            height: 30px;
-            margin: auto;
-            border-radius: 100%;
-            overflow: hidden;
-            object-fit: cover;
-            display: grid;
-            place-content: center;
-        }
-
-        .role {
-            background: var(--primary-color);
-            color: white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--stroke-color);
-        }
-
-        .status{
-            color:white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 2px solid rgba(0,0,0,0.3);
-        }
-
-        .th-sort {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+        /* modals */
 
         .bulk-popup {
             display: flex;
@@ -752,8 +398,8 @@
 @endsection
 
 <section>
-    <div class="header ">
-        <div class="header__left-container">
+    <div class="section-header ">
+        <div class="section-header__left-container">
             <div class="search-form">
                 <label for="search-input" class="search-form__label ">Search</label>
                 <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input" placeholder="Search User" id="search-input">
@@ -860,7 +506,6 @@
                             <div class="filter-modal-footer">
                                 <button type="button" class="secondary-btn"x-on:click="openFilterModal = false">Cancel</button>
                                 <button type="submit" class="primary-btn"x-on:click="openFilterModal = false; $wire.resetPage()">Search</button>  
-                                <!-- Additional buttons or actions -->
                             </div>
                         </form>
                     </div>
@@ -870,7 +515,7 @@
         </div>
 
 
-        <div class="flex items-center gap-2 relative " x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
+        <div class="section-header__right-container" x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
                 @if(App\Helpers\CommonHelpers::isCreate())
                 
                     <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
@@ -971,66 +616,74 @@
                 <thead>
                     <tr>
                         @if(App\Helpers\CommonHelpers::isUpdate())
-                            <th><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
+                            <th class="checkbox-col"><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
                         @endif
 
                         <th></th>
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'first_name',
-                            'displayName' => 'First Name'
+                            'displayName' => 'First Name',
+                            'class' => 'first-name-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'middle_name',
-                            'displayName' => 'Middle Name'
+                            'displayName' => 'Middle Name',
+                            'class' => 'middle-name-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'last_name',
-                            'displayName' => 'Last Name'
+                            'displayName' => 'Last Name',
+                            'class' => 'last-name-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'employee_id',
-                            'displayName' => 'Employee Id'
+                            'displayName' => 'Employee Id',
+                            'class' => 'employee-id-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'email',
-                            'displayName' => 'Email Address'
+                            'displayName' => 'Email Address',
+                            'class' => 'email-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'company',
-                            'displayName' => 'Company'
+                            'displayName' => 'Company',
+                            'class' => 'company-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'hire_location',
-                            'displayName' => 'Hire Location'
+                            'displayName' => 'Hire Location',
+                            'class' => 'hire-location-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'hire_date',
-                            'displayName' => 'Hire Date'
+                            'displayName' => 'Hire Date',
+                            'class' => 'hire-date-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'position',
                             'displayName' => 'Position',
-                            'addClass' => 'mx-auto'
+                            'class' => 'position-col'
                         ])
 
                         @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
                             'colName' => 'status',
                             'displayName' => 'Status',
-                            'addClass' => 'mx-auto'
+                            'class' => 'status-col'
                         ])
 
                         @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
                         
-                        <th>Action</th>
+                            <th class="action-col">Action</th>
 
                         @endif
                     </tr>
@@ -1043,31 +696,29 @@
 
                             @if(App\Helpers\CommonHelpers::isUpdate())
                                 @if ($selectedAll)
-                                    <td>
+                                    <td class="checkbox-col">
                                         <input type="checkbox" value="{{ $user->id }}" checked>
                                     </td>
                                 @else
-                                    <td>
+                                    <td class="checkbox-col">
                                         <input type="checkbox" wire:model="userIds" value="{{ $user->id }}">
                                     </td>
                                 @endif
                             @endif
 
-                            <td><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
+                            <td class="image-col"><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
                                     alt="{{ $user->last_name }} picture"></td>
                                     
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->middle_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->employee_id }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->company }}</td>
-                            <td>{{ $user->hire_location }}</td>
-                            <td>{{ $user->hire_date }}</td>
-                            <td><span class="role">{{ $user->position }}</span></td>
-                            {{-- <td><span class="role">Employee</span></td> --}}
-
-                            <td><span class="status"
+                            <td class="first-name-col">{{ $user->first_name }}</td>
+                            <td class="middle-name-col">{{ $user->middle_name }}</td>
+                            <td class="last-name-col">{{ $user->last_name }}</td>
+                            <td class="employee-id-col">{{ $user->employee_id }}</td>
+                            <td class="email-col">{{ $user->email }} </td>
+                            <td class="company-col">{{ $user->company }}s</td>
+                            <td class="hire-location-col">{{ $user->hire_location }}</td>
+                            <td class="hire-date-col">{{ $user->hire_date }}</td>
+                            <td class="position-col"><span class="role">{{ $user->position }}</span></td>
+                            <td class="status-col"><span class="status"
                                     @style([$user->status ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
 
@@ -1075,9 +726,9 @@
 
                             @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
 
-                            <td>
+                                <td class="action-col">
                              
-                                    <div class="tbl-btns">
+                                    <div class="table-btns">
                                         @if(App\Helpers\CommonHelpers::isRead())
                                             <a role="button" href="{{ route('employee.show', $user->id) }}"
                                                 class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
@@ -1089,7 +740,7 @@
                                         @endif
                                     </div>
                               
-                            </td>
+                                </td>
 
                             @endif
                         </tr>
@@ -1102,7 +753,6 @@
 
     <div class="pagination">
         {{ $users->links() }}
-
     </div>
 
 </section>

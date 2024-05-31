@@ -17,31 +17,40 @@ section {
     height: 100%;
 }
 
-.module {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: "Inter", sans-serif;
-
-}
-
 .pagination{
     margin-top: auto;
 }
 
-.inter {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
-    font-variation-settings:
-        "slnt" 0;
-}
 
-
-.header {
+.section-header {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     justify-content: space-between;
     align-items: center;
+}
+
+@media screen and (min-width: 1100px) {
+    .section-header {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.section-header__left-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    max-width: 550px;
+}
+
+.section-header__right-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 
@@ -86,7 +95,6 @@ section {
     width: 100%;
     margin: 30px 0;
     gap: 0;
-    /* border: 1px solid black; */
     border-collapse: collapse;
     text-align: left;
 }
@@ -100,7 +108,7 @@ section {
     color: var(--primary-text);
     font-weight: bold;
     font-family: "Inter", sans-serif;
-    padding: 12px 10px;
+    padding: 12px 15px;
     font-size:13px;
 }
 
@@ -109,24 +117,20 @@ section {
     border-radius: 10px;
 }
 
-.table tr{
+.table tbody tr{
     color: var(--primary-text);
-    font-weight: 600;
+    font-weight: 500;
     font-family: "Inter", sans-serif;
     border-bottom: 0.1px solid var(--stroke-color);
+    font-size: 13px;
 }
 .table tbody tr:hover{
     background-color: var(--primary-hover);
 }
 
 .table td{
-    color: var(--primary-text);
-    font-weight: 500;
-    font-family: "Inter", sans-serif;
     padding: 15px;
-    font-size: 13px;
 }
-
 
 .table input {
     display: inline-block;
@@ -168,8 +172,9 @@ input[type="checkbox"]:checked::after {
     transform: translate(-50%, -50%);
 }
 
-.tbl-btns{
+.table-btns{
     display: flex;
+    gap:2px;
 }
 .table-btn{
     height: 25px;
@@ -180,7 +185,6 @@ input[type="checkbox"]:checked::after {
     font-size: 10px;
     color: white;
     border: 2px solid var(--secondary-color);
-    margin:auto;
 }
 
 .table-btn--red{
@@ -189,12 +193,19 @@ input[type="checkbox"]:checked::after {
 .table-btn--green{
     background: #0F901B;
 }
+.table-btn--blue {
+    background: #2196F3;
+}
+
 
 .user-img{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
+    display: block;
+    width: 35px;
+    height: 35px;
     margin: auto;
+    border-radius: 100%;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .role{
@@ -213,12 +224,6 @@ input[type="checkbox"]:checked::after {
     border: 2px solid rgba(0,0,0,0.3);
 }
 
-.th-sort{
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-}
 
 .primary-btn {
     background-color: var(--primary-color);
@@ -254,7 +259,6 @@ input[type="checkbox"]:checked::after {
 .error-text {
     color: rgb(250, 48, 48);
 }
-
 
 .custom-select {
     position: relative;

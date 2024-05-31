@@ -1,136 +1,9 @@
 @section('css')
+
+    <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
+
     <style>
-        :root {
-            --primary-color: #1F6268;
-            --stroke-color: #599297;
-            --secondary-color: #cbfaff;
-            --primary-text: #113437;
-            --primary-hover: #DDFAFD;
-            --tertiary-color: #27C1CE;
-
-
-        }
-
-        section {
-            margin: 1rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .module {
-            font-size: 20px;
-            font-weight: bold;
-            font-family: "Inter", sans-serif;
-
-        }
-
-        .pagination{
-            margin-top: auto;
-        }
-
-        .inter {
-            font-family: "Inter", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: bold;
-            font-style: normal;
-            font-variation-settings:
-                "slnt" 0;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        @media screen and (min-width: 1100px) {
-            .header {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-        }
-
-        .header__left-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            width: 100%;
-            max-width: 550px;
-        }
-
-        .search-form {
-            border-radius: 8px;
-            display: flex;
-            gap: 5px;
-            border: 1px solid var(--stroke-color);
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .search-form__label {
-            background: var(--primary-color);
-            color: white;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 3px;
-            border-top-right-radius: unset;
-            border-bottom-right-radius: unset;
-            border: 1px solid var(--stroke-color);
-            border-right: 2px solid var(--stroke-color);
-            font-weight: 500;
-            font-family: "Inter", sans-serif;
-            display: grid;
-            place-content: center;
-
-        }
-
-        .search-form__input {
-            padding: 10px;
-            outline: none;
-            border: none;
-            font-weight: normal;
-            font-size: 14px;
-            flex: 1;
-        }
-
-        .custom-select {
-            position: relative;
-            width: 65px;
-            min-width: 65px;
-            height: 40px;
-        }
-
-        .custom-select select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding: 9px;
-            font-size: 14px;
-            outline: none;
-            font-family: "Inter", sans-serif;
-            border: 1px solid var(--stroke-color);
-            color: var(--primary-color);
-            border-radius: 8px;
-            background-color: #fff;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .arrow-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-20%);
-            width: 10px;
-            height: 10px;
-            pointer-events: none;
-        }
-
-
+      
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -146,276 +19,78 @@
             border-collapse: collapse;
         }
 
-        /* table column alignment */
-
-        /* time in */
-
-        .table th:nth-child(7) button,
-        .table td:nth-child(7) {
-            text-align: center;
-            margin: auto;
+        /* Override section table css */
+        @media screen and (min-width: 800px) {
+            .section-header {
+                flex-direction: row;
+                align-items: flex-start;
+            }
 
         }
-
-        /* time out */
-
-        .table th:nth-child(8) button,
-        .table td:nth-child(8) {
-            text-align: center;
-            margin: auto;
-
-        }
-
-        /* date */
-        .table th:nth-child(9) button,
-        .table td:nth-child(9) {
-            text-align: center;
-            margin: auto;
-        }
-
-        /* bio duration */
-        .table th:nth-child(10) button,
-        .table td:nth-child(10) {
-            text-align: center;
-            margin: auto;
-        }
-        /* filo duration */
-        .table th:nth-child(11) button,
-        .table td:nth-child(11) {
-            text-align: center;
-            margin: auto;
-        }
-        /* bio duration */
-        .table th:nth-child(12) button,
-        .table td:nth-child(12) {
-            text-align: center;
-            margin: auto;
-        }
-
-        /* end of table column alignment */
-
-        .table thead {
-            background: var(--secondary-color);
-        }
-
-        .table th {
-            color: var(--primary-text);
-            font-weight: bold;
-            font-family: "Inter", sans-serif;
-            padding: 12px 10px;
-            font-size:13px;
-        }
-
-        .table thead tr{
-            border-bottom: unset;
-            border-radius: 10px;
-        }
-
-        .table tr{
-            color: var(--primary-text);
-            font-weight: 600;
-            font-family: "Inter", sans-serif;
-            border-bottom: 0.1px solid var(--stroke-color);
-        }
-        .table tbody tr:hover{
-            background-color: var(--primary-hover);
-        }
-
-        .table td{
-            color: var(--primary-text);
-            font-weight: 500;
-            font-family: "Inter", sans-serif;
-            padding: 10px;
-            font-size: 12px;
-        }
-
         /* Table Column Widths  */
 
-        /* first name  */
-        .table th:nth-child(1), .table td:nth-child(1){
+        .first-name-col {
            width: 150px;
         }
-    
-        /* middle name  */
-        .table th:nth-child(2), .table td:nth-child(2){
+        .middle-name-col {
             width: 150px;
         }
-        /* last name  */
-        .table th:nth-child(3), .table td:nth-child(3){
+        .last-name-col {
             width: 150px;
         }
-        /* company  */
-        .table th:nth-child(4), .table td:nth-child(4){
+        .company-col {
             width: 180px;
         }
-        /* hire location  */
-        .table th:nth-child(5), .table td:nth-child(5){
+        .hire-location-col {
             width: 180px;
         }
-        /* time in locations  */
-        .table th:nth-child(6), .table td:nth-child(6){
+        .time-in-locations-col {
             width: 180px;
         }
-        /* first time in  */
-        .table th:nth-child(7), .table td:nth-child(7){
+        .first-time-in-col {
             width: 180px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
-        /* last time out  */
-        .table th:nth-child(8), .table td:nth-child(8){
+        .last-time-out-col {
             width: 150px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
-        /* date  */
-        .table th:nth-child(9), .table td:nth-child(9){
+        .date-col {
             width: 120px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
-        /* bio duration  */
-        .table th:nth-child(10), .table td:nth-child(10){
+        .bio-duration-col {
             width: 120px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
-        /* filo duration  */
-        .table th:nth-child(11), .table td:nth-child(11){
+        .filo-duration-col {
             width: 120px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
-        /* action  */
-        .table th:nth-child(12), .table td:nth-child(12){
-            width: 120px;
+        .action-col {
+            width: 100px;
+            text-align: center;
+            button{
+                margin: auto;
+            }
         }
 
         /* End of Table Column Widths  */
-        
-        .table input {
-            display: inline-block;
-        }
-
-        ::placeholder {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        input[type="checkbox"] {
-            -webkit-appearance: none; /* Remove default appearance */
-            -moz-appearance: none;
-            background-color: white; /* Background color when checked */
-            appearance: none;
-            margin-top: 5px;
-            width: 15px;
-            height: 15px;
-            border: 2px solid var(--stroke-color); /* Default border color */
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-        }
-        /* Custom checkbox when checked */
-        input[type="checkbox"]:checked {
-            background-color:var(--primary-color); /* Background color when checked */
-            padding: 5px;
-
-        }
-        /* Custom checkbox when checked - checkmark */
-        input[type="checkbox"]:checked::after {
-            content: "\2714"; /* Checkmark symbol */
-            color: white; /* Color of the checkmark */
-            font-size: 8px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .tbl-btns{
-            display: flex;
-            justify-content: center;
-        }
-        .table-btn{
-            height: 25px;
-            width: 25px;
-            border-radius: 5px;
-            display: grid;
-            place-content: center;
-            font-size: 10px;
-            color: white;
-            border: 2px solid var(--secondary-color);
-        }
-
-
-        .table-btn--blue {
-            background: #2196F3;
-        }
-
-
-        .user-img{
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            margin: auto;
-        }
-
-        .role{
-            background: var(--primary-color);
-            color:white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--stroke-color);
-        }
-
-        .status{
-            background: var(--tertiary-color);
-            color:white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--stroke-color);
-        }
-
-    .th-sort{
-     display: flex; 
-     align-items: center;
-     justify-content: center;
-     gap:10px;
-    }
- 
-    .no-data-container {
-            width: 100%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 40px;
-            background-color: rgb(243 244 246);
-            font-weight: 600;
-            border-radius: 5px;
-            color: var(--primary-color);
-            font-family: "Inter", sans-serif;
-    }
-
-    .primary-btn {
-        background-color: var(--primary-color);
-        color: white;
-        font-weight: 600;
-        border-radius: 8px;
-        font-size: 12px;
-        border: 2px solid var(--stroke-color);
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-
-    .primary-btn:hover {
-        opacity: 0.9;
-    }
-
-    .secondary-btn {
-            background-color: white;
-            color: var(--primary-color);
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 12px;
-            border: 1px solid var(--stroke-color);
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-    .secondary-btn:hover {
-        background: var(--primary-hover);
-        opacity: 0.9;
-    }
 
      /* FOR FILTER MODAL */
 
@@ -612,8 +287,8 @@
 @endsection
 
 <section>
-    <div class="header ">
-        <div class="header__left-container">
+    <div class="section-header ">
+        <div class="section-header__left-container">
             <div class="search-form">
                 <label for="search-input" class="search-form__label ">Search</label>
                 <input wire:model.live.debounce.300ms="search" type="text" class="search-form__input "
@@ -634,7 +309,7 @@
 
         </div>
 
-        <div class="flex items-center gap-2 relative ">
+        <div class="section-header__right-container">
             <button class="primary-btn" @click="$dispatch('toggle-filter-export-modal', true)">Export</button>
         </div>
     </div>
@@ -761,42 +436,42 @@
                  <tr>
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'first_name', 'displayName' => 'First Name' ])
+                    ['colName'=>'first_name', 'displayName' => 'First Name', 'class' => 'first-name-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'middle_name', 'displayName' => 'Middle Name' ])
+                    ['colName'=>'middle_name', 'displayName' => 'Middle Name', 'class' => 'middle-name-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'last_name', 'displayName' => 'Last Name' ])
+                    ['colName'=>'last_name', 'displayName' => 'Last Name', 'class' => 'last-name-col' ])
 
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'company', 'displayName' => 'Company' ])
+                    ['colName'=>'company', 'displayName' => 'Company', 'class' => 'company-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'hire_location', 'displayName' => 'Hire Location' ])
+                    ['colName'=>'hire_location', 'displayName' => 'Hire Location', 'class' => 'hire-location-col' ])
         
                     {{-- @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
                     ['colName'=>'current_location_id', 'displayName' => 'Time in Location/s' ]) --}}
 
-                    <th class="text-left">Time in Location/s</th>
+                    <th class="text-left time-in-locations-col">Time in Location/s</th>
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'first_clock_in', 'displayName' => 'First Time In' ])
+                    ['colName'=>'first_clock_in', 'displayName' => 'First Time In', 'class' => 'first-time-in-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'last_clock_out', 'displayName' => 'Last Time Out' ])
+                    ['colName'=>'last_clock_out', 'displayName' => 'Last Time Out', 'class' => 'last-time-out-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'date', 'displayName' => 'Date' ])
+                    ['colName'=>'date', 'displayName' => 'Date', 'class' => 'date-col' ])
         
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'total_time_bio_diff', 'displayName' => 'Bio Duration' ])
+                    ['colName'=>'total_time_bio_diff', 'displayName' => 'Bio Duration', 'class' => 'bio-duration-col' ])
 
                     @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'total_time_filo_diff', 'displayName' => 'FILO Duration' ])
+                    ['colName'=>'total_time_filo_diff', 'displayName' => 'FILO Duration', 'class' => 'filo-duration-col' ])
 
                     @if(App\Helpers\CommonHelpers::isRead())
-                        <th>Action</th>
+                        <th class="action-col">Action</th>
                     @endif
         
                  </tr>
@@ -805,14 +480,14 @@
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
-                            <td>{{ $employeeLog->first_name }}</td>
-                            <td>{{ $employeeLog->middle_name }}</td>
-                            <td>{{ $employeeLog->last_name }}</td>
-                            <td>{{ $employeeLog->company ?? '' }}</td>
-                            <td>{{ $employeeLog->hire_location ?? '' }}</td>
+                            <td class="first-name-col">{{ $employeeLog->first_name }}</td>
+                            <td class="middle-name-col">{{ $employeeLog->middle_name }}</td>
+                            <td class="last-name-col">{{ $employeeLog->last_name }}</td>
+                            <td class="company-col">{{ $employeeLog->company ?? '' }}</td>
+                            <td class="hire-location-col">{{ $employeeLog->hire_location ?? '' }}</td>
 
                             {{-- Time in Location  --}}
-                            <td>
+                            <td class="time-in-locations-col">
                                 @php
                                     $currentLocationIdsIn = explode(",", $employeeLog->combined_terminal_in_ids);
                                     $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
@@ -847,17 +522,17 @@
                             </td> --}}
 
 
-                            <td>{{ $employeeLog->first_clock_in }}</td>
-                            <td>{{ $employeeLog->last_clock_out }}</td>
-                            <td>{{ $employeeLog->date }}</td>
-                            <td>{{ $employeeLog->total_time_bio_diff }}</td>
-                            <td>{{ $employeeLog->total_time_filo_diff }}</td>
+                            <td class="first-time-in-col">{{ $employeeLog->first_clock_in }}</td>
+                            <td class="last-time-out-col">{{ $employeeLog->last_clock_out }}</td>
+                            <td class="date-col">{{ $employeeLog->date }}</td>
+                            <td class="bio-duration-col">{{ $employeeLog->total_time_bio_diff }}</td>
+                            <td class="filo-duration-col">{{ $employeeLog->total_time_filo_diff }}</td>
 
                             @if(App\Helpers\CommonHelpers::isRead())
-                                <td>
-                                    <div class="tbl-btns">
+                                <td class="action-col">
+                                    <div class="table-btns">
                                         <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
-                                            class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
+                                            class="table-btn table-btn--blue mx-auto"><i class="fa-solid fa-eye"></i></a>
                                     </div>
 
                                 </td>

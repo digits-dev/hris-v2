@@ -1,5 +1,5 @@
 @extends('layout')
-<link rel="stylesheet" href="{{ asset('css/navigation/section.css') }}">
+<link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
 @section('css')
     <style>
@@ -64,7 +64,7 @@
 
                            </td>
                         <td><a role="button" href="{{url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege')."/$priv->id"}}"
-                        class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a></td>
+                        class="table-btn table-btn--green mx-auto"><i class="fa-solid fa-pencil"></i></a></td>
            
                     </tr>
                 @endforeach
