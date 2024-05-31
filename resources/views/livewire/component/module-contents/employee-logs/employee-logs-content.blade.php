@@ -545,6 +545,52 @@
 
 
         /* END OF FOR FILTER MODAL */
+
+        
+        /* Export  */
+
+        .export-modal-content {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 25px;
+            z-index: 10000;
+            
+        }
+
+        .export-modal-header p {
+            font-size: 18px;
+            color: #113437;
+            font-family: "Inter", sans-serif;
+            font-weight: bold;
+        }
+
+        .export-modal-body {
+            display: flex;
+            justify-content: center; 
+            margin: 25px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+            width:480px;
+        }
+
+        
+        .filename-input{
+            padding: 6px 12px;
+            border: 1px solid var(--stroke-color);
+            border-radius: 5px;
+            outline: none;
+
+        }
+    
     
     </style>
 @endsection
@@ -648,40 +694,30 @@
 
         </div>
 
-     
 
         <div x-data="{openExportModal:false}">
-
             {{-- Export Btn  --}}
             <button class="primary-btn" x-on:click="openExportModal = true">Export</button>
-
-
             {{-- EXPORT MODAL --}}
             <div x-show="openExportModal" x-cloak  x-transition class="modal-container" >
-
                 <!-- Modal backdrop -->
                 <div class="modal-backdrop" x-on:click="openExportModal = false">
                 </div>
-
                 <!-- Modal content -->
-                <div class="filter-modal-content">
-                    <div class="filter-modal-header">
+                <div class="export-modal-content">
+                    <div class="export-modal-header">
                         <p>Export</p>
                     </div>
                     <form wire:submit="export">
                         <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
-                        <div class="filter-modal-body">
-                            <div class="modal-body-container1">
-                                <div class="filter-modal-select-container">
-                                    <div class="filter-modal-select">
-                                        <label>File Name:</label>
-                                        <input type="text" wire:model="filename" class='filename-input' required/>
-                                    </div>
-                                </div>
+                        <div class="export-modal-body">
+                            <div class="  flex w-full items-center gap-2">
+                                <label>File Name:</label>
+                                <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                             </div>
                         </div>
                     
-                        <div class="modal-footer mt-2">
+                        <div class="text-center space-x-2">
                             <button type="submit" class="primary-btn" x-on:click="openExportModal = false">Export</button>
                             <button type="button" class="secondary-btn" x-on:click="openExportModal = false">Cancel</button>
                         </div>
@@ -689,6 +725,7 @@
                 </div>
             </div>
         </div>
+
      
     </div>
 

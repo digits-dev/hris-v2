@@ -564,6 +564,50 @@
         /* END OF FOR FILTER MODAL */
 
     
+
+        /* EXPORT  */
+
+        .export-modal-content {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 25px;
+            z-index: 10000;
+            
+        }
+
+        .export-modal-header p {
+            font-size: 18px;
+            color: #113437;
+            font-family: "Inter", sans-serif;
+            font-weight: bold;
+        }
+
+        .export-modal-body {
+            display: flex;
+            justify-content: center; 
+            margin: 25px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+            width:480px;
+        }
+
+        
+        .filename-input{
+            padding: 6px 12px;
+            border: 1px solid var(--stroke-color);
+            border-radius: 5px;
+            outline: none;
+        }
+    
     </style>
 @endsection
 
@@ -673,13 +717,14 @@
         </div>
     </div>
 
+
     {{-- Export Modal --}}
      <div x-data="{ isFilterExportModalOpen: false }" x-on:toggle-filter-export-modal.window="isFilterExportModalOpen = $event.detail">
         <div x-show="isFilterExportModalOpen" x-cloak>
             <div class="modal-backdrop"></div>
             <!-- Modal content -->
-            <div class="filter-modal-content">
-                <div class="filter-modal-header">
+            <div class="export-modal-content">
+                <div class="export-modal-header">
                     <p>Export</p>
                 </div>
                 <form wire:submit="exportFilter">
@@ -688,26 +733,22 @@
                         <input type="text" wire:model="company_id" value="{{$company_id}}" />
                         <input type="text" wire:model="hire_location" value="{{$hire_location}}" />
                     @endif
-                    <div class="filter-modal-body">
-                        <div class="modal-body-container1">
-                            <div class="filter-modal-select-container">
-                                <div class="filter-modal-select">
-                                    <label>File Name</label>
-                                    <input type="text" wire:model="filename" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required/>
-                                </div>
-                            </div>
+                    <div class="export-modal-body">
+                        <div class="  flex w-full items-center gap-2">
+                            <label>File Name:</label>
+                            <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                         </div>
                     </div>
                 
-                    <div class="filter-modal-footer">
+                    <div class="text-center space-x-2">
+                        <button type="submit" class="primary-btn" @click="$dispatch('toggle-filter-export-modal', false)">Export</button>
                         <button type="button" class="secondary-btn" @click="$dispatch('toggle-filter-export-modal', false)">Cancel</button>
-                        <button type="submit" class="secondary-btn" @click="$dispatch('toggle-filter-export-modal', false)">Export</button>
-                        <!-- Additional buttons or actions -->
                     </div>
                 </form>
             </div>
         </div>
      </div>
+
 
     @if (count($employeeLogs) == 0)
         <div class="no-data-container">
