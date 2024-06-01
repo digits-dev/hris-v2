@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin; 
+namespace App\Http\Controllers\Admin;
 use App\Helpers\CommonHelpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -137,7 +137,7 @@ class ModulsController extends Controller{
                 $php = trim($php);
                 file_put_contents($path.$controllerName.'.php', $php);
                 //MAKE FILE VIEW
-                //MAKE FOLDER FILE VIEW 
+                //MAKE FOLDER FILE VIEW
                 $makeFolderAdminFile = base_path('resources/views/admin/'.$finalViewFileName);
                 File::makeDirectory($makeFolderAdminFile, $mode = 0777, true, true);
                 $pathView = base_path("resources/views/admin/$finalViewFileName/");
@@ -207,7 +207,7 @@ class ModulsController extends Controller{
                     //MAKE FOLDER VIEW CONTENT
                     $makeFolderViewContent = base_path('resources/views/'.$finalViewFolderName);
                     File::makeDirectory($makeFolderViewContent, $mode = 0777, true, true);
-                
+
                     //MAKE FILE CONTROLLER
                     $pathViewController = base_path("resources/views/$finalViewFolderName/");
                     $viewContent = self::viewContent();
@@ -251,9 +251,9 @@ class ModulsController extends Controller{
                         //CREATE MENUS PRIVILEGE
                         DB::table('ad_menus_privileges')->insert(['id_ad_menus' => $menusId, 'id_ad_privileges' => CommonHelpers::myPrivilegeId()]);
                     }
-                
+
                     CommonHelpers::redirect(CommonHelpers::mainpath(), "Modules created successfully", 'success');
-                } 
+                }
             }
         }else{
             //CREATE MENUS
@@ -281,30 +281,31 @@ class ModulsController extends Controller{
             CommonHelpers::redirect(CommonHelpers::mainpath(), "Modules created successfully", 'success');
 
         }
-       
+
     }
 
-    public function livewireContent($contentName, $folderName,$finalViewFolderName,$finalViewContentName){
-        return '<?php
-        namespace App\Livewire\Component\ModuleContents\"'.$folderName.'";
+    public function livewireContent($contentName, $folderName, $finalViewFolderName, $finalViewContentName)
+    {
+        return "<?php
+        namespace App\Livewire\Component\ModuleContents\\$folderName;
         use Livewire\Component;
         use App\Helpers\CommonHelpers;
-        
-        class '.$contentName.' extends Component{
+
+        class $contentName extends Component{
             public function index(){
-                return view("modules.'.$finalViewFolderName.'.'.$finalViewFolderName.'");
+                return view('modules.$finalViewFolderName.$finalViewFolderName');
             }
 
             public function render(){
-                return view("livewire.component.module-contents.'.$finalViewFolderName.'.'.$finalViewContentName.'");
+                return view('livewire.component.module-contents.$finalViewFolderName.$finalViewContentName');
             }
-        } ?>';
+        }";
     }
 
     public function adminControllerContent($controllerName, $finalViewFileName){
         return '<?php
 
-                namespace App\Http\Controllers\Admin; 
+                namespace App\Http\Controllers\Admin;
                 use App\Helpers\CommonHelpers;
                 use App\Http\Controllers\Controller;
                 use Illuminate\Http\Request;
@@ -312,7 +313,7 @@ class ModulsController extends Controller{
                 use Illuminate\Support\Facades\Auth;
                 use Illuminate\Support\Facades\Session;
                 use DB;
-        
+
                 class '.$controllerName.' extends Controller{
                     public function getIndex(){
                         return view("admin/'.$finalViewFileName.'/'.$finalViewFileName.'");
@@ -324,7 +325,7 @@ class ModulsController extends Controller{
     public function controllerContent($controllerName, $finalViewFileName,$finalViewFolderName,$finalViewContentName){
         return '<?php
 
-                namespace App\Http\Controllers\"'.$finalViewFileName.'"; 
+                namespace App\Http\Controllers\"'.$finalViewFileName.'";
                 use App\Helpers\CommonHelpers;
                 use App\Http\Controllers\Controller;
                 use Illuminate\Http\Request;
@@ -332,7 +333,7 @@ class ModulsController extends Controller{
                 use Illuminate\Support\Facades\Auth;
                 use Illuminate\Support\Facades\Session;
                 use DB;
-        
+
                 class '.$controllerName.' extends Controller{
                     public function getIndex(){
                         return view("'.$finalViewFolderName.'/'.$finalViewContentName.'");
