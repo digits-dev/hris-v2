@@ -1,50 +1,37 @@
 <?php
 namespace App\Livewire\Component\ModuleContents\LocationController;
+
+use App\Traits\SortableTrait;
 use Livewire\Component;
 use App\Models\Location;
 use Livewire\Attributes\Url;
 use App\Helpers\CommonHelpers;
 use Illuminate\Support\Facades\Auth;
 
-class LocationControllerContent extends Component{
+class LocationControllerContent extends Component
+{
 
-    #[Url(history:true)]
-    public $search = null; 
-
-    #[Url(as:'per-page')]
-    public $perPage = 10;
-
-    public $sortBy = "created_at";
-    public $sortDir = 'DESC';
-
+    use SortableTrait;
 
     public $location_id;
     public $location_name;
     public $status;
 
 
-    public function setSortBy($fieldName){
-        if($this->sortBy === $fieldName) {
-            $this->sortDir = ($this->sortDir == "ASC") ? "DESC" : "ASC";
-            return;
-        }
-
-        $this->sortBy = $fieldName;
-        $this->sortDir = "DESC";
-    }
-
-    public function editForm($locationId) {
+    public function editForm($locationId)
+    {
         $this->location_id = $locationId;
 
         $location = Location::findOrFail($locationId);
 
         $this->location_name = $location->location_name;
-        $this->status = $location->status;
+        $this->status        = $location->status;
     }
 
 
-    public function save(){
-        
+    public function save()
+    {
+
         if (!CommonHelpers::isCreate()) {
             CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
         }
@@ -55,8 +42,8 @@ class LocationControllerContent extends Component{
 
         Location::create([
             'location_name' => $this->location_name,
-            'created_by' => Auth::user()->id,
-            'updated_by' => Auth::user()->id,
+            'created_by'    => Auth::user()->id,
+            'updated_by'    => Auth::user()->id,
 
         ]);
 
@@ -66,24 +53,25 @@ class LocationControllerContent extends Component{
         session()->flash('message', 'Created location successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/locations');
+        return $this->redirect('/locations');
     }
 
-    public function update(){
-        
+    public function update()
+    {
+
         if (!CommonHelpers::isUpdate()) {
             CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
         }
 
         $attribute = $this->validate([
-            'location_name' => 'required|unique:locations,location_name,'. $this->location_id,
-            'status' => 'required',
+            'location_name' => 'required|unique:locations,location_name,' . $this->location_id,
+            'status'        => 'required',
         ]);
 
         Location::find($this->location_id)->update([
             'location_name' => $this->location_name,
-            'status' => $this->status,
-            'updated_by' => Auth::user()->id,
+            'status'        => $this->status,
+            'updated_by'    => Auth::user()->id,
         ]);
 
         $this->reset('location_name', 'status');
@@ -92,19 +80,21 @@ class LocationControllerContent extends Component{
         session()->flash('message', 'Updated location successfully.');
         session()->flash('message_type', 'success');
 
-        return  $this->redirect('/locations');
+        return $this->redirect('/locations');
     }
 
 
 
-    public function index(){
+    public function index()
+    {
         if (!CommonHelpers::isView()) {
             CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
         }
         return view("modules.location-controller.location-controller");
     }
 
-    public function render(){
+    public function render()
+    {
 
         $data = [];
 
