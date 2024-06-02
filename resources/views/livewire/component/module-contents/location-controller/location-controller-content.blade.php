@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-     
+
     /* Table Column Widths  */
 
-    /* 1st Col  */ 
+    /* 1st Col  */
      .table th:nth-child(1), .table td:nth-child(1){
         width: 20%;
         width: auto;
@@ -84,7 +84,7 @@
         outline: none;
         padding: 6px 12px;
         border-radius: 5px;
-    
+
     }
 
 
@@ -94,7 +94,7 @@
 <section>
     <div class="main-container" x-data="{  isModalOpen: false, action: null }">
 
-    
+
         <div class="flex justify-between">
             <div class="flex items-center gap-2">
                 <div class="search-form">
@@ -117,7 +117,7 @@
             @if(App\Helpers\CommonHelpers::isCreate())
 
                 <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.location_name = null">Add New Location</a>
-        
+
             @endif
         </div>
 
@@ -132,8 +132,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    @include('livewire.component.module-contents.location-controller.includes.th-sort', 
-                    ['colName'=>'location_name', 'displayName' => 'Location Name' ])
+                    <x-sortable-table-header colName="location_name" displayName="Location Name" mxAuto />
 
                     <th>Status</th>
 
@@ -145,14 +144,14 @@
                 </tr>
                 </thead>
 
-     
-        
+
+
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($locations as $location)
                         <tr>
                             <td>{{ $location->location_name }}</td>
                             <td>
-                      
+
                             <span class="status"
                                 @style([$location->status == "ACTIVE" ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
                                 {{ $location->status == "ACTIVE" ? 'Active' : 'Inactive'}}
@@ -193,7 +192,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="location_name" class="text-base">Location Name:</label>
                                 <input type="text" wire:model="location_name" class="form-control flex-1">
                                     @error('location_name')
@@ -222,7 +221,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="location_name" class="text-base">Location Name:</label>
                                 <input type="text" wire:model="location_name" class="form-control flex-1">
                                     @error('location_name')
@@ -233,7 +232,7 @@
                             </div>
 
                             <div class="flex flex-col justify-start gap-3 mt-3">
-                            
+
                                 <label for="status" class="text-base">Status</label>
                                 <select wire:model="status" class="form-control">
                                     <option>ACTIVE</option>
@@ -257,7 +256,7 @@
         </div>
     </div>
 
-        
+
     <div class="pagination">
         {{ $locations->links() }}
     </div>

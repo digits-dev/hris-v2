@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-       
+
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -20,7 +20,7 @@
             text-align: left;
         }
 
-       
+
         /* Table Column Widths  */
         .checkbox-col {
             width:50px;
@@ -29,7 +29,7 @@
         .image-col{
             width:60px;
         }
-    
+
         .first-name-col {
             width:130px;
         }
@@ -84,7 +84,7 @@
 
         /* End of Table Column Widths  */
 
-       
+
 
         /* modals */
 
@@ -241,12 +241,12 @@
         .modal-body-container2 {
             display: flex;
             flex-direction: column;
-            justify-content: space-between; 
+            justify-content: space-between;
         }
 
-    
+
         /* SELECT */
-        
+
         .filter-modal-select {
             position: relative;
             width: 300px;
@@ -269,7 +269,7 @@
             color: #113437;
             font-weight: bold;
         }
-        
+
 
         .filter-modal-select select {
             -webkit-appearance: none;
@@ -365,7 +365,7 @@
             border-radius: 5px;
             padding: 25px;
             z-index: 10000;
-            
+
         }
 
         .export-modal-header p {
@@ -377,14 +377,14 @@
 
         .export-modal-body {
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             margin: 25px 0;
             flex-wrap: wrap;
             gap: 15px;
             width:480px;
         }
 
-        
+
         .filename-input{
             padding: 6px 12px;
             border: 1px solid var(--stroke-color);
@@ -392,8 +392,8 @@
             outline: none;
 
         }
-    
-    
+
+
     </style>
 @endsection
 
@@ -472,7 +472,7 @@
                                             <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="modal-body-container2">
                                     <div class="filter-modal-select-container">
@@ -487,7 +487,7 @@
                                             <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
                                         </div>
                                     </div>
-        
+
                                     <div class="filter-modal-select-container" style="margin-bottom: 7px">
                                         <p>Hire Date</p>
                                         <div class="hire-date-container mb-2">
@@ -499,13 +499,13 @@
                                             <span>To</span>
                                             <input type="date" wire:model="date_to">
                                         </div>
-                                    </div>                    
-                                
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="filter-modal-footer">
                                 <button type="button" class="secondary-btn"x-on:click="openFilterModal = false">Cancel</button>
-                                <button type="submit" class="primary-btn"x-on:click="openFilterModal = false; $wire.resetPage()">Search</button>  
+                                <button type="submit" class="primary-btn"x-on:click="openFilterModal = false; $wire.resetPage()">Search</button>
                             </div>
                         </form>
                     </div>
@@ -517,7 +517,7 @@
 
         <div class="section-header__right-container" x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
                 @if(App\Helpers\CommonHelpers::isCreate())
-                
+
                     <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
 
                 @endif
@@ -538,7 +538,7 @@
                             <p>Set to Inactive </p>
                         </button>
                     </div>
-                
+
                     {{-- BULK ACTIONS MODAL --}}
                     <div x-show="openBulkModal" x-cloak  x-transition class="modal-container" >
                         <!-- Modal backdrop -->
@@ -566,7 +566,7 @@
                     </div>
 
                 @endif
-     
+
 
 
             <div x-data="{openExportModal:false}">
@@ -590,7 +590,7 @@
                                     <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                                 </div>
                             </div>
-                        
+
                             <div class="modal-footer">
                                 <button type="submit" class="primary-btn" x-on:click="openExportModal = false">Export</button>
                                 <button type="button" class="secondary-btn" x-on:click="openExportModal = false">Cancel</button>
@@ -603,7 +603,7 @@
     </div>
 
 
-    
+
 
 
     @if (count($users) == 0)
@@ -621,68 +621,15 @@
 
                         <th></th>
 
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'first_name',
-                            'displayName' => 'First Name',
-                            'class' => 'first-name-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'middle_name',
-                            'displayName' => 'Middle Name',
-                            'class' => 'middle-name-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'last_name',
-                            'displayName' => 'Last Name',
-                            'class' => 'last-name-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'employee_id',
-                            'displayName' => 'Employee Id',
-                            'class' => 'employee-id-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'email',
-                            'displayName' => 'Email Address',
-                            'class' => 'email-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'company',
-                            'displayName' => 'Company',
-                            'class' => 'company-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'hire_location',
-                            'displayName' => 'Hire Location',
-                            'class' => 'hire-location-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'hire_date',
-                            'displayName' => 'Hire Date',
-                            'class' => 'hire-date-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'position',
-                            'displayName' => 'Position',
-                            'class' => 'position-col'
-                        ])
-
-                        @include('livewire.component.module-contents.employee-accounts.includes.th-sort', [
-                            'colName' => 'status',
-                            'displayName' => 'Status',
-                            'class' => 'status-col'
-                        ])
+                         @foreach ($colHeaders as $header)
+                            <x-sortable-table-header
+                            :colName="$header['colName']"
+                            :displayName="$header['displayName']"
+                            class="{{ $header['class'] }}" />
+                        @endforeach
 
                         @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
-                        
+
                             <th class="action-col">Action</th>
 
                         @endif
@@ -708,7 +655,7 @@
 
                             <td class="image-col"><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
                                     alt="{{ $user->last_name }} picture"></td>
-                                    
+
                             <td class="first-name-col">{{ $user->first_name }}</td>
                             <td class="middle-name-col">{{ $user->middle_name }}</td>
                             <td class="last-name-col">{{ $user->last_name }}</td>
@@ -722,12 +669,12 @@
                                     @style([$user->status ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>
 
-                     
+
 
                             @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
 
                                 <td class="action-col">
-                             
+
                                     <div class="table-btns">
                                         @if(App\Helpers\CommonHelpers::isRead())
                                             <a role="button" href="{{ route('employee.show', $user->id) }}"
@@ -739,7 +686,7 @@
                                                 class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
                                         @endif
                                     </div>
-                              
+
                                 </td>
 
                             @endif

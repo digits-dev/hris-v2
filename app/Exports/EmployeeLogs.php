@@ -43,27 +43,24 @@ class EmployeeLogs implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
 
     public function map($item): array {
 
-        $date = Carbon::parse($item->date_clocked_in)->format('Y-m-d');
-        $timeDifference = Carbon::parse($item->date_clocked_in)->diff(Carbon::parse($item->date_clocked_out))->format('%H:%I:%S');
-
         $employees = [
                         $item->employee_id,
                         $item->first_name,
                         $item->middle_name,
                         $item->last_name,
-                        $item->hire_location,
+                        $item->location,
                         $item->current_location,
-                        $item->date_clocked_in,
-                        $item->date_clocked_out,
+                        $item->time_in,
+                        $item->time_out,
                         $item->date,
                         $item->day,
-                        $item->time_difference_seconds
+                        $item->bio_duration
                         ];
-        
+
         return $employees;
     }
 
-    public function query(){       
+    public function query(){
         return $this->query;
     }
 

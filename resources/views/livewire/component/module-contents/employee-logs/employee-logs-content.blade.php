@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-       
+
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -67,7 +67,7 @@
         }
 
         /* End of Table Column Widths  */
-        
+
 
      /* FOR FILTER MODAL */
 
@@ -128,12 +128,12 @@
         .modal-body-container2 {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; 
+            justify-content: flex-start;
         }
 
 
         /* SELECT */
-        
+
         .filter-modal-select {
             position: relative;
             width: 300px;
@@ -156,7 +156,7 @@
             color: #113437;
             font-weight: bold;
         }
-        
+
 
         .filter-modal-select select {
             -webkit-appearance: none;
@@ -222,7 +222,7 @@
 
         /* END OF FOR FILTER MODAL */
 
-        
+
         /* Export  */
 
         .export-modal-content {
@@ -239,7 +239,7 @@
             border-radius: 5px;
             padding: 25px;
             z-index: 10000;
-            
+
         }
 
         .export-modal-header p {
@@ -251,14 +251,14 @@
 
         .export-modal-body {
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             margin: 25px 0;
             flex-wrap: wrap;
             gap: 15px;
             width:480px;
         }
 
-        
+
         .filename-input{
             padding: 6px 12px;
             border: 1px solid var(--stroke-color);
@@ -266,8 +266,8 @@
             outline: none;
 
         }
-    
-    
+
+
     </style>
 @endsection
 
@@ -294,10 +294,10 @@
 
             <div x-data="{openFilterModal: false}">
 
-       
+
                 <button class="primary-btn" x-on:click="openFilterModal = true">Filters</button>
 
-                
+
                    {{-- FILTER MODAL --}}
                    <div x-show="openFilterModal" x-cloak  x-transition class="modal-container" >
 
@@ -338,7 +338,7 @@
                                             <span>To</span>
                                             <input type="date" wire:model="date_to">
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                                 <div class="modal-body-container2">
@@ -359,7 +359,7 @@
 
                             <div class="filter-modal-footer">
                                 <button type="button" class="secondary-btn"x-on:click="openFilterModal = false">Cancel</button>
-                                <button type="submit" class="primary-btn"x-on:click="openFilterModal = false; $wire.resetPage()">Search</button>  
+                                <button type="submit" class="primary-btn"x-on:click="openFilterModal = false; $wire.resetPage()">Search</button>
                                 <!-- Additional buttons or actions -->
                             </div>
                         </form>
@@ -392,7 +392,7 @@
                                 <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                             </div>
                         </div>
-                    
+
                         <div class="text-center space-x-2">
                             <button type="submit" class="primary-btn" x-on:click="openExportModal = false">Export</button>
                             <button type="button" class="secondary-btn" x-on:click="openExportModal = false">Cancel</button>
@@ -402,10 +402,10 @@
             </div>
         </div>
 
-     
+
     </div>
 
- 
+
     @if (count($employeeLogs) == 0)
         <div class="no-data-container">
             <p>No data available in table</p>
@@ -415,54 +415,34 @@
             <table class="table">
                 <thead>
                  <tr>
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'first_name', 'displayName' => 'First Name', 'class' => 'first-name-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'middle_name', 'displayName' => 'Middle Name', 'class' => 'middle-name-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'last_name', 'displayName' => 'Last Name', 'class' => 'last-name-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'hire_location', 'displayName' => 'Location', 'class' => 'location-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'current_location', 'displayName' => 'Current Location', 'class' => 'current-location-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'date_clocked_in', 'displayName' => 'Time In', 'class' => 'time-in-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'date_clocked_out', 'displayName' => 'Time Out', 'class' => 'time-out-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'date', 'displayName' => 'Date', 'class' => 'date-col' ])
-        
-                    @include('livewire.component.module-contents.employee-logs.includes.th-sort', 
-                    ['colName'=>'time_difference_seconds', 'displayName' => 'Bio Duration', 'class' => 'bio-duration-col' ])
-        
+
+                    @foreach ($colHeaders as $header)
+                    <x-sortable-table-header
+                    :colName="$header['colName']"
+                    :displayName="$header['displayName']"
+                    class="{{ $header['class'] }}" />
+                    @endforeach
+
                  </tr>
                 </thead>
-        
+
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
                             <td class="first-name-col">{{ $employeeLog->first_name }}</td>
                             <td class="middle-name-col">{{ $employeeLog->middle_name }}</td>
                             <td class="last-name-col">{{ $employeeLog->last_name }}</td>
-                            <td class="location-col">{{ $employeeLog->hire_location ?? '' }}</td>
+                            <td class="location-col">{{ $employeeLog->location ?? '' }}</td>
                             <td class="current-location-col">{{ $employeeLog->current_location ?? '' }}</td>
-                            <td class="time-in-col">{{ $employeeLog->date_clocked_in }}</td>
-                            <td class="time-out-col">{{ $employeeLog->date_clocked_out }}</td>        
+                            <td class="time-in-col">{{ $employeeLog->time_in }}</td>
+                            <td class="time-out-col">{{ $employeeLog->time_out }}</td>
                             <td class="date-col">{{ $employeeLog->date }}</td>
-                            <td class="bio-duration-col">{{ $employeeLog->time_difference_seconds }}</td>
+                            <td class="bio-duration-col">{{ $employeeLog->bio_duration }}</td>
                         </tr>
                     @endforeach
                 </tbody>
-        
-        
+
+
             </table>
         </div>
     @endif

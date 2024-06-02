@@ -4,11 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-     
+
     /* Table Column Widths  */
 
-  
-    /* 1st Col  */ 
+
+    /* 1st Col  */
     .table th:nth-child(1), .table td:nth-child(1){
         width: 20%;
         width: auto;
@@ -84,7 +84,7 @@
         outline: none;
         padding: 6px 12px;
         border-radius: 5px;
-    
+
     }
 
 
@@ -124,14 +124,13 @@
             <div class="no-data-container">
                 <p>No data available in table</p>
             </div>
-        
+
         @else
 
             <table class="table">
                 <thead>
                 <tr>
-                    @include('livewire.component.module-contents.position-controller.includes.th-sort', 
-                    ['colName'=>'position_name', 'displayName' => 'Position Name' ])
+                    <x-sortable-table-header colName="position_name" displayName="Position Name" mxAuto />
 
                     <th>Status</th>
 
@@ -140,7 +139,7 @@
                     @endif
                 </tr>
                 </thead>
-        
+
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($positions as $position)
                         <tr >
@@ -185,7 +184,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="position_name" class="text-base">Position Name:</label>
                                 <input type="text" wire:model="position_name" class="form-control flex-1">
                                 @error('position_name')
@@ -213,7 +212,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="position_name" class="text-base">Position Name:</label>
                                 <input type="text" wire:model="position_name" class="form-control flex-1">
                                     @error('position_name')
@@ -224,7 +223,7 @@
                             </div>
 
                             <div class="flex flex-col justify-start gap-3 mt-3">
-                            
+
                                 <label for="status" class="text-base">Status</label>
                                 <select wire:model="status" class="form-control">
                                     <option>ACTIVE</option>
@@ -247,7 +246,7 @@
             </div>
         </div>
     </div>
-        
+
     <div class="pagination">
         {{ $positions->links() }}
     </div>

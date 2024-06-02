@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-      
+
         .table-container {
             width:100%;
             max-width: 1500px;
@@ -144,12 +144,12 @@
         .modal-body-container2 {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; 
+            justify-content: flex-start;
         }
 
 
         /* SELECT */
-        
+
         .filter-modal-select {
             position: relative;
             width: 300px;
@@ -172,7 +172,7 @@
             color: #113437;
             font-weight: bold;
         }
-        
+
 
         .filter-modal-select select {
             -webkit-appearance: none;
@@ -238,7 +238,7 @@
 
         /* END OF FOR FILTER MODAL */
 
-    
+
 
         /* EXPORT  */
 
@@ -256,7 +256,7 @@
             border-radius: 5px;
             padding: 25px;
             z-index: 10000;
-            
+
         }
 
         .export-modal-header p {
@@ -268,21 +268,21 @@
 
         .export-modal-body {
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             margin: 25px 0;
             flex-wrap: wrap;
             gap: 15px;
             width:480px;
         }
 
-        
+
         .filename-input{
             padding: 6px 12px;
             border: 1px solid var(--stroke-color);
             border-radius: 5px;
             outline: none;
         }
-    
+
     </style>
 @endsection
 
@@ -378,13 +378,13 @@
                                     <span>To</span>
                                     <input type="date" wire:model="date_to">
                                 </div>
-                            
-                            </div>                          
+
+                            </div>
                         </div>
                     </div>
                     <div class="filter-modal-footer">
                         <button type="button" class="secondary-btn" @click="$dispatch('toggle-filter-modal', false)">Cancel</button>
-                        <button type="submit" class="primary-btn" @click="$dispatch('toggle-filter-modal', false)">Search</button>  
+                        <button type="submit" class="primary-btn" @click="$dispatch('toggle-filter-modal', false)">Search</button>
                         <!-- Additional buttons or actions -->
                     </div>
                 </form>
@@ -414,7 +414,7 @@
                             <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                         </div>
                     </div>
-                
+
                     <div class="text-center space-x-2">
                         <button type="submit" class="primary-btn" @click="$dispatch('toggle-filter-export-modal', false)">Export</button>
                         <button type="button" class="secondary-btn" @click="$dispatch('toggle-filter-export-modal', false)">Cancel</button>
@@ -434,49 +434,30 @@
             <table class="table">
                 <thead>
                  <tr>
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'first_name', 'displayName' => 'First Name', 'class' => 'first-name-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'middle_name', 'displayName' => 'Middle Name', 'class' => 'middle-name-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'last_name', 'displayName' => 'Last Name', 'class' => 'last-name-col' ])
 
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'company', 'displayName' => 'Company', 'class' => 'company-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'hire_location', 'displayName' => 'Hire Location', 'class' => 'hire-location-col' ])
-        
-                    {{-- @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'current_location_id', 'displayName' => 'Time in Location/s' ]) --}}
+                    @foreach ($colHeaders as $header)
+                        @if ($loop->iteration == 6)
+                            <th class="text-left time-in-locations-col">Time in Location/s</th>
+                        @else
+                            @php
+                            $displayName = $header['displayName'];
+                            if ($displayName === 'Filo Duration') {
+                                $header['displayName'] = 'FILO Duration';
+                            }
+                            @endphp
 
-                    <th class="text-left time-in-locations-col">Time in Location/s</th>
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'first_clock_in', 'displayName' => 'First Time In', 'class' => 'first-time-in-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'last_clock_out', 'displayName' => 'Last Time Out', 'class' => 'last-time-out-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'date', 'displayName' => 'Date', 'class' => 'date-col' ])
-        
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'total_time_bio_diff', 'displayName' => 'Bio Duration', 'class' => 'bio-duration-col' ])
-
-                    @include('livewire.component.module-contents.employee-attendance.includes.th-sort', 
-                    ['colName'=>'total_time_filo_diff', 'displayName' => 'FILO Duration', 'class' => 'filo-duration-col' ])
+                            <x-sortable-table-header :colName="$header['colName']" :displayName="$header['displayName']"
+                            class="{{ $header['class'] }}" />
+                        @endif
+                    @endforeach
 
                     @if(App\Helpers\CommonHelpers::isRead())
                         <th class="action-col">Action</th>
                     @endif
-        
+
                  </tr>
                 </thead>
-        
+
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
@@ -493,40 +474,23 @@
                                     $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
                                     $allLocations = array_merge($currentLocationIdsIn, $currentLocationIdsOut);
                                 @endphp
-                                
+
                                 @foreach ($locations as $location)
                                     @if (in_array($location->id, $currentLocationIdsIn))
                                         @if ($loop->last)
                                         {{ $location->location_name }}
                                         @else
-                                        {{ $location->location_name }}, 
+                                        {{ $location->location_name }},
                                         @endif
                                     @endif
                                 @endforeach
                             </td>
-                            {{-- Time out Location  --}}
-                            {{-- <td>
-                                @php
-                                    $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
-                                @endphp
-                                
-                                @foreach ($locations as $location)
-                                    @if (in_array($location->id, $currentLocationIdsOut))
-                                        @if ($loop->last)
-                                        {{ $location->location_name }}
-                                        @else
-                                        {{ $location->location_name }}, 
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </td> --}}
 
-
-                            <td class="first-time-in-col">{{ $employeeLog->first_clock_in }}</td>
-                            <td class="last-time-out-col">{{ $employeeLog->last_clock_out }}</td>
+                            <td class="first-time-in-col">{{ $employeeLog->first_time_in }}</td>
+                            <td class="last-time-out-col">{{ $employeeLog->last_time_out }}</td>
                             <td class="date-col">{{ $employeeLog->date }}</td>
-                            <td class="bio-duration-col">{{ $employeeLog->total_time_bio_diff }}</td>
-                            <td class="filo-duration-col">{{ $employeeLog->total_time_filo_diff }}</td>
+                            <td class="bio-duration-col">{{ $employeeLog->bio_duration }}</td>
+                            <td class="filo-duration-col">{{ $employeeLog->filo_duration }}</td>
 
                             @if(App\Helpers\CommonHelpers::isRead())
                                 <td class="action-col">
@@ -540,8 +504,8 @@
                         </tr>
                     @endforeach
                 </tbody>
-        
-        
+
+
             </table>
         </div>
     @endif

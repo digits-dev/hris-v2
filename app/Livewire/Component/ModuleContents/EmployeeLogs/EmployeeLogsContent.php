@@ -88,7 +88,7 @@ class EmployeeLogsContent extends Component
 
         $alldatas = self::getAllData();
 
-        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir);
 
         $data = [
             'isFilter' => $isFilter,
@@ -132,13 +132,13 @@ class EmployeeLogsContent extends Component
                 'users.first_name',
                 'users.middle_name',
                 'users.last_name',
-                'hire_location.location_name as hire_location',
+                'hire_location.location_name as location',
                 'current_location.location_name as current_location',
-                'logs.date_clocked_in',
-                'logs.date_clocked_out',
+                'logs.date_clocked_in as time_in',
+                'logs.date_clocked_out as time_out',
                 DB::raw('DATE(logs.date_clocked_in) as date'),
                 DB::raw('DATE_FORMAT(logs.date_clocked_in, "%a") as day'),
-                DB::raw('TIMEDIFF(logs.date_clocked_out, logs.date_clocked_in) as time_difference_seconds'),
+                DB::raw('TIMEDIFF(logs.date_clocked_out, logs.date_clocked_in) as bio_duration'),
                 'logs.created_at',
             ]);
         return $query;
@@ -200,6 +200,32 @@ class EmployeeLogsContent extends Component
         return Excel::download(new EmployeeLogs($result), $filename . '.xlsx');
     }
 
+    public function getColumnsHeader($data)
+    {
+        $cols = [];
+
+        if(is_object($data)){
+
+            $keys              = array_keys(get_object_vars($data));
+            $excludeAttributes = [ 'employee_id', 'day', 'created_at' ];
+
+            // dump($keys);
+
+            foreach ($keys as $key) {
+                if (!in_array($key, $excludeAttributes)) {
+                    $cols[] = [
+                        'class'       => (str_replace('_', '-', $key)) . '-col',
+                        'colName'     => $key,
+                        'displayName' => ucwords(str_replace('_', ' ', $key))
+                    ];
+                }
+            }
+        };
+
+        // dump($cols);
+
+        return $cols;
+    }
 
     public function render()
     {
@@ -209,10 +235,13 @@ class EmployeeLogsContent extends Component
         $filterData = self::filterData();
 
         if ($filterData['isFilter'] == 0) {
-            $data['employeeLogs'] = self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+            $logs                 = self::getAllData()->orderBy($this->sortBy, $this->sortDir);
+            $data['employeeLogs'] = $logs->paginate($this->perPage);
+            $data['colHeaders']   = self::getColumnsHeader($logs->first());
         } else {
             $data['isFilter']     = $filterData['isFilter'];
-            $data['employeeLogs'] = $filterData['datas'];
+            $data['employeeLogs'] = $filterData['datas']->paginate($this->perPage);
+            $data['colHeaders']   = self::getColumnsHeader($data['employeeLogs']->first());
         }
 
 

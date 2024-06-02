@@ -89,7 +89,7 @@ class EmployeeAccountsContent extends Component
 
         $alldatas = self::getAllData();
 
-        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $result = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir);
 
         $data = [
             'isFilter' => $isFilter,
@@ -129,10 +129,10 @@ class EmployeeAccountsContent extends Component
             ->leftJoin('positions', 'positions.id', 'users.position_id')
             ->select([
                 'users.id',
-                'users.employee_id',
                 'users.first_name',
                 'users.middle_name',
                 'users.last_name',
+                'users.employee_id',
                 'users.email',
                 'companies.company_name as company',
                 'hire_location.location_name as hire_location',
@@ -257,6 +257,30 @@ class EmployeeAccountsContent extends Component
         $this->userIds = [];
     }
 
+    public function getColumnsHeader($data)
+    {
+        $cols = [];
+
+        if(is_object($data)){
+            $keys              = array_keys(get_object_vars($data));
+            $excludeAttributes = [ 'id', 'image', 'created_at' ];
+
+            // dump($keys);
+
+            foreach ($keys as $key) {
+                if (!in_array($key, $excludeAttributes)) {
+                    $cols[] = [
+                        'class'       => (str_replace('_', '-', $key)) . '-col',
+                        'colName'     => $key,
+                        'displayName' => ucwords(str_replace('_', ' ', $key))
+                    ];
+                }
+            }
+        }
+        // dump($cols);
+
+        return $cols;
+    }
 
     public function render()
     {
@@ -266,10 +290,14 @@ class EmployeeAccountsContent extends Component
         $filterData = self::filterData();
 
         if ($filterData['isFilter'] == 0) {
-            $data['users'] = self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+            $users = self::getAllData()->orderBy($this->sortBy, $this->sortDir);
+            $data['users']      = $users->paginate($this->perPage);
+            $data['colHeaders'] = self::getColumnsHeader($users->first());
+
         } else {
-            $data['isFilter'] = $filterData['isFilter'];
-            $data['users']    = $filterData['datas'];
+            $data['isFilter']   = $filterData['isFilter'];
+            $data['users']      = $filterData['datas']->paginate($this->perPage);
+            $data['colHeaders'] = self::getColumnsHeader($data['users']->first());
         }
 
         $data['companies'] = Companies::get();

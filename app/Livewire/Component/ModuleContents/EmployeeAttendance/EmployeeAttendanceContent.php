@@ -85,7 +85,7 @@ class EmployeeAttendanceContent extends Component
             $isFilter = 1;
         }
         $alldatas = self::getAllData();
-        $result   = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+        $result   = self::filteredData($alldatas, $filter_params)->orderBy($this->sortBy, $this->sortDir);
         $data     = [
             'isFilter' => $isFilter,
             'datas'    => $result,
@@ -149,16 +149,16 @@ class EmployeeAttendanceContent extends Component
                 'users.last_name',
                 'companies.company_name as company',
                 'hire_location.location_name as hire_location',
-                'logs_duration.first_clock_in',
-                'logs_duration.last_clock_out',
+                'logs_duration.combined_terminal_in_ids',
+                'logs_duration.combined_terminal_out_ids',
+                'logs_duration.first_clock_in as first_time_in',
+                'logs_duration.last_clock_out as last_time_out',
                 DB::raw('DATE(logs_duration.first_clock_in) as date'),
                 DB::raw('DATE_FORMAT(logs_duration.first_clock_in, "%a") as day'),
-                'logs_duration.total_time_bio_diff',
-                'logs_duration.total_time_filo_diff',
+                'logs_duration.total_time_bio_diff as bio_duration',
+                'logs_duration.total_time_filo_diff as filo_duration',
                 'users.hire_date',
                 'users.company_id',
-                'logs_duration.combined_terminal_in_ids',
-                'logs_duration.combined_terminal_out_ids'
             ]);
         return $query;
     }
@@ -201,17 +201,48 @@ class EmployeeAttendanceContent extends Component
         return Excel::download(new EmployeeAttendanceSummary($result), $filename . '.xlsx');
     }
 
+    public function getColumnsHeader($data)
+    {
+        $cols = [];
+
+         if(is_object($data)){
+
+            $keys              = array_keys(get_object_vars($data));
+            $excludeAttributes = [ 'employee_id', 'hire_date', 'day', 'company_id', 'combined_terminal_out_ids' ];
+
+            // dump($keys);
+
+            foreach ($keys as $key) {
+                if (!in_array($key, $excludeAttributes)) {
+                    $cols[] = [
+                        'class'       => (str_replace('_', '-', $key)) . '-col',
+                        'colName'     => $key,
+                        'displayName' => ucwords(str_replace('_', ' ', $key))
+                    ];
+                }
+            }
+        }
+
+        // dump($cols);
+
+        return $cols;
+    }
+
     public function render()
     {
         $data       = [];
         $filterData = self::filterData();
 
         if ($filterData['isFilter'] == 0) {
-            $data['employeeLogs'] = self::getAllData()->orderBy($this->sortBy, $this->sortDir)->paginate($this->perPage);
+            $logs = self::getAllData()->orderBy($this->sortBy, $this->sortDir);
+            $data['employeeLogs'] = $logs->paginate($this->perPage);
+            $data['colHeaders']   = self::getColumnsHeader($logs->first());
         } else {
             $data['isFilter']     = $filterData['isFilter'];
-            $data['employeeLogs'] = $filterData['datas'];
+            $data['employeeLogs'] = $filterData['datas']->paginate($this->perPage);
+            $data['colHeaders']   = self::getColumnsHeader($data['employeeLogs']->first());
         }
+
         $data['companies'] = Companies::get();
         $data['locations'] = Location::get();
 

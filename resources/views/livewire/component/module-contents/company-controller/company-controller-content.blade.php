@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-     
+
     /* Table Column Widths  */
 
     /* 1st Col  */
@@ -84,7 +84,7 @@
         outline: none;
         padding: 6px 12px;
         border-radius: 5px;
-    
+
     }
 
     </style>
@@ -129,8 +129,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    @include('livewire.component.module-contents.company-controller.includes.th-sort', 
-                    ['colName'=>'company_name', 'displayName' => 'Company Name' ])
+                    <x-sortable-table-header colName="company_name" displayName="Company Name" mxAuto />
 
                     <th>Status</th>
 
@@ -139,20 +138,20 @@
                     @endif
                 </tr>
                 </thead>
-        
+
                 <tbody wire:loading.class="opacity-50">
                     @foreach ($companies as $company)
                         <tr>
                             <td>{{ $company->company_name }}</td>
                             <td>
-                   
+
                             <span class="status"
                                 @style([$company->status == "ACTIVE" ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
                                 {{ $company->status == "ACTIVE" ? 'Active' : 'Inactive'}}
                             </span>
 
                             </td>
-                            
+
                             @if(App\Helpers\CommonHelpers::isUpdate())
                                 <td><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="$wire.editForm({{$company->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
                             @endif
@@ -185,7 +184,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="company_name" class="text-base">Company Name:</label>
                                 <input type="text" wire:model="company_name" class="form-control flex-1">
                                 @error('company_name')
@@ -213,7 +212,7 @@
                         <div class="modal-body">
                             <!-- Modal content goes here -->
                             <div class="flex flex-col justify-start gap-3">
-                            
+
                                 <label for="company_name" class="text-base">Company Name:</label>
                                 <input type="text" wire:model="company_name" class="form-control flex-1">
                                 @error('company_name')
@@ -224,7 +223,7 @@
                             </div>
 
                             <div class="flex flex-col justify-start gap-3 mt-3">
-                            
+
                                 <label for="status" class="text-base">Status</label>
                                 <select wire:model="status" class="form-control">
                                     <option>ACTIVE</option>
@@ -248,7 +247,7 @@
         </div>
     </div>
 
-    
+
     <div class="pagination">
         {{ $companies->links() }}
     </div>

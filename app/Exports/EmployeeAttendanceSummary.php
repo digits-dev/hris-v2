@@ -48,11 +48,11 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping,
         $allLocations = array_merge($currentLocationIdsIn, $currentLocationIdsOut);
         $timeInLocations = Location::whereIn('id', $allLocations)->get();
         $allLocations = [];
-        
+
         foreach($timeInLocations as $loc){
             $allLocations[] = $loc->location_name;
         }
-        
+
         $allLocationsString = implode(',', $allLocations);
         $employees = [
                         $item->employee_id,
@@ -62,18 +62,18 @@ class EmployeeAttendanceSummary implements FromQuery, WithHeadings, WithMapping,
                         $item->company,
                         $item->hire_location,
                         $allLocationsString,
-                        $item->first_clock_in,
-                        $item->last_clock_out,
+                        $item->first_time_in,
+                        $item->last_time_out,
                         $item->date,
                         $item->day,
-                        $item->total_time_bio_diff,
-                        $item->total_time_filo_diff
+                        $item->bio_duration,
+                        $item->filo_duration
                     ];
-        
+
             return $employees;
     }
 
-    public function query(){       
+    public function query(){
         return $this->query;
     }
 
