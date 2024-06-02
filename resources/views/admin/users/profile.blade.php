@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset ('css/bootstrap-utilities/utilities.css') }}">
     <style>
 
-        
+
         :root {
             --primary-color: #1F6268;
             --stroke-color: #599297;
@@ -13,7 +13,7 @@
             --primary-hover: #DDFAFD;
             --tertiary-color: #27C1CE;
         }
-        
+
         section{
             background: #eee;
             margin-bottom: 10px;
@@ -41,7 +41,7 @@
             padding: 10px;
             border:0.5px solid rgba(0,0,0,0.1);
             display: none;
-            
+
         }
 
         /* Basic Information */
@@ -108,7 +108,7 @@
             width: 100%;
             max-width: 100%;
         }
-      
+
 
     </style>
     @endsection
@@ -123,17 +123,20 @@
             <div class="content-data-container">
                 <div class="profile-img-container">
 
-                    @if (auth()->user()->image)
+                     @if (auth()->user()->image)
                         @php
-                            $profileImagePath = public_path('storage/' . auth()->user()->image);
-                            list($width, $height) = getimagesize($profileImagePath);
-                            $isLandscape = $width > $height;
+                            if (file_exists(auth()->user()->image)) {
+                                $profileImagePath = public_path('storage/' . auth()->user()->image);
+                                [$width, $height] = getimagesize($profileImagePath);
+                                $isLandscape = $width > $height;
+                            }
                         @endphp
-                        
-                        <img src="{{ asset('storage/' . auth()->user()->image) }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+
+                        <img @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture"
+                            src="{{ asset('storage/' . auth()->user()->image) }}">
                     @else
-              
-                        <img src="/images/navigation/user.png" height="auto" class="object-contain" alt="default profile image">
+                        <img alt="default profile image" class="object-contain" height="auto"
+                            src="/images/navigation/user.png">
                     @endif
 
                 </div>
@@ -158,41 +161,41 @@
                         <label for="employee_id">Employee ID</label>
                         <input type="text" name="" id="" value="{{auth()->user()->employee_id}}" class="form-control" disabled>
                     </div>
-                    
+
                 </div>
             </div>
-    
+
         </div>
       </div>
 
       {{-- Work Information  --}}
-      
+
       <div class='row'>
         <h3 class='header' id="header-wi"><i class="fa-solid fa-briefcase mr-1"></i> Work Information</h3>
             <div class="content">
                 <div class="content-data-container">
-              
+
                     <div class="content-data-container-content">
                         <div class="form-group">
                             <label for="">Company</label>
                             <input type="text" name="" id="" value="{{auth()->user()->company->company_name}}" class="form-control" disabled>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="">Hire Location</label>
                             <input type="text" name="" id="" value="{{auth()->user()->hireLocation->location_name}}" class="form-control" disabled>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="">Hire Date</label>
                             <input type="text" name="" id="" value="{{auth()->user()->hire_date}}" class="form-control" disabled>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="">Position</label>
                             <input type="text" name="" id="" value="{{auth()->user()->position->position_name}}" class="form-control" disabled>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -210,10 +213,10 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $('.row .content').hide(); 
-            $('#header-bi, #header-wi').click(function() { 
+            $('.row .content').hide();
+            $('#header-bi, #header-wi').click(function() {
                 $(this).siblings('.content').slideToggle(500);
-                $('.row .content').not($(this).siblings('.content')).slideUp(500); 
+                $('.row .content').not($(this).siblings('.content')).slideUp(500);
             });
         });
     </script>

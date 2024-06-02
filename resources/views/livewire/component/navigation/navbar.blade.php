@@ -1,6 +1,6 @@
 <div class="navbar-section {{App\Helpers\CommonHelpers::myThemeColor()}}"
 
- x-data="{ isProfileOpen: false }"   
+ x-data="{ isProfileOpen: false }"
 >
     <link rel="stylesheet" href="{{ asset('css/navigation/navbar.css') }}">
 
@@ -8,25 +8,30 @@
         <span class="system-title-text">Human Resource Information System</span>
         <span class="view-line"></span>
     </div>
-    <div class="settings-button" 
+    <div class="settings-button"
         @click="isProfileOpen=!isProfileOpen"
         @click.outside="isProfileOpen=false"
     >
-
         @if (auth()->user()->image)
             @php
-                $profileImagePath = public_path('storage/' . auth()->user()->image);
-                list($width, $height) = getimagesize($profileImagePath);
-                $isLandscape = $width > $height;
+                $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
+                $isLandscape = false;
+
+                if ($fileExists) {
+                    $profileImagePath = public_path('storage/' . auth()->user()->image);
+                    [$width, $height] = getimagesize($profileImagePath);
+                    $isLandscape = $width > $height;
+                }
             @endphp
-            
-            <img src="{{ asset('storage/' . auth()->user()->image) }}" class="settings-image" @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+
+            <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
+                src="{{ asset('storage/' . auth()->user()->image) }}">
         @else
-            <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
+            <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
         @endif
 
     </div>
-    <div class="setting-popup z-50" 
+    <div class="setting-popup z-50"
          x-show="isProfileOpen"
          x-transition
          x-cloak
@@ -34,15 +39,22 @@
         <div class="header-info">
             @if (auth()->user()->image)
                 @php
+                $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
+                $isLandscape = false;
+
+                if ($fileExists) {
                     $profileImagePath = public_path('storage/' . auth()->user()->image);
-                    list($width, $height) = getimagesize($profileImagePath);
+                    [$width, $height] = getimagesize($profileImagePath);
                     $isLandscape = $width > $height;
+                }
                 @endphp
-            
-                <img src="{{ asset('storage/' . auth()->user()->image) }}" class="settings-image" @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+
+                <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
+                src="{{ asset('storage/' . auth()->user()->image) }}">
             @else
-                <img src="{{asset('images/navigation/user.png')}}" class="settings-image" width="40">
+                <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
             @endif
+
             <p>{{auth()->user()->full_name}}</p>
         </div>
 
@@ -63,13 +75,13 @@
             </a>
         </div>
     </div>
-    
+
 </div>
 
 @section('script')
 <script>
      $(document).ready(function(){
-   
+
     });
 </script>
 @endsection

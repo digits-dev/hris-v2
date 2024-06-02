@@ -184,11 +184,25 @@
             <div class="personal-content">
                 <div class="custom-upload-div">
                     <div class="custom-upload">
+                        @php
+                            if ($user->image) {
+                                $imagePath = public_path('storage/' . $user->image);
+
+                                if (file_exists($imagePath)) {
+                                    [$width, $height] = getimagesize($imagePath);
+                                    $isLandscape = $width > $height;
+                                } else {
+                                    $isLandscape = false;
+                                }
+                            }
+                        @endphp
+
                         @if ($user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}" @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture">
+                            <img @style(['height:180px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture"
+                                src="{{ asset('storage/' . $user->image) }}">
                         @else
-                            <img src="/images/navigation/user.png" height="auto" class="object-contain"
-                                alt="default profile image">
+                            <img alt="default profile image" class="object-contain" height="auto"
+                                src="/images/navigation/user.png">
                         @endif
                     </div>
                 </div>
