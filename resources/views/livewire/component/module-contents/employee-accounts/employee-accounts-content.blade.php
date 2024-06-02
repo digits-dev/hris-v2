@@ -97,8 +97,7 @@
             top: 0;
             right: 0;
             border-radius: 8px;
-            margin-top: 60px;
-            margin-right: 10px;
+            margin-top: 50px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             justify-content: space-between;
             overflow: hidden;
@@ -524,19 +523,21 @@
 
                 @if(App\Helpers\CommonHelpers::isUpdate())
 
-                    <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
-                        Actions</button>
+                    <div class="relative">
+                        <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
+                            Actions</button>
 
-                    <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
-                        <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
-                            <i class="fa-solid fa-user-check mx-2"></i>
-                            <p>Set to Active </p>
-                        </button>
+                        <div class="bulk-popup z-50" x-show="isBulkOpen" x-transition x-cloak>
+                            <button class="bulk-content" x-on:click="openBulkModal = true; status = 'active'">
+                                <i class="fa-solid fa-user-check mx-2"></i>
+                                <p>Set to Active </p>
+                            </button>
 
-                        <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
-                            <i class="fa-solid fa-user-xmark mx-2"></i>
-                            <p>Set to Inactive </p>
-                        </button>
+                            <button class="bulk-content"  x-on:click="openBulkModal = true; status = 'inactive'">
+                                <i class="fa-solid fa-user-xmark mx-2"></i>
+                                <p>Set to Inactive </p>
+                            </button>
+                        </div>
                     </div>
 
                     {{-- BULK ACTIONS MODAL --}}
@@ -559,7 +560,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setToActive() : $wire.setToInactive(); openBulkModal = false">Confirm</button>
+                                <button type="button" class="primary-btn" x-on:click="status == 'active' ? $wire.setStatus('active') : $wire.setStatus('inactive'); openBulkModal = false">Confirm</button>
                                 <button type="button" class="secondary-btn"x-on:click="openBulkModal = false">Cancel</button>
                             </div>
                         </div>

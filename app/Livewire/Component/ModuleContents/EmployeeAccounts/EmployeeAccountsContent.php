@@ -218,26 +218,14 @@ class EmployeeAccountsContent extends Component
 
     // FOR BULK ACTIONS MODAL
 
-    public function setToActive()
-    {
+    public function setStatus($status){
+        $statusValue = ($status == 'active') ? 1 : 0;
 
-        User::whereIn('id', $this->userIds)->update([ 'status' => 1 ]);
+        User::whereIn('id', $this->userIds)->update([ 'status' => $statusValue ]);
         $this->selectedAll = false;
         $this->userIds     = [];
 
-        // dd($this->userIds);
-
     }
-    public function setToInactive()
-    {
-        User::whereIn('id', $this->userIds)->update([ 'status' => 0 ]);
-        $this->selectedAll = false;
-        $this->userIds     = [];
-
-        // dd($this->userIds);
-
-    }
-
 
     public function updatedSelectedAll()
     {
