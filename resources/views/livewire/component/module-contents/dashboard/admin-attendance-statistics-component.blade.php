@@ -432,7 +432,7 @@
         $('.chart-container').show();
 
         startChart(clockedInCount, notClockedInCount, clockedOutCount, onVacationLeaveCount, onSickLeaveCount);
-        }, 1000);
+        }, 2000);
     }
 
     function startChart(clockedInCount, notClockedInCount, clockedOutCount, onVacationLeaveCount, onSickLeaveCount) {
