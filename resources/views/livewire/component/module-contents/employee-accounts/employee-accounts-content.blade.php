@@ -665,7 +665,7 @@
                             <td class="company-col">{{ $user->company }}s</td>
                             <td class="hire-location-col">{{ $user->hire_location }}</td>
                             <td class="hire-date-col">{{ $user->hire_date }}</td>
-                            <td class="position-col"><span class="role">{{ $user->position }}</span></td>
+                            <td class="position-col">{{ $user->position }}</td>
                             <td class="status-col"><span class="status"
                                     @style([$user->status ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>{{ $user->status ? 'Active' : 'Inactive' }}</span>
                             </td>

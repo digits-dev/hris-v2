@@ -13,24 +13,33 @@
         <table class="table">
             <thead>
              <tr>
-                <th>{{trans('ad_default.action_label')}}</th>
                 <th>{{trans('ad_lang.form-header.name')}}</th>
                 <th>{{trans('ad_lang.form-header.email')}}</th>
                 <th>{{trans('ad_lang.form-header.privilege_name')}}</th>
                 <th>{{trans('ad_lang.form-header.department')}}</th>
-                <th>{{trans('ad_lang.form-header.status')}}</th>
+                <th class="text-center">{{trans('ad_lang.form-header.status')}}</th>
+                <th class="text-center">{{trans('ad_default.action_label')}}</th>
+
              </tr>
             </thead>
 
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td><a class="" href="{{url(config('ad_url.ADMIN_PATH').'/users/edit-users')."/$user->id"}}"> <i class="fa fa-edit"></i> Edit</a></td>
                         <td>{{ $user->full_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->privilege_name }}</td>
                         <td>{{ $user->department_name }}</td>
-                        <td>{{ $user->u_status == 1 ? 'Active' : 'Inactive' }}</td>
+                        <td class="text-center">
+                            <span class="status"
+                            @style([$user->u_status ? 'background: var(--active-color)' : 'background: var(--inactive-color)'])>
+                            {{ $user->u_status ? 'Active' : 'Inactive'}}
+                            </span>
+                        </td>
+
+                        @if(App\Helpers\CommonHelpers::isUpdate())
+                            <td ><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="{{url(config('ad_url.ADMIN_PATH').'/users/edit-users')."/$user->id"}}"><i class="fa-solid fa-pencil"></i></a></td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
