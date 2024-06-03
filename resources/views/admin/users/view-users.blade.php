@@ -3,14 +3,13 @@
 @section('content')
     <section>
         <div class="main-container">
-            <div class="date-container">
-                <span class="font-bold">{{trans('ad_default.Users_Management')}}</span>
-                <a href="{{ route('add-user') }}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-1 dark:bg-green-700 dark:hover:bg-green-700 dark:focus:ring-green-800"> <i class="fa fa-circle-plus"></i> {{trans('ad_default.add_user')}}</a>
-                <p class="date" id="Date"></p>
-            </div>
-        </div>
 
-        <table class="table">
+            <p class="header-title">{{trans('ad_default.Users_Management')}}</p>
+
+            <a href="{{ route('add-user') }}" class="primary-btn mt-10 inline-block">{{trans('ad_default.add_user')}}</a>
+    
+
+            <table class="table">
             <thead>
              <tr>
                 <th>{{trans('ad_lang.form-header.name')}}</th>
@@ -38,13 +37,15 @@
                         </td>
 
                         @if(App\Helpers\CommonHelpers::isUpdate())
-                            <td ><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="{{url(config('ad_url.ADMIN_PATH').'/users/edit-users')."/$user->id"}}"><i class="fa-solid fa-pencil"></i></a></td>
+                            <td ><a class="table-btn table-btn--green mx-auto" href="{{url(config('ad_url.ADMIN_PATH').'/users/edit-users')."/$user->id"}}"><i class="fa-solid fa-pencil"></i></a></td>
                         @endif
                     </tr>
                 @endforeach
             </tbody>
     
     
-        </table>
+            </table>
+        </div>
+
     </section>
 @endsection
