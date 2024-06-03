@@ -12,6 +12,7 @@ class AdminAttendanceStatisticsComponent extends Component
     public $date;
     public $company_id = 0;
 
+
     public function mount(){
         $this->date = date('Y-m-d');
     }
