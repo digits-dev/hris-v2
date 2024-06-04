@@ -336,64 +336,66 @@
             </div>
         </div> 
     </div>
-    <div class="employee-attendance-container">
-        <div class="statistics-content shadow-md shadow-slate-200" wire:ignore>
-            <p class="content-title ">Statistics</p>
-            <div class="chart-content">
-                <div class="chart-container" style="display: none">
-                    <canvas id="statistics-chart"></canvas>
-                </div>
-                <div class="loading-container">
-                    <div class="loader"></div>
-                </div>
-            </div>
-        </div>
-        <div class="attendance-content shadow-md shadow-slate-200">
-            <p class="content-title ">Attendance</p>
-            <div class="attendance-items-container">
-                {{-- CLOCKED IN --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
-                        <p class="item-title"> Clocked In</p>
-                        <p class="clocked-in-value" data-value=" {{$clocked_in_count}} ">{{$clocked_in_count}}</p>
+    <a href="{{url('/employee-logs')}}">
+        <div class="employee-attendance-container">
+            <div class="statistics-content shadow-md shadow-slate-200" wire:ignore>
+                <p class="content-title ">Statistics</p>
+                <div class="chart-content">
+                    <div class="chart-container" style="display: none">
+                        <canvas id="statistics-chart"></canvas>
                     </div>
-                </div>
-                {{-- NOT CLOCKED IN --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
-                        <p class="item-title"> Not Clocked In</p>
-                        <p class="not-clocked-in-value" data-value="{{$not_clocked_in_count}}">{{$not_clocked_in_count}}</p>
-                    </div>
-                </div>
-                {{-- CLOCKED OUT --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
-                        <p class="item-title"> Clocked Out</p>
-                        <p class="clocked-out-value" data-value="{{$clocked_out_count}}">{{$clocked_out_count}}</p>
-                    </div>
-                </div>
-                {{-- ON VACATION LEAVE --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
-                        <p class="item-title"> On Vacation Leave</p>
-                        <p class="on-vacation-leave-value" data-value="0">-</p>
-                    </div>
-                </div>
-                {{-- ON SICK LEAVE --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
-                        <p class="item-title"> On Sick Leave</p>
-                        <p class="on-sick-leave-value" data-value="0">-</p>
+                    <div class="loading-container">
+                        <div class="loader"></div>
                     </div>
                 </div>
             </div>
+            <div class="attendance-content shadow-md shadow-slate-200">
+                <p class="content-title ">Attendance</p>
+                <div class="attendance-items-container">
+                    {{-- CLOCKED IN --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
+                            <p class="item-title"> Clocked In</p>
+                            <p class="clocked-in-value" data-value=" {{$clocked_in_count}} ">{{$clocked_in_count}}</p>
+                        </div>
+                    </div>
+                    {{-- NOT CLOCKED IN --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
+                            <p class="item-title"> Not Clocked In</p>
+                            <p class="not-clocked-in-value" data-value="{{$not_clocked_in_count}}">{{$not_clocked_in_count}}</p>
+                        </div>
+                    </div>
+                    {{-- CLOCKED OUT --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
+                            <p class="item-title"> Clocked Out</p>
+                            <p class="clocked-out-value" data-value="{{$clocked_out_count}}">{{$clocked_out_count}}</p>
+                        </div>
+                    </div>
+                    {{-- ON VACATION LEAVE --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
+                            <p class="item-title"> On Vacation Leave</p>
+                            <p class="on-vacation-leave-value" data-value="0">-</p>
+                        </div>
+                    </div>
+                    {{-- ON SICK LEAVE --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
+                            <p class="item-title"> On Sick Leave</p>
+                            <p class="on-sick-leave-value" data-value="0">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </a>
     <br>
 
    
