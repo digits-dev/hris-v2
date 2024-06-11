@@ -22,7 +22,7 @@
     })
   }"
 >
-  <div class="fixed bottom-2 left-2 cursor-pointer hover:opacity-50  block sm:hidden" style="display: none"
+  <div class="fixed bottom-2 left-2 cursor-pointer hover:opacity-50  block sm:hidden"
     @click="isSidenavOpen=true"
   >
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -125,7 +125,7 @@
             </li>
             <li class="{{ Request::segment(2) == 'module_generator' ? 'active' : '' }}">
               <a href="{{ route('ModulsControllerGetIndex') }}">
-                <img src="{{asset('images/navigation/settings-icon.png')}}" class="nav-icon" />
+                <img src="{{asset('images/navigation/module-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">{{trans('ad_default.Module_Generator')}}</span>
               </a>
             </li>

@@ -692,7 +692,7 @@
                             <td class="last-name-col">{{ $user->last_name }}</td>
                             <td class="employee-id-col">{{ $user->employee_id }}</td>
                             <td class="email-col">{{ $user->email }} </td>
-                            <td class="company-col">{{ $user->company }}s</td>
+                            <td class="company-col">{{ $user->company }}</td>
                             <td class="hire-location-col">{{ $user->hire_location }}</td>
                             <td class="hire-date-col">{{ $user->hire_date }}</td>
                             <td class="position-col">{{ $user->position }}</td>
