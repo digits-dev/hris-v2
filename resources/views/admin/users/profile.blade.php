@@ -125,7 +125,11 @@
 
                      @if (auth()->user()->image)
                         @php
-                            if (file_exists(auth()->user()->image)) {
+                          $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
+                          $isLandscape = false;
+
+
+                            if ($fileExists) {
                                 $profileImagePath = public_path('storage/' . auth()->user()->image);
                                 [$width, $height] = getimagesize($profileImagePath);
                                 $isLandscape = $width > $height;

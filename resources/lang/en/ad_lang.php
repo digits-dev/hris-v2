@@ -8,7 +8,7 @@ return [
         'department'      =>  'Department',
         'status'          =>  'Status',
         'path'            =>  'Path',
-        'controller'      =>  'Controler',
+        'controller'      =>  'Controller',
         'icon'            =>  'Icon',
         'type'            =>  'Controller Type',
         'choose-type'     =>  'Choose controller type',

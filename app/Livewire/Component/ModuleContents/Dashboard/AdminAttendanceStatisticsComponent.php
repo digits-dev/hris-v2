@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\ModuleContents\Dashboard;
 
+use App\Models\Dashboard;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -11,65 +12,21 @@ class AdminAttendanceStatisticsComponent extends Component
     public $date;
     public $company_id = 0;
 
+
     public function mount(){
         $this->date = date('Y-m-d');
     }
 
 
-    public function render()
+    public function render(Dashboard $dashboard)
     {
 
         $data = [];
         $data['companies'] = DB::table('companies')->get();
 
-        // Clocked In
-        $data['clocked_in_count'] = DB::table('users')
-        ->whereIn('employee_id', function($query) {
-            $query->select('employee_id')
-                ->from('filtered_employee_logs_view')
-                ->whereDate('date_clocked_in', $this->date)
-                ->whereNull('date_clocked_out')
-                ->when($this->company_id != 0, function ($query) {
-                    $query->where('company_id', $this->company_id);
-                });
-        })
-        ->count();
-
-        // Clocked Out
-        $data['clocked_out_count'] = DB::table('users')
-        ->whereIn('employee_id', function($query) {
-            $query->select('employee_id')
-                ->from('filtered_employee_logs_view')
-                ->whereDate('date_clocked_in', $this->date);
-        })
-        ->whereIn('employee_id', function($query) {
-            $query->select('employee_id')
-                ->from('filtered_employee_logs_view')
-                ->whereDate('date_clocked_out', $this->date)
-                ->when($this->company_id != 0, function ($query) {
-                    $query->where('company_id', $this->company_id);
-                });
-        })
-        ->count();
-
-        // Not Clocked In
-
-        $data['not_clocked_in_count'] = DB::table('users')
-        ->when($this->company_id != 0, function ($query) {
-            $query->where('company_id', $this->company_id);
-        })
-        ->whereNotIn('employee_id', function ($query) {
-            $query->select('employee_id')
-                ->from('employee_logs')
-                ->whereDate('date_clocked_in', $this->date)
-                ->whereNull('date_clocked_out');
-        })
-        ->whereNotIn('employee_id', function ($query) {
-            $query->select('employee_id')
-                ->from('employee_logs')
-                ->whereDate('date_clocked_out', $this->date);
-        })
-        ->count();
+        $data['clocked_in_count'] = $dashboard->getClockedInCount($this->date, $this->company_id);
+        $data['clocked_out_count'] = $dashboard->getClockedOutCount($this->date, $this->company_id);
+        $data['not_clocked_in_count'] = $dashboard->getNotClockedInCount($this->date, $this->company_id);
 
 
         return view('livewire.component.module-contents.dashboard.admin-attendance-statistics-component', $data);

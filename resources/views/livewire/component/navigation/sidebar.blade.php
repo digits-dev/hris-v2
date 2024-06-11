@@ -14,7 +14,6 @@
     window.addEventListener('resize', () => {
       
       screen = window.innerWidth;
-      console.log(isSidenavOpen, screen) 
       if (window.innerWidth >= 640){
         isSidenavOpen = true;
       }else{

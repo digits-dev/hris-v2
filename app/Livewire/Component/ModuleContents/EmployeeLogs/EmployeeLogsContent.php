@@ -37,6 +37,8 @@ class EmployeeLogsContent extends Component
 
     public function mount()
     {
+        $this->setSortByField('time_in');
+
         date_default_timezone_set('Asia/Manila');
         $this->filename = 'Export ' . CommonHelpers::getCurrentModule()->name . ' - ' . date('Y-m-d H:i:s');
 

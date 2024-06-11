@@ -39,7 +39,7 @@
     <div class="main-container">
         <p class="header-title">{{trans('ad_default.Privileges')}}</p>
 
-        <a href="{{ route('create-privilege') }}" class="primary-btn mt-2 inline-block">{{trans('ad_default.Add_New_Privilege')}}</a>
+        <a href="{{ route('create-privilege') }}" class="primary-btn mt-10 inline-block">{{trans('ad_default.Add_New_Privilege')}}</a>
 
         <table class="table">
             <thead>

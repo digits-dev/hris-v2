@@ -93,11 +93,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
 
     }
     .chart-container{
         width: 220px;
+    }
+
+    .loading-container{
+        width: 220px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height: 180px;
     }
 
     @media screen and (max-width: 700px) {
@@ -201,105 +208,119 @@
 
        /* SELECT */
         
-       .filter-modal-select {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            min-width: 300px;
-            height: 40px;
-        }
+    .filter-modal-select {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        min-width: 300px;
+        height: 40px;
+    }
 
-        .filter-modal-select-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+    .filter-modal-select-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-        .filter-modal-select-container p {
-            text-align: start;
-            margin-bottom: 5px;
-            font-size: 15px;
-            font-family: "Inter", sans-serif;
-            color: #113437;
-            font-weight: bold;
-        }
-        
+    .filter-modal-select-container p {
+        text-align: start;
+        margin-bottom: 5px;
+        font-size: 15px;
+        font-family: "Inter", sans-serif;
+        color: #113437;
+        font-weight: bold;
+    }
+    
 
-        .filter-modal-select select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding: 10px 15px;
-            font-weight: 600;
-            font-size: 14px;
-            outline: none;
-            font-family: "Inter", sans-serif;
-            border: 2px solid var(--stroke-color);
-            color: var(--primary-color);
-            border-radius: 8px;
-            background-color: #fff;
-            width: 100%;
-            cursor: pointer;
-        }
+    .filter-modal-select select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 10px 15px;
+        font-weight: 600;
+        font-size: 14px;
+        outline: none;
+        font-family: "Inter", sans-serif;
+        border: 2px solid var(--stroke-color);
+        color: var(--primary-color);
+        border-radius: 8px;
+        background-color: #fff;
+        width: 100%;
+        cursor: pointer;
+    }
 
-        .filter-modal-arrow-icon {
-            position: absolute;
-            top: 60%;
-            right: 15px;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            pointer-events: none;
-        }
+    .filter-modal-arrow-icon {
+        position: absolute;
+        top: 60%;
+        right: 15px;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        pointer-events: none;
+    }
 
-        /* DATE */
+    /* DATE */
 
-        .hire-date-container{
-            display: flex;
-            justify-content: space-between;
-            border: 2px solid var(--stroke-color);
-            font-weight: 600;
-            font-size: 14px;
-            font-family: "Inter", sans-serif;
-            border-radius: 8px;
-            width: 100%;
-            overflow: hidden;
-            align-items: center;
-            position: relative;
-        }
+    .hire-date-container{
+        display: flex;
+        justify-content: space-between;
+        border: 2px solid var(--stroke-color);
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        border-radius: 8px;
+        width: 100%;
+        overflow: hidden;
+        align-items: center;
+        position: relative;
+    }
 
-        .hire-date-container span{
-            padding: 12px 10px;
-            text-align: center;
-            width: 60px;
-            font-size: 12px;
-            color: var(--primary-color);
-            border-right: 2px solid var(--stroke-color);
-        }
+    .hire-date-container span{
+        padding: 12px 10px;
+        text-align: center;
+        width: 60px;
+        font-size: 12px;
+        color: var(--primary-color);
+        border-right: 2px solid var(--stroke-color);
+    }
 
-        .hire-date-container input{
-            flex: 1;
-            padding: 0 20px;
-            outline: none;
-            color: var(--primary-color);
-            -webkit-appearance: none; /* Hide the default calendar icon in Chrome, Safari, and Opera */
-            -moz-appearance: textfield; /* Hide the default calendar icon in Firefox */
-        }
+    .hire-date-container input{
+        flex: 1;
+        padding: 0 20px;
+        outline: none;
+        color: var(--primary-color);
+        -webkit-appearance: none; /* Hide the default calendar icon in Chrome, Safari, and Opera */
+        -moz-appearance: textfield; /* Hide the default calendar icon in Firefox */
+    }
 
-        .filter-containers{
-            display: flex;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+    .filter-containers{
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .loader {
+    border: 5px solid #ffffff; /* Light grey */
+    border-top: 5px solid var(--stroke-color); /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
 
 </style>
 @endsection
 <div class="main-container relative">
     <div class="filter-containers">
         <div class="filter-modal-select">
-            <select wire:model.change="company_id">
+            <select wire:model.change="company_id" id="company_id">
                 <option disabled>Select Company</option>
                 <option value="0">All Employees</option>
                 @foreach ($companies as $company)
@@ -315,61 +336,66 @@
             </div>
         </div> 
     </div>
-    <div class="employee-attendance-container">
-        <div class="statistics-content shadow-md shadow-slate-200" wire:ignore>
-            <p class="content-title ">Statistics</p>
-            <div class="chart-content">
-                <div class="chart-container">
-                    <canvas id="statistics-chart" m></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="attendance-content shadow-md shadow-slate-200">
-            <p class="content-title ">Attendance</p>
-            <div class="attendance-items-container">
-                {{-- CLOCKED IN --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
-                        <p class="item-title"> Clocked In</p>
-                        <p class="clocked-in-value">{{$clocked_in_count}}</p>
+    <a href="{{url('/employee-logs')}}">
+        <div class="employee-attendance-container">
+            <div class="statistics-content shadow-md shadow-slate-200" wire:ignore>
+                <p class="content-title ">Statistics</p>
+                <div class="chart-content">
+                    <div class="chart-container" style="display: none">
+                        <canvas id="statistics-chart"></canvas>
                     </div>
-                </div>
-                {{-- NOT CLOCKED IN --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
-                        <p class="item-title"> Not Clocked In</p>
-                        <p class="not-clocked-in-value">{{$not_clocked_in_count}}</p>
-                    </div>
-                </div>
-                {{-- CLOCKED OUT --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
-                        <p class="item-title"> Clocked Out</p>
-                        <p class="clocked-out-value">{{$clocked_out_count}}</p>
-                    </div>
-                </div>
-                {{-- ON VACATION LEAVE --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
-                        <p class="item-title"> On Vacation Leave</p>
-                        <p class="on-vacation-leave-value">-</p>
-                    </div>
-                </div>
-                {{-- ON SICK LEAVE --}}
-                <div class="content-title-container">
-                    <div class="attendance-items">
-                        <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
-                        <p class="item-title"> On Sick Leave</p>
-                        <p class="on-sick-leave-value">-</p>
+                    <div class="loading-container">
+                        <div class="loader"></div>
                     </div>
                 </div>
             </div>
+            <div class="attendance-content shadow-md shadow-slate-200">
+                <p class="content-title ">Attendance</p>
+                <div class="attendance-items-container">
+                    {{-- CLOCKED IN --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/clocked-in-icon.png')}}" width="67">
+                            <p class="item-title"> Clocked In</p>
+                            <p class="clocked-in-value" data-value=" {{$clocked_in_count}} ">{{$clocked_in_count}}</p>
+                        </div>
+                    </div>
+                    {{-- NOT CLOCKED IN --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/not-clocked-in-icon.png')}}" width="67">
+                            <p class="item-title"> Not Clocked In</p>
+                            <p class="not-clocked-in-value" data-value="{{$not_clocked_in_count}}">{{$not_clocked_in_count}}</p>
+                        </div>
+                    </div>
+                    {{-- CLOCKED OUT --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/clocked-out-icon.png')}}" width="67">
+                            <p class="item-title"> Clocked Out</p>
+                            <p class="clocked-out-value" data-value="{{$clocked_out_count}}">{{$clocked_out_count}}</p>
+                        </div>
+                    </div>
+                    {{-- ON VACATION LEAVE --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/on-vacation-leave-icon.png')}}" width="67">
+                            <p class="item-title"> On Vacation Leave</p>
+                            <p class="on-vacation-leave-value" data-value="0">-</p>
+                        </div>
+                    </div>
+                    {{-- ON SICK LEAVE --}}
+                    <div class="content-title-container">
+                        <div class="attendance-items">
+                            <img src="{{asset('images/dashboard/on-sick-leave-icon.png')}}" width="67">
+                            <p class="item-title"> On Sick Leave</p>
+                            <p class="on-sick-leave-value" data-value="0">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </a>
     <br>
 
    
@@ -377,50 +403,95 @@
 
 @section('script')
 <script >
-    document.addEventListener('livewire:navigated', () => {
+    let chartInstance;
+
+    $(document).ready(function() {
+        updateChart();
+
+        $('#company_id').on('change', function() {
+            updateChart();
+        });
+
+        $('#dateInput').on('change', function() {
+            updateChart();
+        });
+
+    });
+
+    function updateChart() {
+
+        $('.chart-container').hide();
+        $('.loading-container').show();
+
+        setTimeout(() => {
+        let clockedInCount = document.querySelector('.clocked-in-value').getAttribute('data-value');
+        let notClockedInCount = document.querySelector('.not-clocked-in-value').getAttribute('data-value');
+        let clockedOutCount = document.querySelector('.clocked-out-value').getAttribute('data-value');
+        let onVacationLeaveCount = document.querySelector('.on-vacation-leave-value').getAttribute('data-value');
+        let onSickLeaveCount = document.querySelector('.on-sick-leave-value').getAttribute('data-value');
+    
+        $('.loading-container').hide();
+        $('.chart-container').show();
+
+        startChart(clockedInCount, notClockedInCount, clockedOutCount, onVacationLeaveCount, onSickLeaveCount);
+        }, 2000);
+    }
+
+    function startChart(clockedInCount, notClockedInCount, clockedOutCount, onVacationLeaveCount, onSickLeaveCount) {
         const ctx = document.getElementById('statistics-chart');
-         new Chart(ctx, {
-             type: 'doughnut',
-             data: {
-                 labels: [
-                     'Clocked In',
-                     'Not Clocked In',
-                     'Clocked Out',
-                     'On Vacation Leave',
-                     'On Sick Leave'
-                 ],
-                 datasets: [{
-                     label: 'Employees',
-                     data: [1, 1, 0, 0, 0],
-                     backgroundColor: [
-                         '#2196F3',
-                         '#FF6174',
-                         '#EFE30A',
-                         '#FF6600',
-                         '#0F901B'
-                     ],
-                     hoverOffset: 10
-                 },]
-             },
-             options: {
-                 responsive: true,
-                 maintainAspectRation: false,
-                 context: '2d',
-                 plugins: {
-                     legend: {
-                         display: false
-                     }
-                 }
-                 
-             }
-         });
-     
-    })
+    
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'Clocked In',
+                        'Not Clocked In',
+                        'Clocked Out',
+                        'On Vacation Leave',
+                        'On Sick Leave'
+                    ],
+                    datasets: [{
+                        label: 'Employees',
+                        data: [
+                            clockedInCount,
+                            notClockedInCount,
+                            clockedOutCount,
+                            onVacationLeaveCount,
+                            onSickLeaveCount
+                        ],
+                        backgroundColor: [
+                            '#2196F3',
+                            '#FF6174',
+                            '#EFE30A',
+                            '#FF6600',
+                            '#0F901B'
+                        ],
+                        hoverOffset: 10
+                    },]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRation: false,
+                    context: '2d',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                    
+                }
+            });
+
+    }
+
 
     var date = new Date();
          var formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
          var fullDate = 'Today: ' + formattedDate;
          document.getElementById('Date').innerText = fullDate;
 
-  </script>
+</script>
 @endsection
