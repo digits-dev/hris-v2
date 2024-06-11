@@ -168,7 +168,7 @@ class AdMenus extends Seeder
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 2
+                'sorting'           => 3
             ]
         );
 
@@ -187,7 +187,26 @@ class AdMenus extends Seeder
                 'is_active'         => 1,
                 'is_dashboard'      => 0,
                 'id_ad_privileges'  => 1,
-                'sorting'           => 3
+                'sorting'           => 4
+            ]
+        );
+
+        DB::table('ad_menuses')->updateOrInsert(
+            [
+                'name'              => 'Department',
+            ],
+            [
+                'name'              => 'Department',
+                'type'              => 'Route',
+                'path'              => 'DepartmentController\DepartmentControllerContentGetIndex',
+                'slug'              => 'department',
+                'color'             => NULL,
+                'icon'              => 'images/navigation/department-icon.png',
+                'parent_id'         => 2,
+                'is_active'         => 1,
+                'is_dashboard'      => 0,
+                'id_ad_privileges'  => 1,
+                'sorting'           => 2
             ]
         );
 

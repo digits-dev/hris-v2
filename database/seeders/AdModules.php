@@ -215,6 +215,16 @@ class AdModules extends Seeder
                 'is_protected' => 0,
                 'is_active' => 1,
             ],
+            [
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => 'Department',
+                'icon' => 'fa fa-icon',
+                'path' => 'department',
+                'table_name' => 'departments',
+                'controller' => 'DepartmentController\DepartmentControllerContent',
+                'is_protected' => 0,
+                'is_active' => 1,
+            ],
         ];
 
         foreach ($data as $module) {
