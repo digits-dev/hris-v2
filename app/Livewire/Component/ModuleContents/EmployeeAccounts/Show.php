@@ -23,9 +23,6 @@ class Show extends Component
 
     public function index($userId)
     {
-        if (!CommonHelpers::isRead()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), "danger");
-        }
         return view('modules.employee-accounts.employee-accounts-module', [ 'routeName' => 'show', 'userId' => $userId ]);
     }
 

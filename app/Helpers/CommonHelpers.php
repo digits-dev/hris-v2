@@ -459,4 +459,16 @@ class CommonHelpers {
 				function(){  location.href=\"$redirectTo\" });";
     }
 
+    public static function insertLog($description, $details = '') {
+        $a                 = array();
+        $a['created_at']   = date('Y-m-d H:i:s');
+        $a['ipaddress']    = $_SERVER['REMOTE_ADDR'];
+        $a['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+        $a['url']          = Request::url();
+        $a['description']  = $description;
+        $a['details']        = $details;
+        $a['id_ad_users'] = self::myId();
+        DB::table('ad_logs')->insert($a);    
+    }
+
 }

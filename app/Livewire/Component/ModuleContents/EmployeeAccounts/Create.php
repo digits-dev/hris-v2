@@ -20,9 +20,6 @@ class Create extends Component
 
     public function index()
     {
-        if (!CommonHelpers::isCreate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"));
-        }
         return view('modules.employee-accounts.employee-accounts-module', [ 'routeName' => 'create' ]);
 
     }
@@ -30,13 +27,7 @@ class Create extends Component
 
     public function save()
     {
-
-        if (!CommonHelpers::isCreate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
-
         $this->form->store();
-
         session()->flash('message', 'Created user successfully.');
         session()->flash('message_type', 'success');
 

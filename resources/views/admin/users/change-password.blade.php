@@ -223,11 +223,9 @@
                 }
 
                 function confirmPassword(){
-             
                     let isDisabled = true;
                     const new_pass = $('#new_password').val();
                     const confirm_pass = $('#confirmation_password').val();
-                    console.log(new_pass);
                     if(new_pass != confirm_pass){
                         isDisabled = false;
                         $('.confirm-input').css('border', '2px solid red');

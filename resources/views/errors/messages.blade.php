@@ -1,5 +1,4 @@
-<div x-data="{showResponse: true }" x-init="setTimeout(()=>{ showResponse = false },3000)">
-    
+<div x-data="{showResponse: true }" x-init="setTimeout(()=>{ showResponse = false },3000)">    
     <div x-show="showResponse" x-cloak x-transition>    
         @if (\Session::has('message'))
 
@@ -8,7 +7,7 @@
                     <span class="font-medium">{!! \Session::get('message') !!}</span>
                 </div>
             @elseif(\Session::get('message_type') === 'warning')
-                <div class="p-4 mx-10 my-5 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-yellow-600 dark:text-white" role="alert">
+                <div class="label label-warning" role="alert">
                     <span class="font-medium">{!! \Session::get('message') !!}</span>
                 </div>
             @elseif(\Session::get('message_type') === 'success')

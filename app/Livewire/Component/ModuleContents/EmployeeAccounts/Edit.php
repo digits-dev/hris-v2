@@ -36,11 +36,6 @@ class Edit extends Component
 
     public function save()
     {
-
-        if (!CommonHelpers::isUpdate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
-
         $this->form->update();
 
         session()->flash('message', 'Updated user successfully.');
