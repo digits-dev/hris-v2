@@ -568,7 +568,37 @@
 
                 @endif
 
+            <div x-data="{openImportModal:false}">
+                {{-- Export Btn  --}}
+                <button class="primary-btn" x-on:click="openImportModal = true">Import</button>
+                {{-- EXPORT MODAL --}}
+                <div x-show="openImportModal" x-cloak  x-transition class="modal-container" >
+                    <!-- Modal backdrop -->
+                    <div class="modal-backdrop" x-on:click="openImportModal = false">
+                    </div>
+                    <!-- Modal content -->
+                    <div class="export-modal-content">
+                        <div class="export-modal-header">
+                            <p>Import</p>
+                        </div>
+                        <button type="button" wire:click="importUsersTemplete">Download template</button>
+                        <form wire:submit="import">
+                            <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
+                            <div class="export-modal-body">
+                                <div class="  flex w-full items-center gap-2">
+                                    <label>File Name:</label>
+                                    <input type="file" wire:model="file_import" class='file_import-input flex-1' required/>
+                                </div>
+                            </div>
 
+                            <div class="modal-footer">
+                                <button type="submit" class="primary-btn" x-on:click="openImportModal = false">Import</button>
+                                <button type="button" class="secondary-btn" x-on:click="openImportModal = false">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <div x-data="{openExportModal:false}">
                 {{-- Export Btn  --}}

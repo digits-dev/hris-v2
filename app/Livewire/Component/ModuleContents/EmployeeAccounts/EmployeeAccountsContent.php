@@ -11,12 +11,15 @@ use App\Helpers\CommonHelpers;
 use App\Models\Companies;
 use App\Models\Location;
 use App\Models\Position;
+use App\Imports\ImportUsers;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmployeesExport;
+use Livewire\WithFileUploads;
 
 class EmployeeAccountsContent extends Component
 {
+    use WithFileUploads;
     use WithPagination;
     use SortableTrait;
 
@@ -35,6 +38,7 @@ class EmployeeAccountsContent extends Component
     //Export
     public $isFilterExportModalOpen = false;
     public $filename;
+    public $file_import;
     public $filters = [];
 
     public function mount()
@@ -192,10 +196,7 @@ class EmployeeAccountsContent extends Component
         return $query_filter_params;
     }
 
-
-
     //EXPORT FILTER
-
     public function export()
     {
 
@@ -215,6 +216,64 @@ class EmployeeAccountsContent extends Component
         return Excel::download(new EmployeesExport($result), $filename . '.xlsx');
     }
 
+    public function import()
+    {   
+        $path = $this->file_import->store('file_import');
+        $excel_path = storage_path('app') . '/' . $path;
+        try {
+            Excel::import(new ImportUsers, $path);	
+            CommonHelpers::redirect(url('/'), trans("Upload Successfully!"), 'success');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            
+            $error = [];
+            foreach ($failures as $failure) {
+                $line = $failure->row();
+                foreach ($failure->errors() as $err) {
+                    $error[] = $err . " on line: " . $line; 
+                }
+            }
+            
+            $errors = collect($error)->unique()->toArray();
+        }
+        CommonHelpers::redirect(url('/'), trans("Upload Successfully!"), 'success');
+    }
+
+    public function importUsersTemplete(){
+   
+        $fileHeader = [
+            "arf_number"         => "ARF NUMBER",
+            "item_code"          => "ITEM CODE",
+            "dr_qty"             => "DR QTY",
+            "dr_number"          => "DR NUMBER",
+            "dr_type"            => "DR TYPE",
+        ];
+
+        $fileData = [
+            "erf_number"         => "ARF-0000001",
+            "item_code"          => "40000054",
+            "dr_qty"             => "1",
+            "dr_number"          => "DR#12345",
+            "dr_type"            => "REP/RO", 
+        ];
+        $filename = "import-users-".date('Y-m-d').".csv";
+        self::downloadTemplate($fileHeader, $fileData, $filename);
+    }
+
+    public function downloadTemplate($fileHeader, $fileData, $filename) {
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        header("Content-Type: text/csv; charset=UTF-16LE");
+        $out = fopen("php://output", 'w');
+        $flag = false;
+        if(!$flag) {
+            // display field/column names as first row
+            fputcsv($out, $fileHeader);
+            $flag = true;
+        }
+        fputcsv($out, $fileData);
+        fclose($out);
+        exit;
+    }
 
     // FOR BULK ACTIONS MODAL
 
