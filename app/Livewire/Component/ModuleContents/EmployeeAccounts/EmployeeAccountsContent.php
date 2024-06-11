@@ -218,11 +218,14 @@ class EmployeeAccountsContent extends Component
 
     public function import()
     {   
+        $this->validate([
+            'file_import' => 'required|file|mimes:xlsx,xls,csv|max:10240', // Adjust rules as needed
+        ]);
         $path = $this->file_import->store('file_import');
         $excel_path = storage_path('app') . '/' . $path;
         try {
-            Excel::import(new ImportUsers, $path);	
-            CommonHelpers::redirect(url('/'), trans("Upload Successfully!"), 'success');
+            Excel::import(new ImportUsers, $excel_path);	
+              redirect()->to('/employee-accounts', 'Upload Success!', "success");
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             
@@ -236,7 +239,7 @@ class EmployeeAccountsContent extends Component
             
             $errors = collect($error)->unique()->toArray();
         }
-        CommonHelpers::redirect(url('/'), trans("Upload Successfully!"), 'success');
+          redirect()->to('/employee-accounts', 'Upload Success!', "success");
     }
 
     public function importUsersTemplete(){

@@ -582,7 +582,7 @@
                             <p>Import</p>
                         </div>
                         <button type="button" wire:click="importUsersTemplete">Download template</button>
-                        <form wire:submit="import">
+                        <form wire:submit.prevent="import">
                             <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
                             <div class="export-modal-body">
                                 <div class="  flex w-full items-center gap-2">
