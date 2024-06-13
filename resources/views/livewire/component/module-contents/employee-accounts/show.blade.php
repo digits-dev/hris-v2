@@ -127,11 +127,14 @@
 
         }
 
+       
+
         @media screen and (min-width: 900px) {
-            .account-content {
-                grid-template-columns: 4fr 4fr 2fr;
-                gap: 40px;
-            }
+        .account-content {
+            grid-template-columns: 4fr 4fr 3fr;
+            column-gap: 40px;
+            row-gap: 20px;
+        }
         }
 
         .account-content input,
@@ -226,46 +229,53 @@
             <legend class="legend">Account Information</legend>
             <div class="account-content">
 
-                <div class="flex flex-col ">
-                    <label for="">Employee Id
-                        <input type="text" name="" id="" value="{{ $user->employee_id }}" disabled>
+               
+                    <label>Employee Id
+                        <input type="text"  value="{{ $user->employee_id }}" disabled>
                     </label>
 
-                    <label for="" class="flex flex-col mt-2">Hire Location
-                        <input type="text" name="" id=""
-                            value="{{ $user->hireLocation->location_name }}" disabled>
+                    <label class="flex flex-col">Department
+                        <input type="text" 
+                            value="{{ $user->department->department_name }}" disabled>
                     </label>
 
-                    <label for="" class="block mt-3">
+                    <label class="flex flex-col ">Hire Date
+                        <input type="email" 
+                            value="{{ $user->hire_date }}" disabled>
+                    </label>
+    
+                    <label class="block">
                         Email Address
-                        <input type="email" name="" id="" value="{{ $user->email }}" disabled>
+                        <input type="email"  value="{{ $user->email }}" disabled>
                     </label>
 
-                </div>
+                    <label class="flex flex-col">Position
+                        <input type="text"  value="{{ $user->position->position_name }}" disabled>
+                    </label>
 
-                <div class="flex flex-col ">
-                    <label for="">Company
-                        <input type="text" name="" id="" value="{{ $user->company->company_name }}"
+                    <label class="block">
+                        System Privilege
+                        <input type="email"  value="{{ $user->privilege->name }}" disabled>
+                    </label>
+
+                    <label>Company
+                        <input type="text"  value="{{ $user->company->company_name }}"
                             disabled>
                     </label>
 
-                    <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="{{ $user->position->position_name }}" disabled>
+                    <label class="flex flex-col">Hire Location
+                        <input type="text" 
+                            value="{{ $user->hireLocation->location_name }}" disabled>
                     </label>
 
-                    <label for="" class="block mt-3">
-                        System Privilege
-                        <input type="email" name="" id="" value="User" disabled>
+                    <label class="flex flex-col">Status
+                        <input type="text" 
+                            value="{{ $user->status ? 'Active' : 'Inactive' }}" disabled>
                     </label>
-
-                </div>
-
-                <label for="" class="flex flex-col ">Hire Date
-                    <input type="email" name="" id=""
-                        value="{{ \Carbon\Carbon::parse($user->hire_date)->format('Y-m-d') }}" disabled>
-                </label>
 
             </div>
+
+    
         </fieldset>
 
     </form>
