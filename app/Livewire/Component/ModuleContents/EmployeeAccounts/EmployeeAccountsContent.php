@@ -3,19 +3,20 @@
 namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
 
 use App\Models\User;
-use App\Traits\SortableTrait;
 use Livewire\Component;
-use Livewire\Attributes\Url;
-use Livewire\WithPagination;
-use App\Helpers\CommonHelpers;
-use App\Models\Companies;
 use App\Models\Location;
 use App\Models\Position;
+use App\ImportTemplates\UsersImportTemplate;
+use App\Models\Companies;
 use App\Imports\ImportUsers;
+use Livewire\Attributes\Url;
+use Livewire\WithPagination;
+use App\Traits\SortableTrait;
+use Livewire\WithFileUploads;
+use App\Helpers\CommonHelpers;
+use App\Exports\EmployeesExport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\EmployeesExport;
-use Livewire\WithFileUploads;
 
 class EmployeeAccountsContent extends Component
 {
@@ -246,42 +247,16 @@ class EmployeeAccountsContent extends Component
             return $this->redirect('/employee-accounts');
     }
 
-    public function importUsersTemplete(){
    
-        $fileHeader = [
-            "arf_number"         => "ARF NUMBER",
-            "item_code"          => "ITEM CODE",
-            "dr_qty"             => "DR QTY",
-            "dr_number"          => "DR NUMBER",
-            "dr_type"            => "DR TYPE",
-        ];
 
-        $fileData = [
-            "erf_number"         => "ARF-0000001",
-            "item_code"          => "40000054",
-            "dr_qty"             => "1",
-            "dr_number"          => "DR#12345",
-            "dr_type"            => "REP/RO", 
-        ];
-        $filename = "import-users-".date('Y-m-d').".csv";
-        self::downloadTemplate($fileHeader, $fileData, $filename);
+
+    public function downloadTemplate()
+    {
+        $filename = "import-users-".date('Y-m-d').".xlsx";
+        return Excel::download(new UsersImportTemplate, $filename);
     }
 
-    public function downloadTemplate($fileHeader, $fileData, $filename) {
-        header("Content-Disposition: attachment; filename=\"$filename\"");
-        header("Content-Type: text/csv; charset=UTF-16LE");
-        $out = fopen("php://output", 'w');
-        $flag = false;
-        if(!$flag) {
-            // display field/column names as first row
-            fputcsv($out, $fileHeader);
-            $flag = true;
-        }
-        fputcsv($out, $fileData);
-        fclose($out);
-        exit;
-    }
-
+  
     // FOR BULK ACTIONS MODAL
 
     public function setStatus($status){

@@ -1,21 +1,27 @@
 <?php
 namespace App\Livewire\Component\ModuleContents\LocationController;
 
-use App\Traits\SortableTrait;
+use App\ImportTemplates\LocationImportTemplate;
 use Livewire\Component;
 use App\Models\Location;
 use Livewire\Attributes\Url;
+use App\Traits\SortableTrait;
 use App\Helpers\CommonHelpers;
+use App\Imports\ImportLocations;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocationControllerContent extends Component
 {
 
     use SortableTrait;
+    use WithFileUploads;
 
     public $location_id;
     public $location_name;
     public $status;
+    public $file_import;
 
 
     public function editForm($locationId)
@@ -83,6 +89,44 @@ class LocationControllerContent extends Component
         return $this->redirect('/locations');
     }
 
+    public function import()
+    {   
+        $this->validate([
+            'file_import' => 'required|file|mimes:xlsx,xls,csv|max:10240'
+        ]);
+        $path = $this->file_import->store('file_import');
+        $excel_path = storage_path('app') . '/' . $path;
+        try {
+            Excel::import(new ImportLocations, $excel_path);	
+
+            session()->flash('message', 'Upload Success!');
+            session()->flash('message_type', 'success');
+      
+            return $this->redirect('/locations');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            
+            $error = [];
+            foreach ($failures as $failure) {
+                $line = $failure->row();
+                foreach ($failure->errors() as $err) {
+                    $error[] = $err . " on line: " . $line; 
+                }
+            }
+            
+            $errors = collect($error)->unique()->toArray();
+        }
+
+        session()->flash('message',  $errors[0]);
+        session()->flash('message_type', 'danger');
+        return $this->redirect('/employee-accounts');
+    }
+
+    public function downloadTemplate()
+    {
+        $filename = "import-locations-".date('Y-m-d').".xlsx";
+        return Excel::download(new LocationImportTemplate, $filename);
+    }
 
 
     public function index()

@@ -367,12 +367,15 @@
 
         }
 
-        .export-modal-header p {
+        .export-modal-header {
             font-size: 18px;
             color: #113437;
             font-family: "Inter", sans-serif;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
         }
+        
 
         .export-modal-body {
             display: flex;
@@ -568,11 +571,11 @@
 
                 @endif
 
-            <div  x-data="{openImportModal:false}">
-                {{-- Export Btn  --}}
+            <div x-data="{openImportModal:false}">
+                {{-- Import Btn  --}}
                 <button class="primary-btn" x-on:click="openImportModal = true">Import</button>
-                {{-- EXPORT MODAL --}}
-                <div x-show="openImportModal" x-cloak x-transition class="modal-container" >
+                {{-- Import MODAL --}}
+                <div x-show="openImportModal" x-cloak  x-transition class="modal-container" >
                     <!-- Modal backdrop -->
                     <div class="modal-backdrop" x-on:click="openImportModal = false">
                     </div>
@@ -580,14 +583,15 @@
                     <div  class="export-modal-content">
                         <div class="export-modal-header">
                             <p>Import</p>
+                            <button type="button" wire:click="downloadTemplate" ><span class="underline underline-offset-2 text-sm font-normal">Download Template</span></button>
+
                         </div>
-                        <button class="primary-btn" type="button" wire:click="importUsersTemplete">Download template</button>
                         <form wire:submit.prevent="import">
                             <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
                             <div  class="export-modal-body">
                                 <div class="flex w-full items-center gap-2">
                                     <label>File Name:</label>
-                                    <input type="file" wire:model="file_import" id="file_import"  class='file_import-input flex-1' required/>
+                                    <input type="file" wire:model="file_import" class='filename-input flex-1' required/>
                                 </div>
                             </div>
 

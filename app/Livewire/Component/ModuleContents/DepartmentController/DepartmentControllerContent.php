@@ -1,21 +1,27 @@
 <?php
 namespace App\Livewire\Component\ModuleContents\DepartmentController;
 
-use App\Traits\SortableTrait;
+use App\ImportTemplates\DepartmentImportTemplate;
 use Livewire\Component;
 use App\Models\Companies;
-use Livewire\Attributes\Url;
-use App\Helpers\CommonHelpers;
 use App\Models\Department;
+use Livewire\Attributes\Url;
+use App\Traits\SortableTrait;
+use App\Helpers\CommonHelpers;
+use App\Imports\ImportDepartments;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentControllerContent extends Component{
 
     use SortableTrait;
+    use WithFileUploads;
 
     public $department_id;
     public $department_name;
     public $status;
+    public $file_import;
 
 
     public function editForm($department_id)
@@ -80,6 +86,50 @@ class DepartmentControllerContent extends Component{
 
         return $this->redirect('/department');
     }
+
+    
+    public function import()
+    {   
+        $this->validate([
+            'file_import' => 'required|file|mimes:xlsx,xls,csv|max:10240'
+        ]);
+        
+        $path = $this->file_import->store('file_import');
+        $excel_path = storage_path('app') . '/' . $path;
+
+        try {
+            Excel::import(new ImportDepartments, $excel_path);	
+
+            session()->flash('message', 'Upload Success!');
+            session()->flash('message_type', 'success');
+      
+            return $this->redirect('/department');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            
+            $error = [];
+            foreach ($failures as $failure) {
+                $line = $failure->row();
+                foreach ($failure->errors() as $err) {
+                    $error[] = $err . " on line: " . $line; 
+                }
+            }
+            
+            $errors = collect($error)->unique()->toArray();
+        }
+        
+        session()->flash('message',  $errors[0]);
+        session()->flash('message_type', 'danger');
+        return $this->redirect('/employee-accounts');
+    }
+
+    
+    public function downloadTemplate()
+    {
+        $filename = "import-departments-".date('Y-m-d').".xlsx";
+        return Excel::download(new DepartmentImportTemplate, $filename);
+    }
+
 
     public function index(){
         if (!CommonHelpers::isView()) {
