@@ -45,7 +45,6 @@ class Create extends Component
                 'locations'  => Location::all(),
                 'privileges' => Privileges::whereNot('id', 1)->get(),
                 'companies'  => Companies::all(),
-                'positions'  => Position::all(),
                 'departments'  => Department::all(),
             ]
         );

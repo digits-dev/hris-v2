@@ -131,7 +131,6 @@ class EmployeeAccountsContent extends Component
         $query = DB::table('users')
             ->leftJoin('companies', 'companies.id', 'users.company_id')
             ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
-            ->leftJoin('positions', 'positions.id', 'users.position_id')
             ->leftJoin('departments', 'departments.id', 'users.department_id')
             ->select([
                 'users.id',
@@ -144,7 +143,7 @@ class EmployeeAccountsContent extends Component
                 'departments.department_name as department',
                 'hire_location.location_name as hire_location',
                 'users.hire_date',
-                'positions.position_name as position',
+                'users.position',
                 'users.status',
                 'users.image',
                 'users.created_at'

@@ -32,7 +32,7 @@ class User extends Authenticatable
         'image',
         'company_id', 
         'department_id', 
-        'position_id', 
+        'position', 
         'password',
         'id_ad_privileges',
         'created_at	',

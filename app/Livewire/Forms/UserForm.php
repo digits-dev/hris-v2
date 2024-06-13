@@ -41,7 +41,7 @@ class UserForm extends Form
     public $department_id;
 
     #[Validate('required')]
-    public $position_id;
+    public $position;
 
     #[Validate('required', as: 'system privilege')]
     public $id_ad_privileges;
@@ -63,7 +63,7 @@ class UserForm extends Form
         $this->email            = $user->email;
         $this->company_id       = $user->company_id;
         $this->department_id    = $user->department_id;
-        $this->position_id      = $user->position_id;
+        $this->position      = $user->position;
         $this->id_ad_privileges = $user->id_ad_privileges;
         $this->hire_date        = date('Y-m-d', strtotime($user->hire_date));
         $this->status           = $user->status;

@@ -250,7 +250,7 @@
                     </label>
 
                     <label class="flex flex-col">Position
-                        <input type="text"  value="{{ $user->position->position_name }}" disabled>
+                        <input type="text"  value="{{ $user->position }}" disabled>
                     </label>
 
                     <label class="block">

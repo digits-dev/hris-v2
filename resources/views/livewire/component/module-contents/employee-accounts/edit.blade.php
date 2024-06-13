@@ -359,9 +359,9 @@
         {{-- Position  --}}
           <div>
             <label class="flex flex-col" for="position">Position
-              <input type="text" id="position" wire:model.blur="form.position_id">
+              <input type="text" id="position" wire:model.blur="form.position">
             </label>
-            @error('form.position_id')
+            @error('form.position')
               <em>
                 <p class="error-text">{{ $message }}</p>
               </em>
