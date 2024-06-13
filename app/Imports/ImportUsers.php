@@ -57,7 +57,7 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
     public function rules(): array
     {
         return [ 
-            '*.first_name' => 'required|numeric',
+            '*.first_name' => 'required',
         ];
     }
 }

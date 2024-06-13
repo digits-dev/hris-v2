@@ -568,26 +568,26 @@
 
                 @endif
 
-            <div x-data="{openImportModal:false}">
+            <div  x-data="{openImportModal:false}">
                 {{-- Export Btn  --}}
                 <button class="primary-btn" x-on:click="openImportModal = true">Import</button>
                 {{-- EXPORT MODAL --}}
-                <div x-show="openImportModal" x-cloak  x-transition class="modal-container" >
+                <div x-show="openImportModal" x-cloak x-transition class="modal-container" >
                     <!-- Modal backdrop -->
                     <div class="modal-backdrop" x-on:click="openImportModal = false">
                     </div>
                     <!-- Modal content -->
-                    <div class="export-modal-content">
+                    <div  class="export-modal-content">
                         <div class="export-modal-header">
                             <p>Import</p>
                         </div>
-                        <button type="button" wire:click="importUsersTemplete">Download template</button>
+                        <button class="primary-btn" type="button" wire:click="importUsersTemplete">Download template</button>
                         <form wire:submit.prevent="import">
                             <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
-                            <div class="export-modal-body">
-                                <div class="  flex w-full items-center gap-2">
+                            <div  class="export-modal-body">
+                                <div class="flex w-full items-center gap-2">
                                     <label>File Name:</label>
-                                    <input type="file" wire:model="file_import" class='file_import-input flex-1' required/>
+                                    <input type="file" wire:model="file_import" id="file_import"  class='file_import-input flex-1' required/>
                                 </div>
                             </div>
 
@@ -616,7 +616,7 @@
                         <form wire:submit="export">
                             <input type='hidden' wire:model='_token' value="{{ csrf_token()}}">
                             <div class="export-modal-body">
-                                <div class="  flex w-full items-center gap-2">
+                                <div class="flex w-full items-center gap-2">
                                     <label>File Name:</label>
                                     <input type="text" wire:model="filename" class='filename-input flex-1' required/>
                                 </div>
@@ -632,9 +632,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 
     @if (count($users) == 0)
@@ -734,3 +731,9 @@
     </div>
 
 </section>
+
+@section('script')
+<script>
+
+</script>
+@endsection

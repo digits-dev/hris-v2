@@ -225,7 +225,9 @@ class EmployeeAccountsContent extends Component
         $excel_path = storage_path('app') . '/' . $path;
         try {
             Excel::import(new ImportUsers, $excel_path);	
-              redirect()->to('/employee-accounts', 'Upload Success!', "success");
+            session()->flash('message', 'Upload Success!');
+            session()->flash('message_type', 'success');
+            return $this->redirect('/employee-accounts');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             
@@ -239,7 +241,9 @@ class EmployeeAccountsContent extends Component
             
             $errors = collect($error)->unique()->toArray();
         }
-          redirect()->to('/employee-accounts', 'Upload Success!', "success");
+            session()->flash('message',  $errors[0]);
+            session()->flash('message_type', 'danger');
+            return $this->redirect('/employee-accounts');
     }
 
     public function importUsersTemplete(){
