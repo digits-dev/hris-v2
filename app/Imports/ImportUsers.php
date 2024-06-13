@@ -22,13 +22,19 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
             $company  = DB::table('companies')->where(DB::raw('LOWER(TRIM(company_name))'),strtolower(trim($row->company)))->first();
             $department  = DB::table('departments')->where(DB::raw('LOWER(TRIM(department_name))'),strtolower(trim($row->department)))->first();
             if(!$location){
-               return redirect()->to('/employee-accounts', 'Hire Location not exist! at Line'.($key + 1), "danger");
+                session()->flash('message', 'Location not exist.');
+                session()->flash('message_type', 'danger');
+                return $this->redirect('/employee-accounts');
             }
             if(!$company){
-                return redirect()->to('/employee-accounts', 'Company not exist! at Line'.($key + 1), "danger");
+                session()->flash('message', 'Company not exist.');
+                session()->flash('message_type', 'danger');
+                return $this->redirect('/employee-accounts');
             }
             if(!$department){
-               return  redirect()->to('/employee-accounts', 'Department not exist! at Line'.($key + 1), "danger");
+                session()->flash('message', 'Department not exist.');
+                session()->flash('message_type', 'danger');
+                return $this->redirect('/employee-accounts');
             }
 
             User::create([

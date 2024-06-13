@@ -41,7 +41,7 @@ class Edit extends Component
         session()->flash('message', 'Updated user successfully.');
         session()->flash('message_type', 'success');
 
-        return $this->redirect('/employee-accounts', navigate: true);
+        return $this->redirect('/employee-accounts');
     }
 
 
