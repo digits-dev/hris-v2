@@ -4,6 +4,7 @@ namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
 
 use App\Livewire\Forms\UserForm;
 use App\Models\Companies;
+use App\Models\Department;
 use App\Models\Position;
 use App\Models\Privileges;
 use Livewire\Component;
@@ -34,6 +35,7 @@ class Create extends Component
         return $this->redirect('/employee-accounts');
     }
 
+ 
 
     public function render()
     {
@@ -41,9 +43,10 @@ class Create extends Component
             'livewire.component.module-contents.employee-accounts.create',
             [
                 'locations'  => Location::all(),
-                'privileges' => Privileges::all(),
+                'privileges' => Privileges::whereNot('id', 1)->get(),
                 'companies'  => Companies::all(),
                 'positions'  => Position::all(),
+                'departments'  => Department::all(),
             ]
         );
     }

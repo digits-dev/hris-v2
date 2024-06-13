@@ -37,6 +37,9 @@ class UserForm extends Form
     #[Validate('required', as: 'company')]
     public $company_id;
 
+    #[Validate('required', as: 'department')]
+    public $department_id;
+
     #[Validate('required')]
     public $position_id;
 

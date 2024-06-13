@@ -53,6 +53,9 @@
         .company-col {
             width:150px;
         }
+        .department-col {
+            width:150px;
+        }
 
         .hire-location-col {
             width:150px;
@@ -694,6 +697,7 @@
                             <td class="employee-id-col">{{ $user->employee_id }}</td>
                             <td class="email-col">{{ $user->email }} </td>
                             <td class="company-col">{{ $user->company }}</td>
+                            <td class="department-col">{{ $user->department }}</td>
                             <td class="hire-location-col">{{ $user->hire_location }}</td>
                             <td class="hire-date-col">{{ $user->hire_date }}</td>
                             <td class="position-col">{{ $user->position }}</td>
