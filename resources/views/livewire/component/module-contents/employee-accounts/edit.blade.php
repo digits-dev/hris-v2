@@ -125,10 +125,12 @@
       gap: 10px;
     }
 
+
     @media screen and (min-width: 900px) {
       .account-content {
-        grid-template-columns: 4fr 4fr 2fr;
-        gap: 40px;
+        grid-template-columns: 4fr 4fr 3fr;
+        column-gap: 40px;
+        row-gap: 20px;
       }
     }
 
@@ -169,6 +171,32 @@
     .error-text {
       color: rgb(250, 48, 48);
     }
+
+    
+  .select2-selection__choice{
+    font-size:14px !important;
+    color:black !important;
+  }
+  .select2-selection__rendered {
+    line-height: 31px !important;
+    color:var(--primary-text) !important;
+    font-weight: normal !important;
+  }
+  .select2-container .select2-selection--single {
+    height: 38px !important;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-color);
+    padding:5px;
+    margin-top: 5px;
+  }
+  .select2-selection__arrow {
+    height: 50px !important;
+   }
+
+  .select2-results__option {
+      font-size: 16px !important;
+  }
+
   </style>
 @endsection
 
@@ -274,98 +302,36 @@
       <legend class="legend">Account Information</legend>
       <div class="account-content">
 
-        <div class="flex flex-col">
-          <label for="employeeId">Employee Id
-            <input id="employeeId" type="text" wire:model.blur="form.employee_id">
-          </label>
-          @error('form.employee_id')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
+        {{-- Employee ID  --}}
+          <div>
+            <label for="employeeId">Employee Id
+              <input id="employeeId" type="text" wire:model.blur="form.employee_id">
+            </label>
+            @error('form.employee_id')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
 
-          <label class="flex flex-col mt-2" for="location">Location
-            <select class="text-primary-text" id="location"
-              wire:model.blur="form.hire_location_id">
-              <option disabled value="">Select Location</option>
-              @foreach ($locations as $location)
-                <option @if ($location->id == $this->form->hire_location_id) selected @endif
-                  value="{{ $location->id }}">
-                  {{ $location->location_name }}
-                </option>
-              @endforeach
-            </select>
-          </label>
-          @error('form.hire_location_id')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
+        {{-- Department  --}}
+          <div>
+            <label wire:ignore class="flex flex-col " for="department">Department
+              <select  class="text-primary-text select-2" id="department" wire:model.blur="form.department_id" data-livewire-property="form.department_id">
+                <option selected value="">Select Department</option>
+                @foreach ($departments as $department)
+                  <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                @endforeach
+              </select>
+            </label>
+            @error('form.department_id')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
 
-          <label class="block mt-3" for="email">
-            Email Address
-            <input id="email" type="email" wire:model.blur="form.email">
-          </label>
-          @error('form.email')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
-        </div>
-
-        <div class="flex flex-col">
-          <label class="flex flex-col" for="company">Company
-            <select class="text-primary-text" id="company" wire:model.blur="form.company_id">
-              <option disabled value="">Select Company</option>
-              @foreach ($companies as $company)
-                <option @if ($company->id == $this->form->company_id) selected @endif
-                  value="{{ $company->id }}">
-                  {{ $company->company_name }}
-                </option>
-              @endforeach
-            </select>
-          </label>
-          @error('form.company_id')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
-
-          <label class="flex flex-col mt-2" for="position">Position
-            <select class="text-primary-text" id="position" wire:model.blur="form.position_id">
-              <option selected value="">Select Position</option>
-              @foreach ($positions as $position)
-                <option value="{{ $position->id }}">{{ $position->position_name }}</option>
-              @endforeach
-            </select>
-          </label>
-
-          @error('form.position')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
-
-          <label class="flex flex-col mt-3" for="privilege">System Privilege
-            <select class="text-primary-text" id="privilege"
-              wire:model.blur="form.id_ad_privileges">
-              <option disabled value="">Select System Privilege</option>
-              @foreach ($privileges as $privilege)
-                <option @if ($privilege->id == $this->form->id_ad_privileges) selected @endif
-                  value="{{ $privilege->id }}">
-                  {{ $privilege->name }}
-                </option>
-              @endforeach
-            </select>
-          </label>
-          @error('form.id_ad_privileges')
-            <em>
-              <p class="error-text">{{ $message }}</p>
-            </em>
-          @enderror
-        </div>
-
-        <div class="flex flex-col">
+        {{-- Hire Date  --}}
           <div>
             <label class="flex flex-col" for="hire_date">Hire Date
               <input id="hire_date" type="date" wire:model.blur="form.hire_date">
@@ -377,17 +343,95 @@
             @enderror
           </div>
 
-          <label class="flex flex-col mt-2" for="">Status
-            <select class="text-primary-text" id="" name="">
-              <option disabled value="">Select Status</option>
-              <option selected value="">{{ $this->form->status ? 'Active' : 'Inactive' }}
-              </option>
-              <option value="{{ !$this->form->status ? 1 : 0 }}">
-                {{ !$this->form->status ? 'Active' : 'Inactive' }}
-              </option>
-            </select>
-          </label>
-        </div>
+        {{-- Email Address  --}}
+          <div>
+            <label class="block " for="email">
+              Email Address
+              <input id="email" type="email" wire:model.blur="form.email">
+            </label>
+            @error('form.email')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
+
+        {{-- Position  --}}
+          <div>
+            <label class="flex flex-col" for="position">Position
+              <input type="text" id="position" wire:model.blur="form.position_id">
+            </label>
+            @error('form.position_id')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
+
+        {{-- System Privilege  --}}
+          <div >
+            <label wire:ignore class="flex flex-col" for="privilege">System Privilege
+              <select class="text-primary-text select-2" id="privilege"
+                wire:model.blur="form.id_ad_privileges" data-livewire-property="form.id_ad_privileges">
+                <option selected value="">Select System Privilege</option>
+                @foreach ($privileges as $privilege)
+                  <option value="{{ $privilege->id }}">{{ $privilege->name }}</option>
+                @endforeach
+              </select>
+            </label>
+            @error('form.id_ad_privileges')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
+          
+        {{-- Company  --}}
+          <div >
+            <label wire:ignore class="flex flex-col" for="company">Company
+              <select class="text-primary-text select-2" id="company" wire:model.blur="form.company_id" data-livewire-property="form.company_id">
+                <option selected value="">Select Company</option>
+                @foreach ($companies as $company)
+                  <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                @endforeach
+              </select>
+            </label>
+            @error('form.company_id')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
+
+        {{-- Location  --}}
+          <div >
+            <label wire:ignore class="flex flex-col" for="location">Location
+              <select class="text-primary-text select-2" id="location"
+                wire:model.blur="form.hire_location_id" data-livewire-property="form.hire_location_id">
+                <option selected value="">Select Location</option>
+                @foreach ($locations as $location)
+                  <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                @endforeach
+              </select>
+            </label>
+            @error('form.hire_location_id')
+              <em>
+                <p class="error-text">{{ $message }}</p>
+              </em>
+            @enderror
+          </div>
+
+          {{-- Status  --}}
+            <label  class="flex flex-col" for="">Status
+              <select class="text-primary-text" id="" name="">
+                <option disabled value="">Select Status</option>
+                <option selected value="">{{ $this->form->status ? 'Active' : 'Inactive' }}
+                </option>
+                <option value="{{ !$this->form->status ? 1 : 0 }}">
+                  {{ !$this->form->status ? 'Active' : 'Inactive' }}
+                </option>
+              </select>
+            </label>
 
       </div>
     </fieldset>
@@ -398,3 +442,20 @@
     </div>
   </form>
 </section>
+
+@section('script')
+<script >
+
+    $(document).ready(function() {
+    $('.select-2').each(function() {
+        $(this).select2();
+
+        $(this).on('change', function (e) {
+            let data = $(this).val();
+            let propertyName = $(this).data('livewire-property');
+            @this.set(propertyName, data);
+        });
+    });
+});
+</script>
+@endsection

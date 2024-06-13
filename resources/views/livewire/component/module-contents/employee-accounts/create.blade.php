@@ -182,7 +182,7 @@
     font-weight: normal !important;
   }
   .select2-container .select2-selection--single {
-    height: 40px !important;
+    height: 38px !important;
     border-radius: 8px;
     border: 1px solid var(--stroke-color);
     padding:5px;

@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Location;
 use App\Models\Position;
 use App\Models\Companies;
+use App\Models\Department;
 use App\Models\Privileges;
 use Livewire\WithFileUploads;
 use app\Helpers\CommonHelpers;
@@ -51,9 +52,10 @@ class Edit extends Component
             'livewire.component.module-contents.employee-accounts.edit',
             [
                 'locations'  => Location::all(),
-                'privileges' => Privileges::all(),
+                'privileges' => Privileges::whereNot('id', 1)->get(),
                 'companies'  => Companies::all(),
-                'positions'  => Position::all()
+                'positions'  => Position::all(),
+                'departments'  => Department::all(),
             ]
         );
     }

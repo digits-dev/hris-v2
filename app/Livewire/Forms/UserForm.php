@@ -62,6 +62,7 @@ class UserForm extends Form
         $this->hire_location_id = $user->hire_location_id;
         $this->email            = $user->email;
         $this->company_id       = $user->company_id;
+        $this->department_id    = $user->department_id;
         $this->position_id      = $user->position_id;
         $this->id_ad_privileges = $user->id_ad_privileges;
         $this->hire_date        = date('Y-m-d', strtotime($user->hire_date));

@@ -34,6 +34,7 @@ class User extends Authenticatable
         'department_id', 
         'position_id', 
         'password',
+        'id_ad_privileges',
         'created_at	',
         'updated_at'
 
@@ -91,6 +92,14 @@ class User extends Authenticatable
     public function hireLocation(){
         return $this->belongsTo(Location::class, 'hire_location_id', 'id');
     }
+
+    public function department(){
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+    public function privilege(){
+        return $this->belongsTo(Privileges::class, 'id_ad_privileges', 'id');
+    }
+
 
     public function getFullnameAttribute(){
         return "{$this->first_name} {$this->middle_name} {$this->last_name}";
