@@ -21,21 +21,6 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
             $location  = DB::table('locations')->where(DB::raw('LOWER(TRIM(location_name))'),strtolower(trim($row->hire_location)))->first();
             $company  = DB::table('companies')->where(DB::raw('LOWER(TRIM(company_name))'),strtolower(trim($row->company)))->first();
             $department  = DB::table('departments')->where(DB::raw('LOWER(TRIM(department_name))'),strtolower(trim($row->department)))->first();
-            if(!$location){
-                session()->flash('message', 'Location not exist.');
-                session()->flash('message_type', 'danger');
-                return $this->redirect('/employee-accounts');
-            }
-            if(!$company){
-                session()->flash('message', 'Company not exist.');
-                session()->flash('message_type', 'danger');
-                return $this->redirect('/employee-accounts');
-            }
-            if(!$department){
-                session()->flash('message', 'Department not exist.');
-                session()->flash('message_type', 'danger');
-                return $this->redirect('/employee-accounts');
-            }
 
             User::create([
                 'first_name'       => $row->first_name,
@@ -54,10 +39,71 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
         }
     }
 
+    public function prepareForValidation($data, $index)
+    {
+        //LOCATION
+        $data['location_exist']['check'] = false;
+        $checkRowDbName = DB::table('locations')->select(DB::raw('LOWER(TRIM(location_name)) as location_name'))->get()->toArray();
+        $checkRowDbNameColumn = array_column($checkRowDbName, 'location_name');
+        $data['location_exist']['code'] = $data['hire_location'];
+        if(!empty($data['hire_location'])){
+            if(in_array(strtolower(trim($data['hire_location'])), $checkRowDbNameColumn)){
+                $data['location_exist']['check'] = true;
+            }
+        }else{
+            $data['location_exist']['check'] = true;
+        }
+
+        //COMPANY
+        $data['company_exist']['check'] = false;
+        $checkRowDbCompany = DB::table('companies')->select(DB::raw('LOWER(TRIM(company_name)) as company_name'))->get()->toArray();
+        $checkRowDbCompanyColumn = array_column($checkRowDbCompany, 'company_name');
+        $data['company_exist']['code'] = $data['company'];
+        if(!empty($data['company'])){
+            if(in_array(strtolower(trim($data['company'])), $checkRowDbCompanyColumn)){
+                $data['company_exist']['check'] = true;
+            }
+        }else{
+            $data['company_exist']['check'] = true;
+        }
+
+        //DEPARTMENT
+        $data['department_exist']['check'] = false;
+        $checkRowDbDepartment = DB::table('departments')->select(DB::raw('LOWER(TRIM(department_name)) as department_name'))->get()->toArray();
+        $checkRowDbDepartmentColumn = array_column($checkRowDbDepartment, 'department_name');
+        $data['department_exist']['code'] = $data['department'];
+        if(!empty($data['department'])){
+            if(in_array(strtolower(trim($data['department'])), $checkRowDbDepartmentColumn)){
+                $data['department_exist']['check'] = true;
+            }
+        }else{
+            $data['department_exist']['check'] = true;
+        }
+
+        return $data;
+    }
+
     public function rules(): array
     {
         return [ 
+            '*.location_exist' => function($attribute, $value, $onFailure) {
+                if ($value['check'] === false) {
+                    $onFailure('Location not exist in Submaster Location List!');
+                }
+            },
+            '*.company_exist' => function($attribute, $value, $onFailure) {
+                if ($value['check'] === false) {
+                    $onFailure('Company not exist in Submaster Company List!');
+                }
+            },
+            '*.department_exist' => function($attribute, $value, $onFailure) {
+                if ($value['check'] === false) {
+                    $onFailure('Department not exist in Submaster Department List!');
+                }
+            },
             '*.first_name' => 'required',
+            '*.department' => 'required',
+            '*.email' => 'required',
         ];
     }
 }

@@ -417,6 +417,23 @@ class CommonHelpers {
         }
     }
 
+    public static function livewiremainpath($path = null)
+    {
+
+        $controllername = str_replace(["\app\Livewire\Component\ModuleContents\\", "App\Livewire\Component\ModuleContents\\"], "", strtok(Route::currentRouteAction(), '@'));
+        $route_url = route($controllername.'GetIndex');
+
+        if ($path) {
+            if (substr($path, 0, 1) == '?') {
+                return trim($route_url, '/').$path;
+            } else {
+                return $route_url.'/'.$path;
+            }
+        } else {
+            return trim($route_url, '/');
+        }
+    }
+
     public static function redirectBack($message, $type = 'warning')
     {
         if (Request::ajax()) {
