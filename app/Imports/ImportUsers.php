@@ -80,6 +80,19 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
             $data['department_exist']['check'] = true;
         }
 
+        //EMAIL EXIST
+        $data['is_email_exist']['check'] = false;
+        $checkRowDbEmail = DB::table('users')->select(DB::raw('TRIM(email) as email'))->get()->toArray();
+        $data['is_email_exist']['email'] = $data['email'];
+        $checkRowDbColumnEmail = array_column($checkRowDbEmail, 'email');
+        if(!empty($data['email'])){
+            if(in_array(trim($data['email']), $checkRowDbColumnEmail)){
+                $data['is_email_exist']['check'] = true;
+            }else{
+                $data['is_email_exist']['check'] = false;
+            }
+        }
+
         return $data;
     }
 
@@ -101,9 +114,20 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
                     $onFailure('Department not exist in Submaster Department List!');
                 }
             },
+            '*.is_email_exist' => function($attribute, $value, $onFailure) {
+                if ($value['check'] === true) {
+                    $onFailure('Email '.$value['email'].' Exist!');
+                }
+            },
             '*.first_name' => 'required',
+            '*.last_name' => 'required',
             '*.department' => 'required',
             '*.email' => 'required',
+            '*.employee_id' => 'required',
+            '*.hire_location' => 'required',
+            '*.company' => 'required',
+            '*.hire_date' => 'required',
+            '*.position' => 'required'
         ];
     }
 }
