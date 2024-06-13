@@ -22,7 +22,7 @@ class ImportCompanies implements ToCollection, SkipsEmptyRows, WithHeadingRow,  
             $row = (object) $row;
 
             Companies::create([
-                'company_name' => $row->company_name,
+                'company_name' => $row->company,
                 'created_by' => CommonHelpers::myId(),
                 'created_at' => now(),
             ]); 
@@ -32,7 +32,7 @@ class ImportCompanies implements ToCollection, SkipsEmptyRows, WithHeadingRow,  
     public function rules(): array
     {
         return [ 
-            '*.company_name' => 'required',
+            '*.company' => 'required',
         ];
     }
 }

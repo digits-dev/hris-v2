@@ -22,7 +22,7 @@ class ImportDepartments implements ToCollection,  SkipsEmptyRows, WithHeadingRow
             $row = (object) $row;
 
             Department::create([
-                'department_name' => $row->department_name,
+                'department_name' => $row->department,
                 'coa_id' => $row->coa_id,
                 'created_by' => CommonHelpers::myId(),
                 'created_at' => now(),
@@ -33,8 +33,8 @@ class ImportDepartments implements ToCollection,  SkipsEmptyRows, WithHeadingRow
     public function rules(): array
     {
         return [ 
-            '*.department_name' => 'required',
-            '*.coa_id' => 'required',
+            '*.department' => 'required',
+            // '*.coa_id' => 'required',
         ];
     }
 
