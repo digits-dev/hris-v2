@@ -74,7 +74,8 @@
               <div class="navigation-div">
                 <a id="dropdown-title" :href="menu.children ? '#' : menu.url" @click="closeOtherDropdowns(index); menu.myDropdown = !menu.myDropdown;" >
                   <div class="nav-parent mb-1 mt-1" :class="menu.slug == '{{ Request::segment(1) }}' ? 'active' : ''" >
-                    <img :src="'{{ Request::segment(1) }}' === 'admin' ? getIconPath(menu.icon) : `${menu.icon}`" class="nav-icon" console.log(menu.slug);>
+                    <i :class="menu.icon" class="child-nav-icon text-white"></i>
+                    {{-- <img :src="'{{ Request::segment(1) }}' === 'admin' ? getIconPath(menu.icon) : `${menu.icon}`" class="nav-icon" console.log(menu.slug);> --}}
                     <p class="nav-name" x-text="menu.name"></p>
                     <img x-show="menu.children" :src="menu.myDropdown ? '{{ asset('images/navigation/nav-up.png') }}' : '{{ asset('images/navigation/nav-down.png') }}'" 
                     class='menu-child-arrow-icon'>
@@ -99,7 +100,8 @@
                               }"
                     
                         >
-                        <img :src="'{{ Request::segment(1) }}' === 'admin' ? getIconPath(children.icon) : `${children.icon}`" class="child-nav-icon" x-init="console.log(children.icon)" >
+                        <i :class="children.icon" class="child-nav-icon text-white"></i>
+                        {{-- <img :src="'{{ Request::segment(1) }}' === 'admin' ? getIconPath(children.icon) : `${children.icon}`" class="child-nav-icon" x-init="console.log(children.icon)" > --}}
                         <p x-text="children.name" class="child-nav-name">children names</p>
                         </a>
                       </template>
