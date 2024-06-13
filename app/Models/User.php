@@ -28,13 +28,15 @@ class User extends Authenticatable
         'email', 
         'employee_id', 
         'hire_location_id', 
-        'company_id', 
+        'hire_date',
+        'image',
         'company_id', 
         'department_id', 
         'position_id', 
         'password',
         'created_at	',
         'updated_at'
+
     ];
     /**
      * The attributes that should be hidden for serialization.
