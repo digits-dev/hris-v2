@@ -20,7 +20,7 @@ class ImportLocations implements ToCollection, SkipsEmptyRows, WithHeadingRow,  
             $row = (object) $row;
 
             Location::create([
-                'location_name' => $row->location_name,
+                'location_name' => $row->location,
                 'created_by' => CommonHelpers::myId(),
                 'created_at' => now(),
             ]); 
@@ -30,7 +30,7 @@ class ImportLocations implements ToCollection, SkipsEmptyRows, WithHeadingRow,  
     public function rules(): array
     {
         return [ 
-            '*.location_name' => 'required',
+            '*.location' => 'required',
         ];
     }
 

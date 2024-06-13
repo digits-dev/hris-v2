@@ -119,7 +119,7 @@ class LocationControllerContent extends Component
 
         session()->flash('message',  $errors[0]);
         session()->flash('message_type', 'danger');
-        return $this->redirect('/employee-accounts');
+        return $this->redirect('/locations');
     }
 
     public function downloadTemplate()
