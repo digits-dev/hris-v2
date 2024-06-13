@@ -148,7 +148,7 @@ class EmployeeAccountsContent extends Component
                 'users.status',
                 'users.image',
                 'users.created_at'
-            ]);
+            ])->where('users.id_ad_privileges', '<>', 1);
         return $query;
     }
 
