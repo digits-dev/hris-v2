@@ -273,7 +273,7 @@
         }
 
 
-        .filter-modal-select select {
+        .filter-modal-select select, .filter-modal-select input[type="text"] {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -288,6 +288,13 @@
             background-color: #fff;
             width: 100%;
             cursor: pointer;
+        }
+
+        input[type="text"]::placeholder{
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
         }
 
         .filter-modal-arrow-icon {
@@ -483,13 +490,7 @@
                                     <div class="filter-modal-select-container">
                                         <p>Position</p>
                                         <div class="filter-modal-select">
-                                            <select wire:model="position">
-                                                <option value="">Select Position</option>
-                                                @foreach ($positions as $position)
-                                                <option value="{{$position->id}}">{{$position->position_name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <img src="/images/table/asc.png" class="filter-modal-arrow-icon" alt="dropdown icon">
+                                            <input type="text" wire:model="position" placeholder="Search position">
                                         </div>
                                     </div>
 

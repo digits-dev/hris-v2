@@ -178,8 +178,8 @@ class EmployeeAccountsContent extends Component
         }
         if (sizeof($positions)) {
             $query_filter_params[] = [
-                'method' => 'whereIn',
-                'params' => [ 'positions.id', $positions ]
+                'method' => 'where',
+                'params' => [ 'users.position', $positions ]
             ];
         }
         if (sizeof($hire_locations)) {
