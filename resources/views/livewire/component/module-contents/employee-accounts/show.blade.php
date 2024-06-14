@@ -233,7 +233,7 @@
 
                     <label for="" class="flex flex-col mt-2">Hire Location
                         <input type="text" name="" id=""
-                            value="{{ $user->hireLocation->location_name }}" disabled>
+                            value="{{ $user->hireLocation->location_name ?? '' }}" disabled>
                     </label>
 
                     <label for="" class="block mt-3">
@@ -245,12 +245,12 @@
 
                 <div class="flex flex-col ">
                     <label for="">Company
-                        <input type="text" name="" id="" value="{{ $user->company->company_name }}"
+                        <input type="text" name="" id="" value="{{ $user->company->company_name ?? '' }}"
                             disabled>
                     </label>
 
                     <label for="" class="flex flex-col mt-2">Position
-                        <input type="text" name="" id="" value="{{ $user->position->position_name }}" disabled>
+                        <input type="text" name="" id="" value="{{ $user->position->position_name ?? ''}}" disabled>
                     </label>
 
                     <label for="" class="block mt-3">

@@ -39,11 +39,78 @@ use App\Models\User;
 
         }
 
+        public function postAddSave(Request $request){
+            $users = DB::table("users")->where("email", $request->email)->first();
+
+            if(!$users){
+                $request->validate([
+                    'email' => 'required',
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                    'employee_id' => 'required',
+                    'department' => 'required',
+                    'hire_date' => 'required',
+                    'position' => 'required',
+                    'privilege' => 'required',
+                    'company' => 'required',
+                    'location' => 'required'
+                ]);
+
+                $data = [
+                    'email' => $request->email,
+                    'first_name' => $request->first_name,
+                    'middle_name' => $request->middle_name ?? 'N/A',
+                    'last_name' => $request->last_name,
+                    'employee_id' => $request->employee_id,
+                    'department_id' => $request->department,
+                    'password'  => 'qwerty',
+                    'hire_location_id' => $request->location,
+                    'id_ad_privileges' => $request->privilege,
+                    'company_id'       => $request->company,
+                    'hire_date' => $request->hire_date,
+                    'position_id' => $request->position,
+                ];
+            
+                User::create($data);
+                return CommonHelpers::redirect(CommonHelpers::adminpath('users'), "Date Saved!", "success");
+            }else{
+                return CommonHelpers::redirect(CommonHelpers::adminpath('users'), "Users Exist!", "danger");
+            }
+        }
+
+        public function getEditUser($id){
+            $data = [];
+            $datA['page_title'] = 'Edit user';
+            $data['user'] = User::getDataPerUser($id);
+            $submasters = self::getSubmaster();
+            $data = array_merge($submasters, $data);
+            return view('admin/users/add-user', $data);
+        }
+
+        public function postEditSave(Request $request){
+            User::where('id',$request->user_id)->update([
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name ?? 'N/A',
+                'last_name' => $request->last_name,
+                'employee_id' => $request->employee_id,
+                'department_id' => $request->department,
+                'password'  => 'qwerty',
+                'hire_location_id' => $request->location,
+                'id_ad_privileges' => $request->privilege,
+                'company_id'       => $request->company,
+                'hire_date' => $request->hire_date,
+                'position_id' => $request->position,
+                'status' => $request->status
+            ]);
+            return CommonHelpers::redirect(CommonHelpers::adminpath('users'), "Data updated!", "success");
+        }
+
         public function getSubmaster(){
             $data = [];
             $data['departments'] = DB::table('departments')->select('*')->where('status','ACTIVE')->get();
             $data['privileges'] = DB::table('ad_privileges')->select('*')->get();
             $data['companies'] = DB::table('companies')->select('*')->where('status','ACTIVE')->get();
+            $data['locations'] = DB::table('locations')->select('*')->where('status','ACTIVE')->get();
             return $data;
         }
 
@@ -76,6 +143,21 @@ use App\Models\User;
             $data = [];
             $data['page_title'] = "Profile";
             return view('admin/users/profile', $data);
+        }
+
+        public function setStatus(Request $request){
+            if($request->bulk_action_type == 0){
+                foreach($request->Ids as $set_ids){
+                    User::where('id',$set_ids)->update(['status'=> 0]);
+                }
+            }else{
+                foreach($request->Ids as $set_ids){
+                    User::where('id',$set_ids)->update(['status'=> 1]);
+                }
+            }
+          
+           $data = ['msg'=>'Data updated!', 'status'=>'success'];
+           return json_encode($data);
         }
     }
 

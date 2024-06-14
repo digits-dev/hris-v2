@@ -1,80 +1,178 @@
 @extends('layout')
-
+    <script src="{{ asset('plugins/sweetalert.js') }}"></script>
+    @section('css')
+    <link rel="stylesheet" href="{{ asset ('css/bootstrap-utilities/utilities.css') }}">
+    @endsection
 @section('content')
+<section class="content">
+    <div class='panel panel-default'>
+        <div class='panel-heading'>
+           Add Users
+        </div>
+        <div class='panel-body'>
+            <form method='post' action='{{ @$user->u_id ? route("save-edit-user") : route("save-user") }}' id="submitForm">
+                
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="user_id" value="{{ @$user->u_id }}">
+                <div class="row">
+                    <div class="form-groups route_div">
+                        <label for="email">{{trans('ad_lang.form-header.email')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="email" id="email" value='{{ @$user->email }}'>
+                        </label>
+                    </div>
+                    <div class="form-groups">
+                        <label for="first-name">{{trans('ad_lang.user-info.first_name')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="first_name" id="first_name" value='{{ @$user->first_name }}'>
+                        </label>
+                    </div>
+                    <div class="form-groups">
+                        <label for="middle-name">{{trans('ad_lang.user-info.middle_name')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="middle_name" id="middle_name" value='{{ @$user->midle_name }}'>
+                        </label>
+                    </div>
+                    <div class="form-groups">
+                        <label for="last-name">{{trans('ad_lang.user-info.last_name')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="last_name" id="last_name" value='{{ @$user->last_name }}'>
+                        </label>
+                    </div>
+                    <div class="form-groups">
+                        <label for="employee-id">{{trans('ad_lang.user-info.employee_id')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="employee_id" id="employee_id" value='{{ @$user->employee_id }}'>
+                        </label>
+                    </div>
+                    <div class="form-groups">
+                        <label for="department">{{trans('ad_lang.user-info.department')}}</label><br>
+                            <select selected data-placeholder="Choose Department" name='department' class='form-control select2' id="department" required style="width: 50%">
+                                <option value=''></option>
+                                @foreach($departments as $dept)
+                                    <option {{ @$user->department_id == $dept->id ? 'selected' : '' }} value='{{$dept->id}}'>{{$dept->department_name}}</option>
+                                @endforeach
+                            </select>
+                    </div>
+                    <div class="form-groups">
+                        <label for="hire-date">{{trans('ad_lang.user-info.hire_date')}} 
+                            <input type="date" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="hire_date" id="hire_date" value='{{ @$user->hire_date }}'>
+                        </label>
+                    </div>
 
-    <div style="width:750px;margin:0 auto ">
+                    <div class="form-groups">
+                        <label for="position">{{trans('ad_lang.user-info.position')}} 
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="position" id="position" value='{{ @$user->position_id }}'>
+                        </label>
+                    </div>
+                 
+                    <div class="form-groups">
+                        <label for="last-name">{{trans('ad_default.Privileges')}}</label><br>
+                            <select selected data-placeholder="Choose Privilege" name='privilege' class='form-control select2' id="privilege" required style="width: 50%">
+                                <option value=''></option>
+                                @foreach($privileges as $priv)
+                                <option {{ @$user->id_ad_privileges == $priv->id ? 'selected' : '' }} value='{{$priv->id}}'>{{$priv->name}}</option>
+                                @endforeach;
+                            </select>
+                    </div>
 
-    @if(App\Helpers\CommonHelpers::getCurrentMethod() != 'getProfile')
-        <p><a href='{{App\Helpers\CommonHelpers::mainpath()}}'></a></p>
-    @endif
+                    <div class="form-groups">
+                        <label for="last-name">{{trans('ad_lang.user-info.company')}}</label><br>
+                            <select selected data-placeholder="Choose Company" name='company' class='form-control select2' id="company" required style="width: 50%">
+                                <option value=''></option>
+                                @foreach($companies as $comp)
+                                <option {{ @$user->company_id == $comp->id ? 'selected' : '' }} value='{{$comp->id}}'>{{$comp->company_name}}</option>
+                                @endforeach;
+                            </select>
+                    </div>
 
-    <!-- Box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ $page_title }}</h3>
-                <div class="box-tools">
+                    <div class="form-groups">
+                        <label for="last-name">{{trans('ad_lang.user-info.position')}}</label><br>
+                            <select selected data-placeholder="Choose Location" name='location' class='form-control select2' id="location" required style="width: 50%">
+                                <option value=''></option>
+                                @foreach($locations as $loc)
+                                    <option {{ @$user->hire_location_id == $loc->id ? 'selected' : '' }} value='{{$loc->id}}'>{{$loc->location_name}}</option>
+                                @endforeach;
+                            </select>
+                    </div>
+                    @if(@$user->u_id)
+                        <div class="form-groups">
+                            <label for="status">{{trans('ad_lang.form-header.status')}}</label><br>
+                                <select selected data-placeholder="Choose Location" name='status' class='form-control select2' id="status" required style="width: 50%">
+                                    <option value=''></option>
+                                    <option {{ @$user->status == 1 ? 'selected' : '' }} value='1'>Active</option>
+                                    <option {{ @$user->status == 0 ? 'selected' : '' }} value='0'>Inactive</option>
+                                </select>
+                        </div>
+                    @endif
 
                 </div>
-            </div>
-
-            <form method='post' action='{{ (@$row->id) ? url(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save')."/$row->id" : route("save-privilege") }}'>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="box-body">
-                    <div class="alert alert-info">
-                        <strong>Note:</strong> To show the menu you have to create a menu at Menu Management
-                    </div>
-                    <div class='form-group'>
-                        <label>{{trans('ad_default.privileges_name')}}</label>
-                        <input type='text' class='form-control' name='name' required value='{{ @$row->name }}' />
-                        <div class="text-danger">{{ $errors->first('name') }}</div>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>{{trans('ad_default.set_as_superadmin')}}</label>
-                        <div id='set_as_superadmin' class='radio'>
-                            <label><input required {{ (@$row->is_superadmin==1)?'checked':'' }} type='radio' name='is_superadmin'
-                                value='1'/> {{trans('ad_default.confirmation_yes')}}</label> &nbsp;&nbsp;
-                            <label><input {{ (@$row->is_superadmin==0)?'checked':'' }} type='radio' name='is_superadmin'
-                                value='0'/> {{trans('ad_default.confirmation_no')}}</label>
-                        </div>
-                        <div class="text-danger">{{ $errors->first('is_superadmin') }}</div>
-                    </div>
-
-                    <div class='form-group'>
-                        <label>{{trans('ad_default.chose_theme_color')}}</label>
-                        <select name='theme_color' class='form-control' required>
-                            <option value=''>{{trans('ad_default.chose_theme_color_select')}}</option>
-                            <?php
-                            $skins = array(
-                                'skin-blue',
-                                'skin-blue-light',
-                                'skin-yellow',
-                                'skin-yellow-light',
-                                'skin-green',
-                                'skin-green-light',
-                                'skin-purple',
-                                'skin-purple-light',
-                                'skin-red',
-                                'skin-red-light',
-                                'skin-black',
-                                'skin-black-light'
-                            );
-                            foreach($skins as $skin):
-                            ?>
-                            <option <?=(@$row->theme_color == $skin) ? "selected" : ""?> value='<?=$skin?>'><?=ucwords(str_replace('-', ' ', $skin))?></option>
-                            <?php endforeach;?>
-                        </select>
-             
-                    </div>
-
-
-                </div><!-- /.box-body -->
-                <div class="box-footer" align="right">
+                <br>
+                <div class='panel-footer'>
                     <button type='button' onclick="location.href='{{App\Helpers\CommonHelpers::mainpath()}}'"
-                            class='btn btn-default'>{{trans('ad_default.button_cancel')}}</button>
-                    <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> {{trans('ad_default.button_save')}}</button>
-                </div><!-- /.box-footer-->
-        </div><!-- /.box -->
+                                    class='btn btn-default'>{{trans('ad_default.button_cancel')}}</button>
+                    <button type='button' class='btn btn-primary' id="btnSubmit"><i class='fa fa-save'></i> {{trans('ad_default.button_save')}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+@endsection
 
-    </div><!-- /.row -->
+@section('script')
+    <script>
+        $('.select2').select2();
+
+        $('#btnSubmit').on('click', function(event) {
+            event.preventDefault();
+            if($('#name').val() === ''){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Module Name Required!',
+                    icon: 'error',
+                    confirmButtonColor: '#3c8dbc',
+                });
+                event.preventDefault();
+                return false;
+            }else if($('#path').val() === ''){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Path Required!',
+                    icon: 'error',
+                    confirmButtonColor: '#3c8dbc',
+                });
+                event.preventDefault();
+                return false;
+            }else if($('#icon').val() === ''){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Icon Required!',
+                    icon: 'error',
+                    confirmButtonColor: '#3c8dbc',
+                });
+                event.preventDefault();
+                return false;
+            }else if($('#route_type').val() === ''){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Route Type Required!',
+                    icon: 'error',
+                    confirmButtonColor: '#3c8dbc',
+                });
+                event.preventDefault();
+                return false;
+            }
+            Swal.fire({
+                title: 'Are you sure ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Save',
+                returnFocus: false,
+                reverseButtons: true,
+                showLoaderOnConfirm: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#submitForm').submit();
+                }
+            });
+            
+        });
+    </script>
 @endsection

@@ -31,6 +31,7 @@ class User extends Authenticatable
         'hire_date',
         'image',
         'company_id', 
+        'id_ad_privileges',
         'department_id', 
         'position_id', 
         'password',
@@ -77,6 +78,19 @@ class User extends Authenticatable
                     'ad_privileges.name as privilege_name',
                     'departments.department_name',
                     'users.status as u_status')->get();
+    }
+
+    public function scopeGetDataPerUser($query, $id){
+        return $query->leftJoin('ad_privileges','users.id_ad_privileges','ad_privileges.id')
+            ->leftJoin('departments','users.department_id','departments.id')
+            ->select('users.*',
+                    'users.id as u_id',
+                    'ad_privileges.*',
+                    'ad_privileges.name as privilege_name',
+                    'departments.department_name',
+                    'users.status as u_status')
+                    ->where('users.id', $id)
+                    ->first();
     }
 
 

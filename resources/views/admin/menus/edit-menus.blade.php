@@ -15,8 +15,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label"> Privilege</label>
-                            <select selected data-placeholder="Choose prvileges" id="privileges_id" name="privileges_id[]" class="form-select select2" style="width:100%;" multiple>
+                            <label class="control-label"> Privilege</label><br>
+                            <select selected data-placeholder="Choose prvileges" id="privileges_id" name="privileges_id[]" class="form-select select2" style="width:50%;" multiple>
                                 @foreach($privileges as $data)
                                     <option value="{{$data->id}}" {{ (in_array($data->name,$menu_priv)) ? "selected" : ""}}>
                                         {{$data->name}}
@@ -26,9 +26,17 @@
                         </div>
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{$menus->name}}">
+                            <input type="text" name="menu_name" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{$menus->name}}">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="">Slug</label>
+                            <input type="text" name="slug" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{$menus->slug}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Icon</label>
+                            <input type="text" name="icon" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{$menus->icon}}">
+                        </div>
+                    </div><br>
                     <div class='panel-footer'>
                         <a href="{{ App\Helpers\CommonHelpers::mainpath() }}" class="btn btn-default">{{ trans('ad_lang.form-btn.cancel') }}</a>
                         <button class="btn btn-success pull-right" type="submit" id="btnUpdate"> <i class="fa fa-save" ></i> {{ trans('ad_lang.form-btn.update') }}</button>

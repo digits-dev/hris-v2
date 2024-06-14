@@ -103,6 +103,12 @@ class MenusController extends Controller{
                 ]
             );
         }
+        DB::table('ad_menuses')->where('id',$menuId)->update([
+            'name' => $request->menu_name,
+            'slug' => $request->slug,
+            'icon' => $request->icon
+        ]);
+
         CommonHelpers::redirect(CommonHelpers::mainpath(), "Edit successfully!", 'success');
     }
 }

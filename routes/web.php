@@ -61,9 +61,13 @@ Route::group(['middleware' => ['web']], function() {
     Route::post(config('ad_url.ADMIN_PATH').'/privileges/edit-privilege-save/{id}', [PrivilegesController::class, 'postEditSave'])->middleware('auth')->name('edit-privilege-save');
     //USERS MANAGEMENT
     Route::get(config('ad_url.ADMIN_PATH').'/users/add-user', [AdminUsersController::class, 'getAddUser'])->middleware('auth')->name('add-user');
+    Route::get(config('ad_url.ADMIN_PATH').'/users/edit-user/{id}', [AdminUsersController::class, 'getEditUser'])->middleware('auth')->name('edit-user');
     Route::get('change-password', [AdminUsersController::class, 'getChangePasswordView'])->middleware('auth')->name('change-password');
     Route::post('change-password', [AdminUsersController::class, 'postUpdatePassword'])->name('update_password');
     Route::get('profile', [AdminUsersController::class, 'getProfileUser'])->name('profile');
+    Route::post(config('ad_url.ADMIN_PATH').'/users/save-users', [AdminUsersController::class, 'postAddSave'])->middleware('auth')->name('save-user');
+    Route::post(config('ad_url.ADMIN_PATH').'/users/save-edit-user', [AdminUsersController::class, 'postEditSave'])->middleware('auth')->name('save-edit-user');
+    Route::post(config('ad_url.ADMIN_PATH').'/users/set-status', [AdminUsersController::class, 'setStatus'])->middleware('auth')->name('set-status');
 
     //MODULES
     Route::get(config('ad_url.ADMIN_PATH').'/module_generator/create-modules', [ModulsController::class, 'getAddModuls'])->middleware('auth')->name('add-modules');
