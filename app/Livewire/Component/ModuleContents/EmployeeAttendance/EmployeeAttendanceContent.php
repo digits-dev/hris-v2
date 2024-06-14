@@ -65,8 +65,12 @@ class EmployeeAttendanceContent extends Component
     public function index()
     {
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
+            session()->flash('message', trans("ad_default.denied_access", ['module' => 'Employee Attendance']));
+            session()->flash('message_type', 'danger');
+    
+            return redirect(url('dashboard'));
         }
+        
         return view("modules.employee-attendance.employee-attendance", [ 'routeName' => 'index' ]);
 
     }

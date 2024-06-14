@@ -202,10 +202,10 @@ return [
     "notice_delete_file_upload" => "* If you want to upload other file, please delete the old file first.",
     "file_broken" => "Oops looks like File was broken !. Click delete and re-upload.",
 
-    'denied_access' => "Sorry you don't have privilege to access this area !",
-    'denied_update' => "Sorry you don't have privilege to update the data !",
-    'denied_create' => "Sorry you don't have privilege to create the data !",
-    'denied_delete' => "Sorry you don't have privilege to delete the data !",
+    'denied_access' => "Sorry, you don't have the privilege to access this area.",
+    'denied_update' => "Sorry, you don't have the privilege to update the data.",
+    'denied_create' => "Sorry, you don't have the privilege to create the data.",
+    'denied_delete' => "Sorry, you don't have the privilege to delete the data.",
 
     'user_image' => 'User Image',
     'online' => 'Online',
