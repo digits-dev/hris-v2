@@ -32,10 +32,6 @@ class PositionControllerContent extends Component
     public function save()
     {
 
-        if (!CommonHelpers::isCreate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
-
         $this->validate([
             'position_name' => 'required|unique:positions,position_name'
         ]);
@@ -58,10 +54,6 @@ class PositionControllerContent extends Component
 
     public function update()
     {
-
-        if (!CommonHelpers::isUpdate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
 
         $attribute = $this->validate([
             'position_name' => 'required|unique:positions,position_name,' . $this->position_id,

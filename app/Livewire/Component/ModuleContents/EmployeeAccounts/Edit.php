@@ -31,6 +31,10 @@ class Edit extends Component
 
     public function index($userId)
     {
+        if (!CommonHelpers::isUpdate()) {
+            CommonHelpers::redirect(CommonHelpers::getModulePath(), trans("ad_default.denied_access"), "danger");
+        }
+        
         return view('modules.employee-accounts.employee-accounts-module', [ 'routeName' => 'edit', 'userId' => $userId ]);
     }
 

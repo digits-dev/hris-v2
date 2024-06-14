@@ -21,6 +21,10 @@ class Create extends Component
 
     public function index()
     {
+        if (!CommonHelpers::isCreate()) {
+            CommonHelpers::redirect(CommonHelpers::getModulePath(), trans("ad_default.denied_access"), "danger");
+        }
+
         return view('modules.employee-accounts.employee-accounts-module', [ 'routeName' => 'create' ]);
 
     }

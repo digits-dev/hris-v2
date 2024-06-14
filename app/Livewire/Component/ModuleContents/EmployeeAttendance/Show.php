@@ -20,8 +20,8 @@ class Show extends Component
     }
 
     public function index($employeeId){
-        if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
+        if (!CommonHelpers::isRead()) {
+            CommonHelpers::redirect(CommonHelpers::getModulePath(), trans("ad_default.denied_access"), "danger");
         }
 
         return view('modules.employee-attendance.employee-attendance', ['routeName'=>'show', 'employeeId' => $employeeId]);

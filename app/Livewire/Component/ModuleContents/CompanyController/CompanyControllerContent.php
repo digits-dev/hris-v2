@@ -38,10 +38,7 @@ class CompanyControllerContent extends Component
     public function save()
     {
 
-        if (!CommonHelpers::isCreate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
-
+  
         $attribute = $this->validate([
             'company_name' => 'required|unique:companies,company_name'
         ]);
@@ -62,10 +59,6 @@ class CompanyControllerContent extends Component
 
     public function update()
     {
-
-        if (!CommonHelpers::isUpdate()) {
-            CommonHelpers::redirect(url('/employee-accounts'), trans("ad_default.denied_access"), 'danger');
-        }
 
         $attribute = $this->validate([
             'company_name' => 'required|unique:companies,company_name,' . $this->company_id,

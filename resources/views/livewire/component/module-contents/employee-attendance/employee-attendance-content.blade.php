@@ -451,7 +451,7 @@
                         @endif
                     @endforeach
 
-                    @if(App\Helpers\CommonHelpers::isRead('employee-accounts'))
+                    @if(App\Helpers\CommonHelpers::isRead('employee-attendance'))
                         <th class="action-col">Action</th>
                     @endif
 
@@ -492,7 +492,7 @@
                             <td class="bio-duration-col">{{ $employeeLog->bio_duration }}</td>
                             <td class="filo-duration-col">{{ $employeeLog->filo_duration }}</td>
 
-                            @if(App\Helpers\CommonHelpers::isRead('employee-accounts'))
+                            @if(App\Helpers\CommonHelpers::isRead('employee-attendance'))
                                 <td class="action-col">
                                     <div class="table-btns">
                                         <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"

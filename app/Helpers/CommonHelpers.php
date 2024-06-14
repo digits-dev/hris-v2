@@ -360,7 +360,7 @@ class CommonHelpers {
         }
     }
 
-    public static function isRead($url){
+    public static function isRead($url = null){
         if (self::isSuperadmin()) {
             return true;
         }
