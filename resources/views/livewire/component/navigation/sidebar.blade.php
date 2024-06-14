@@ -137,9 +137,9 @@
                 <span class="menu-name">{{trans('ad_default.Menu_Management')}}</span>
               </a>
             </li>
-            <li class="{{ Request::segment(1) == 'log-user-access' ? 'active' : '' }}">
+            <li class="{{ Request::segment(1) == 'logs' ? 'active' : '' }}">
     
-              <a href="{{ route('log-user-access') }}">
+              <a href="{{ route('LogsControllerGetIndex') }}">
                 <img src="{{asset('images/navigation/user-logs-icon.png')}}" class="nav-icon" />
                 <span class="menu-name">Log User Access</span>
               </a>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('description')->nullable();
             $table->text('details')->nullable();
-            $table->integer('id_cms_users')->nullable();
+            $table->integer('id_ad_users')->nullable();
             $table->timestamps();
         });
     }

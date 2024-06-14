@@ -32,6 +32,17 @@ return [
         'cancel'          => 'Cancel',
         'update'          => 'Update',
         'delete'          => 'Delete'
+    ],
+
+    'logs' => [
+        'log_name'    => 'Logs',
+        'ip_address'  => 'Ip Address',
+        'user_agent'  => 'User Agent',
+        'url'         => 'Url',
+        'description' => 'Description',
+        'details'     => 'Details',
+        'user'        => 'User',
+        'date'        => 'Logs Date'
     ]
 ];
 

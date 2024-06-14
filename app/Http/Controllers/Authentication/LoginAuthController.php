@@ -44,6 +44,7 @@ class LoginAuthController extends Controller
             Session::put("admin_privileges", $session_details['priv']->id);
             Session::put('admin_privileges_roles', $session_details['roles']);
             Session::put('theme_color', $session_details['priv']->theme_color);
+            CommonHelpers::insertLog(trans("ad_default.log_login", ['email' => $users->email, 'ip' => $request->server('REMOTE_ADDR')]));
             return redirect()->intended('dashboard');
         }
         return back()->withErrors([
@@ -61,12 +62,11 @@ class LoginAuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        CommonHelpers::insertLog(trans("ad_default.log_logout", ['email' => Auth::user()->email, 'ip' => $request->server('REMOTE_ADDR')]));
         Auth::logout();
-    
         $request->session()->invalidate();
     
         $request->session()->regenerateToken();
-    
         return redirect('/login');
     }
 

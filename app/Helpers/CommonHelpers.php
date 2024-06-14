@@ -530,8 +530,8 @@ class CommonHelpers {
         $a['useragent']    = $_SERVER['HTTP_USER_AGENT'];
         $a['url']          = Request::url();
         $a['description']  = $description;
-        $a['details']        = $details;
-        $a['id_ad_users'] = self::myId();
+        $a['details']      = $details;
+        $a['id_ad_users']  = self::myId();
         DB::table('ad_logs')->insert($a);    
     }
 
