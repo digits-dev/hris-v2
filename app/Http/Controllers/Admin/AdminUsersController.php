@@ -41,21 +41,21 @@ use App\Models\User;
 
         public function postAddSave(Request $request){
             $users = DB::table("users")->where("email", $request->email)->first();
+            
+            $request->validate([
+                'email' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'employee_id' => 'required',
+                'department' => 'required',
+                'hire_date' => 'required',
+                'position' => 'required',
+                'privilege' => 'required',
+                'company' => 'required',
+                'location' => 'required'
+            ]);
 
             if(!$users){
-                $request->validate([
-                    'email' => 'required',
-                    'first_name' => 'required',
-                    'last_name' => 'required',
-                    'employee_id' => 'required',
-                    'department' => 'required',
-                    'hire_date' => 'required',
-                    'position' => 'required',
-                    'privilege' => 'required',
-                    'company' => 'required',
-                    'location' => 'required'
-                ]);
-
                 $data = [
                     'email' => $request->email,
                     'first_name' => $request->first_name,
@@ -68,7 +68,7 @@ use App\Models\User;
                     'id_ad_privileges' => $request->privilege,
                     'company_id'       => $request->company,
                     'hire_date' => $request->hire_date,
-                    'position_id' => $request->position,
+                    'position' => $request->position,
                 ];
             
                 User::create($data);
@@ -99,7 +99,7 @@ use App\Models\User;
                 'id_ad_privileges' => $request->privilege,
                 'company_id'       => $request->company,
                 'hire_date' => $request->hire_date,
-                'position_id' => $request->position,
+                'position' => $request->position,
                 'status' => $request->status
             ]);
             return CommonHelpers::redirect(CommonHelpers::adminpath('users'), "Data updated!", "success");

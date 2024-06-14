@@ -18,16 +18,23 @@
                     <div class="form-groups route_div">
                         <label for="email">{{trans('ad_lang.form-header.email')}} 
                             <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="email" id="email" value='{{ @$user->email }}'>
+                            @error('email')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                         </label>
                     </div>
                     <div class="form-groups">
                         <label for="first-name">{{trans('ad_lang.user-info.first_name')}} 
                             <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="first_name" id="first_name" value='{{ @$user->first_name }}'>
+                            @error('first_name')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                         </label>
                     </div>
                     <div class="form-groups">
                         <label for="middle-name">{{trans('ad_lang.user-info.middle_name')}} 
                             <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="middle_name" id="middle_name" value='{{ @$user->midle_name }}'>
+                            
                         </label>
                     </div>
                     <div class="form-groups">
@@ -48,16 +55,25 @@
                                     <option {{ @$user->department_id == $dept->id ? 'selected' : '' }} value='{{$dept->id}}'>{{$dept->department_name}}</option>
                                 @endforeach
                             </select>
+                        @error('department')
+                            <span style="color:red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-groups">
                         <label for="hire-date">{{trans('ad_lang.user-info.hire_date')}} 
                             <input type="date" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="hire_date" id="hire_date" value='{{ @$user->hire_date }}'>
+                            @error('hire_date')
+                            <span style="color:red">{{$message}}</span>
+                        @enderror
                         </label>
                     </div>
 
                     <div class="form-groups">
                         <label for="position">{{trans('ad_lang.user-info.position')}} 
-                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="position" id="position" value='{{ @$user->position_id }}'>
+                            <input type="text" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="position" id="position" value='{{ @$user->position }}'>
+                            @error('position')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                         </label>
                     </div>
                  
@@ -69,6 +85,9 @@
                                 <option {{ @$user->id_ad_privileges == $priv->id ? 'selected' : '' }} value='{{$priv->id}}'>{{$priv->name}}</option>
                                 @endforeach;
                             </select>
+                            @error('privilege')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                     </div>
 
                     <div class="form-groups">
@@ -79,16 +98,22 @@
                                 <option {{ @$user->company_id == $comp->id ? 'selected' : '' }} value='{{$comp->id}}'>{{$comp->company_name}}</option>
                                 @endforeach;
                             </select>
+                            @error('company')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                     </div>
 
                     <div class="form-groups">
-                        <label for="last-name">{{trans('ad_lang.user-info.position')}}</label><br>
+                        <label for="last-name">{{trans('ad_lang.user-info.location')}}</label><br>
                             <select selected data-placeholder="Choose Location" name='location' class='form-control select2' id="location" required style="width: 50%">
                                 <option value=''></option>
                                 @foreach($locations as $loc)
                                     <option {{ @$user->hire_location_id == $loc->id ? 'selected' : '' }} value='{{$loc->id}}'>{{$loc->location_name}}</option>
                                 @endforeach;
                             </select>
+                            @error('location')
+                                <span style="color:red">{{$message}}</span>
+                            @enderror
                     </div>
                     @if(@$user->u_id)
                         <div class="form-groups">
@@ -120,10 +145,10 @@
 
         $('#btnSubmit').on('click', function(event) {
             event.preventDefault();
-            if($('#name').val() === ''){
+            if($('#positions').val() === ''){
                 Swal.fire({
                     type: 'error',
-                    title: 'Module Name Required!',
+                    title: 'Position Required!',
                     icon: 'error',
                     confirmButtonColor: '#3c8dbc',
                 });
