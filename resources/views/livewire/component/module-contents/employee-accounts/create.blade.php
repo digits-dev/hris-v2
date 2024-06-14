@@ -182,7 +182,7 @@
     font-weight: normal !important;
   }
   .select2-container .select2-selection--single {
-    height: 40px !important;
+    height: 38px !important;
     border-radius: 8px;
     border: 1px solid var(--stroke-color);
     padding:5px;
@@ -194,6 +194,12 @@
 
   .select2-results__option {
       font-size: 16px !important;
+  }
+
+  .note{
+    font-size: 14px;
+    margin-top: 5px;
+    color: #333;
   }
 
   </style>
@@ -261,6 +267,12 @@
             <label for="middle-name">Middle Name
               <input id="middle-name" type="text" wire:model.blur="form.middle_name">
             </label>
+            @if ($this->form->middle_name == null && !$errors->has('form.middle_name'))
+              <em>
+                <p class="note">Note: Please put N/A if not applicable.</p>
+              </em>
+            @endif
+            
             @error('form.middle_name')
               <em>
                 <p class="error-text">{{ $message }}</p>
@@ -344,9 +356,9 @@
         {{-- Position  --}}
           <div>
             <label class="flex flex-col" for="position">Position
-              <input type="text" id="position" wire:model.blur="form.position_id">
+              <input type="text" id="position" wire:model.blur="form.position">
             </label>
-            @error('form.position_id')
+            @error('form.position')
               <em>
                 <p class="error-text">{{ $message }}</p>
               </em>

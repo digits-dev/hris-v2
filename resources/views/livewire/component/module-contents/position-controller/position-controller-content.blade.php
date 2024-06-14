@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            @if(App\Helpers\CommonHelpers::isCreate())
+            @if(App\Helpers\CommonHelpers::isCreate('positions'))
                 <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.position_name = null">Add New Position</a>
             @endif
         </div>
@@ -134,7 +134,7 @@
 
                     <th>Status</th>
 
-                    @if(App\Helpers\CommonHelpers::isUpdate())
+                    @if(App\Helpers\CommonHelpers::isUpdate('positions'))
                         <th>Action</th>
                     @endif
                 </tr>
@@ -152,7 +152,7 @@
 
                             </td>
 
-                            @if(App\Helpers\CommonHelpers::isUpdate())
+                            @if(App\Helpers\CommonHelpers::isUpdate('positions'))
                                 <td><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="$wire.editForm({{$position->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
                             @endif
                         </tr>

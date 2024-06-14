@@ -33,8 +33,9 @@ class User extends Authenticatable
         'company_id', 
         'id_ad_privileges',
         'department_id', 
-        'position_id', 
+        'position', 
         'password',
+        'id_ad_privileges',
         'created_at	',
         'updated_at'
 
@@ -98,13 +99,21 @@ class User extends Authenticatable
         return $this->belongsTo(Companies::class, 'company_id', 'id');
     }
 
-    public function position(){
-        return $this->belongsTo(Position::class, 'position_id', 'id');
-    }
+    // public function position(){
+    //     return $this->belongsTo(Position::class, 'position_id', 'id');
+    // }
 
     public function hireLocation(){
         return $this->belongsTo(Location::class, 'hire_location_id', 'id');
     }
+
+    public function department(){
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+    public function privilege(){
+        return $this->belongsTo(Privileges::class, 'id_ad_privileges', 'id');
+    }
+
 
     public function getFullnameAttribute(){
         return "{$this->first_name} {$this->middle_name} {$this->last_name}";

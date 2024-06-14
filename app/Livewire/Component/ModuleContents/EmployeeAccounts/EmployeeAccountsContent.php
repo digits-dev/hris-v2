@@ -60,7 +60,10 @@ class EmployeeAccountsContent extends Component
     public function index()
     {
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
+            session()->flash('message', trans("ad_default.denied_access"));
+            session()->flash('message_type', 'danger');
+    
+            return redirect(url('dashboard'));
         }
         return view('modules.employee-accounts.employee-accounts-module', [ 'routeName' => 'index' ]);
     }
@@ -131,7 +134,6 @@ class EmployeeAccountsContent extends Component
         $query = DB::table('users')
             ->leftJoin('companies', 'companies.id', 'users.company_id')
             ->leftJoin('locations as hire_location', 'hire_location.id', 'users.hire_location_id')
-            ->leftJoin('positions', 'positions.id', 'users.position_id')
             ->leftJoin('departments', 'departments.id', 'users.department_id')
             ->select([
                 'users.id',
@@ -144,11 +146,11 @@ class EmployeeAccountsContent extends Component
                 'departments.department_name as department',
                 'hire_location.location_name as hire_location',
                 'users.hire_date',
-                'positions.position_name as position',
+                'users.position',
                 'users.status',
                 'users.image',
                 'users.created_at'
-            ]);
+            ])->where('users.id_ad_privileges', '<>', 1);
         return $query;
     }
 
@@ -179,8 +181,8 @@ class EmployeeAccountsContent extends Component
         }
         if (sizeof($positions)) {
             $query_filter_params[] = [
-                'method' => 'whereIn',
-                'params' => [ 'positions.id', $positions ]
+                'method' => 'where',
+                'params' => [ 'users.position', $positions ]
             ];
         }
         if (sizeof($hire_locations)) {

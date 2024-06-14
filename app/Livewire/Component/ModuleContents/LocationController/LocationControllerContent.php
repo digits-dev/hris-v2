@@ -132,7 +132,10 @@ class LocationControllerContent extends Component
     public function index()
     {
         if (!CommonHelpers::isView()) {
-            CommonHelpers::redirect(url('/'), trans("ad_default.denied_access"), "danger");
+            session()->flash('message', trans("ad_default.denied_access"));
+            session()->flash('message_type', 'danger');
+    
+            return redirect(url('dashboard'));
         }
         return view("modules.location-controller.location-controller");
     }

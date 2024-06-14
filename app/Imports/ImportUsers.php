@@ -33,8 +33,9 @@ class ImportUsers implements ToCollection, SkipsEmptyRows, WithHeadingRow, WithV
                 'department_id'    => $department->id,
                 'hire_date'        => $row->hire_date,
                 'password'         => 'qwerty',
-                'position_id'      => $row->position,
-                'created_by'	   => CommonHelpers::myId()
+                'position'         => $row->position,
+                'created_by'	   => CommonHelpers::myId(),
+                'id_ad_privileges' => 2,
             ]); 
         }
     }

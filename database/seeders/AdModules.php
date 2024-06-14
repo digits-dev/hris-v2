@@ -219,7 +219,7 @@ class AdModules extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'name' => 'Department',
                 'icon' => 'fa fa-icon',
-                'path' => 'department',
+                'path' => 'departments',
                 'table_name' => 'departments',
                 'controller' => 'DepartmentController\DepartmentControllerContent',
                 'is_protected' => 0,
