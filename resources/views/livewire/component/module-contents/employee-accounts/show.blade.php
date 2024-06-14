@@ -240,7 +240,7 @@
                     </label>
 
                     <label class="flex flex-col ">Hire Date
-                        <input type="email" 
+                        <input type="text" 
                             value="{{ $user->hire_date }}" disabled>
                     </label>
     
@@ -255,7 +255,7 @@
 
                     <label class="block">
                         System Privilege
-                        <input type="email"  value="{{ $user->privilege->name }}" disabled>
+                        <input type="text"  value="{{ $user->privilege->name }}" disabled>
                     </label>
 
                     <label>Company
