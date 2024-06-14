@@ -522,13 +522,12 @@
 
 
         <div class="section-header__right-container" x-data="{ isBulkOpen: false, openBulkModal: false, status: null }">
-                @if(App\Helpers\CommonHelpers::isCreate())
-
-                    <a href="{{ route('employee.create') }}" class="primary-btn">Add User</a>
-
+           
+                @if(App\Helpers\CommonHelpers::isCreate('employee-accounts'))
+                    <a href="{{ route('employee.create') }}" class="primary-btn" >Add User</a>
                 @endif
-
-                @if(App\Helpers\CommonHelpers::isUpdate())
+                
+                @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
 
                     <div class="relative">
                         <button  x-on:click="isBulkOpen=!isBulkOpen"  x-on:click.outside="isBulkOpen=false" class="secondary-btn">Bulk
@@ -574,6 +573,7 @@
                     </div>
 
                 @endif
+           
 
             <div x-data="{openImportModal:false}">
                 {{-- Import Btn  --}}
@@ -651,7 +651,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        @if(App\Helpers\CommonHelpers::isUpdate())
+                        @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                             <th class="checkbox-col"><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
                         @endif
 
@@ -664,10 +664,8 @@
                             class="{{ $header['class'] }}" />
                         @endforeach
 
-                        @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
-
+                        @if(App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                             <th class="action-col">Action</th>
-
                         @endif
                     </tr>
                 </thead>
@@ -677,7 +675,7 @@
                     @foreach ($users as $user)
                         <tr wire:key="{{ $user->id }}">
 
-                            @if(App\Helpers\CommonHelpers::isUpdate())
+                            @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                 @if ($selectedAll)
                                     <td class="checkbox-col">
                                         <input type="checkbox" value="{{ $user->id }}" checked>
@@ -708,17 +706,17 @@
 
 
 
-                            @if(App\Helpers\CommonHelpers::isRead() || App\Helpers\CommonHelpers::isUpdate())
+                            @if(App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
 
                                 <td class="action-col">
 
                                     <div class="table-btns">
-                                        @if(App\Helpers\CommonHelpers::isRead())
+                                        @if(App\Helpers\CommonHelpers::isRead('employee-accounts'))
                                             <a role="button" href="{{ route('employee.show', $user->id) }}"
                                                 class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                         @endif
 
-                                        @if(App\Helpers\CommonHelpers::isUpdate())
+                                        @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                             <a role="button" href="{{ route('employee.edit', $user->id) }}"
                                                 class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
                                         @endif

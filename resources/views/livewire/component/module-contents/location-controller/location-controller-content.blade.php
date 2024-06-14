@@ -161,7 +161,7 @@
             </div>
 
             <div class="section-header__right-container">
-                @if(App\Helpers\CommonHelpers::isCreate())
+                @if(App\Helpers\CommonHelpers::isCreate('employee-accounts'))
 
                     {{-- Add New Location Btn  --}}
                     <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.location_name = null">Add New Location</a>
@@ -258,7 +258,7 @@
 
                     <th>Status</th>
 
-                    @if(App\Helpers\CommonHelpers::isUpdate())
+                    @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
 
                     <th>Action</th>
 
@@ -281,7 +281,7 @@
 
                             </td>
 
-                            @if(App\Helpers\CommonHelpers::isUpdate())
+                            @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                 <td><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="$wire.editForm({{$location->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
                             @endif
                         </tr>

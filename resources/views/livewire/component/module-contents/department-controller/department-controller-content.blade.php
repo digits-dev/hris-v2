@@ -161,7 +161,7 @@
             </div>
 
             <div class="section-header__right-container">
-                @if(App\Helpers\CommonHelpers::isCreate())
+                @if(App\Helpers\CommonHelpers::isCreate('employee-accounts'))
                 {{-- Add New Department Btn  --}}
                 <button type="button" class="primary-btn" x-on:click="isModalOpen = true; action = 'create'; $wire.department_name = null">Add New Department</a>
 
@@ -300,7 +300,7 @@
 
                     <th>Status</th>
 
-                    @if(App\Helpers\CommonHelpers::isUpdate())
+                    @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                         <th>Action</th>
                     @endif
                 </tr>
@@ -319,7 +319,7 @@
 
                             </td>
 
-                            @if(App\Helpers\CommonHelpers::isUpdate())
+                            @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                 <td><a role="button" class="table-btn table-btn--green mx-auto" x-on:click="$wire.editForm({{$department->id}}); isModalOpen = true; action = 'edit'"><i class="fa-solid fa-pencil"></i></a></td>
                             @endif
                         </tr>
