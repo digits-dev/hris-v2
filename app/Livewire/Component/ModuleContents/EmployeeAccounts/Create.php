@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire\Component\ModuleContents\EmployeeAccounts;
-
 use App\Livewire\Forms\UserForm;
 use App\Models\Companies;
 use App\Models\Department;
@@ -35,7 +34,6 @@ class Create extends Component
         $this->form->store();
         session()->flash('message', 'Created user successfully.');
         session()->flash('message_type', 'success');
-
         return $this->redirect('/employee-accounts');
     }
 

@@ -54,6 +54,7 @@ return [
     'log_login' => ':email login with IP Address :ip',
     'log_forgot' => 'Someone with IP :ip request a password for :email',
     'log_logout' => ':email logout',
+    'log_reser_pass' => 'Update password of names :names at :module',
 
     'alert_add_employee'    => ':reference_number has been created successfully!',
 
