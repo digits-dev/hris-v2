@@ -43,6 +43,9 @@ class PositionControllerContent extends Component
 
         ]);
 
+        CommonHelpers::insertLog(trans("ad_default.log_add", ['name' =>  $this->position_name, 'module' => 'Positions']));
+
+
         $this->reset('position_name');
 
 
@@ -65,6 +68,9 @@ class PositionControllerContent extends Component
             'status'        => $this->status,
             'updated_by'    => Auth::user()->id,
         ]);
+
+        CommonHelpers::insertLog(trans("ad_default.log_update", ['name' =>  $this->position_name, 'module' => 'Positions']));
+
 
         $this->reset('position_name', 'status');
 

@@ -48,6 +48,8 @@ class CompanyControllerContent extends Component
             'created_by'   => Auth::user()->id,
         ]);
 
+        CommonHelpers::insertLog(trans("ad_default.log_add", ['name' => $this->company_name, 'module' => 'Companies']));
+
         $this->reset('company_name');
 
 
@@ -65,11 +67,13 @@ class CompanyControllerContent extends Component
             'status'       => 'required',
         ]);
 
-        Companies::find($this->company_id)->update([
+         Companies::find($this->company_id)->update([
             'company_name' => $this->company_name,
             'status'       => $this->status,
             'updated_by'   => Auth::user()->id,
         ]);
+
+        CommonHelpers::insertLog(trans("ad_default.log_update", ['name' =>  $this->company_name, 'module' => 'Companies']));
 
         $this->reset('company_name', 'status');
 

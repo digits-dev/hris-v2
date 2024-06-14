@@ -47,13 +47,16 @@ class DepartmentControllerContent extends Component{
             'created_by'   => Auth::user()->id,
         ]);
 
+        CommonHelpers::insertLog(trans("ad_default.log_add", ['name' =>  $this->department_name, 'module' => 'Departments']));
+
+
         $this->reset('department_name');
 
 
         session()->flash('message', 'Created Deparment successfully.');
         session()->flash('message_type', 'success');
 
-        return $this->redirect('/department');
+        return $this->redirect('/departments');
     }
 
     public function update()
@@ -70,13 +73,16 @@ class DepartmentControllerContent extends Component{
             'updated_by'   => Auth::user()->id,
         ]);
 
+        CommonHelpers::insertLog(trans("ad_default.log_update", ['name' =>  $this->department_name, 'module' => 'Departments']));
+        
+
         $this->reset('department_name', 'status');
 
 
         session()->flash('message', 'Updated Department successfully.');
         session()->flash('message_type', 'success');
 
-        return $this->redirect('/department');
+        return $this->redirect('/departments');
     }
 
     

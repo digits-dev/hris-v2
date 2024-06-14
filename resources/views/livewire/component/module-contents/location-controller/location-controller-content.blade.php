@@ -203,45 +203,88 @@
         </div>
 
 
-        {{-- FORM MODAL --}}
-        <div x-show="isModalOpen" x-cloak  x-transition class="modal-container" >
+            {{-- FORM MODAL --}}
+            <div x-show="isModalOpen" x-cloak  x-transition class="modal-container" >
 
-            <div class="modal-backdrop" x-on:click="isModalOpen = false">
-            </div>
-
-            <div class="modal-content">
-
-                <div x-show="action === 'create'">
-
-                    <div class="modal-header">
-                        <h1 class="font-semibold">Create Location</h1>
+                <div class="modal-backdrop" x-on:click="isModalOpen = false">
+                </div>
+    
+                <div class="modal-content">
+    
+                    <div x-show="action === 'create'">
+    
+                        <div class="modal-header">
+                            <h1 class="font-semibold">Create Location</h1>
+                        </div>
+    
+                        <form  wire:submit.prevent="save">
+                            <div class="modal-body">
+                                <div class="flex flex-col justify-start gap-3">
+    
+                                    <label for="location_name" class="text-base">Location Name:</label>
+                                    <input type="text" wire:model="location_name" class="form-control flex-1">
+                                        @error('location_name')
+                                        <em>
+                                            <p class="error-text">{{ $message }}</p>
+                                        </em>
+                                        @enderror
+                                </div>
+    
+                            </div>
+    
+                            <div class="modal-footer">
+                                <button type="submit" class="primary-btn">Confirm</button>
+                                <button type="button" class="secondary-btn" x-on:click="isModalOpen = false">Cancel</button>
+                            </div>
+                        </form>
                     </div>
 
-                    <form  wire:submit.prevent="save">
-                        <div class="modal-body">
-                            <div class="flex flex-col justify-start gap-3">
+                    <div x-show="action === 'edit'">
+                        <div class="modal-header">
+                            <h1 class="font-semibold">Edit Location</h1>
+                        </div>
 
-                                <label for="location_name" class="text-base">Location Name:</label>
-                                <input type="text" wire:model="location_name" class="form-control flex-1">
-                                    @error('location_name')
+                        <form  wire:submit.prevent="update">
+                            <div class="modal-body">
+                                <div class="flex flex-col justify-start gap-3">
+
+                                    <label for="location_name" class="text-base">Location Name:</label>
+                                    <input type="text" wire:model="location_name" class="form-control flex-1">
+                                        @error('location_name')
+                                        <em>
+                                            <p class="error-text">{{ $message }}</p>
+                                        </em>
+                                        @enderror
+                                </div>
+
+                                <div class="flex flex-col justify-start gap-3 mt-3">
+
+                                    <label for="status" class="text-base">Status</label>
+                                    <select wire:model="status" class="form-control">
+                                        <option>ACTIVE</option>
+                                        <option>INACTIVE</option>
+                                    </select>
+                                    @error('status')
                                     <em>
                                         <p class="error-text">{{ $message }}</p>
                                     </em>
                                     @enderror
+                                </div>
                             </div>
 
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="primary-btn">Confirm</button>
-                            <button type="button" class="secondary-btn" x-on:click="isModalOpen = false">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-
+                            <div class="modal-footer">
+                                <button type="submit" class="primary-btn">Confirm</button>
+                                <button type="button" class="secondary-btn" x-on:click="isModalOpen = false">Cancel</button>
+                            </div>
+                        </form>
+                    </div>	 
     
+        
+                </div>
             </div>
-        </div>
+
+
+   
 
         @if (count($locations) == 0)
 
@@ -295,6 +338,8 @@
 
 
     </div>
+
+     
 
 
     <div class="pagination">

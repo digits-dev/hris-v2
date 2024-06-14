@@ -53,6 +53,9 @@ class LocationControllerContent extends Component
 
         ]);
 
+        CommonHelpers::insertLog(trans("ad_default.log_add", ['name' =>  $this->location_name, 'module' => 'Locations']));
+
+
         $this->reset('location_name');
 
 
@@ -79,6 +82,9 @@ class LocationControllerContent extends Component
             'status'        => $this->status,
             'updated_by'    => Auth::user()->id,
         ]);
+
+        CommonHelpers::insertLog(trans("ad_default.log_update", ['name' =>  $this->location_name, 'module' => 'Locations']));
+
 
         $this->reset('location_name', 'status');
 
