@@ -196,6 +196,12 @@
       font-size: 16px !important;
   }
 
+  .note{
+    font-size: 14px;
+    margin-top: 5px;
+    color: #333;
+  }
+
   </style>
 @endsection
 
@@ -261,6 +267,12 @@
             <label for="middle-name">Middle Name
               <input id="middle-name" type="text" wire:model.blur="form.middle_name">
             </label>
+            @if ($this->form->middle_name == null && !$errors->has('form.middle_name'))
+              <em>
+                <p class="note">Note: Please put N/A if not applicable.</p>
+              </em>
+            @endif
+            
             @error('form.middle_name')
               <em>
                 <p class="error-text">{{ $message }}</p>
