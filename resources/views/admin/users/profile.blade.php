@@ -197,7 +197,7 @@
 
                         <div class="form-group">
                             <label for="">Position</label>
-                            <input type="text" name="" id="" value="{{auth()->user()->position->position_name}}" class="form-control" disabled>
+                            <input type="text" name="" id="" value="{{auth()->user()->position}}" class="form-control" disabled>
                         </div>
 
                     </div>
