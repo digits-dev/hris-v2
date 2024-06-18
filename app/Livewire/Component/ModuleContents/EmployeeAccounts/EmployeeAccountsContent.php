@@ -265,8 +265,18 @@ class EmployeeAccountsContent extends Component
 
     public function setStatus($status){
         $statusValue = ($status == 'active') ? 1 : 0;
-
+        $userMatrix = User::whereIn('id', $this->userIds)->get();
+			
+        $users_array = array();
+        foreach($userMatrix as $matrix){
+            array_push($users_array, $matrix->first_name.' '.$matrix->middle_name.' '.$matrix->last_name);
+        }
+        $user_string = implode(",",$users_array);
+     
         User::whereIn('id', $this->userIds)->update([ 'status' => $statusValue ]);
+        // CommonHelpers::insertLog('Update password of names '.$user_string.' at Employee Accounts');
+        CommonHelpers::insertLog(trans("ad_default.log_reser_pass", ['names' => $user_string, 'module' => 'Employee Accounts']));
+
         $this->selectedAll = false;
         $this->userIds     = [];
 

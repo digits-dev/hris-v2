@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Livewire\Forms;
-
 use Livewire\Form;
 use App\Models\User;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\CommonHelpers;
 
 class UserForm extends Form
 {
@@ -97,6 +97,7 @@ class UserForm extends Form
         $userData['password'] = 'qwerty';
 
         User::create($userData);
+        CommonHelpers::insertLog(trans("ad_default.log_add", ['name' => $this->first_name." ".$this->middle_name." ".$this->last_name, 'module' => 'Employee Accounts']));
     }
 
 
@@ -118,6 +119,7 @@ class UserForm extends Form
         }
 
         $this->user->update($userData);
+        CommonHelpers::insertLog(trans("ad_default.log_update", ['name' => $this->user->first_name." ".$this->user->middle_name." ".$this->user->last_name, 'module' => 'Employee Accounts']));
 
     }
 
