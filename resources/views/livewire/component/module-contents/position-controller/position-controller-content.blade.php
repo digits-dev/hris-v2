@@ -132,7 +132,7 @@
                 <tr>
                     <x-sortable-table-header colName="position_name" displayName="Position Name" mxAuto />
 
-                    <th>Status</th>
+                    <x-sortable-table-header colName="status" displayName="Status" mxAuto />
 
                     @if(App\Helpers\CommonHelpers::isUpdate('positions'))
                         <th>Action</th>

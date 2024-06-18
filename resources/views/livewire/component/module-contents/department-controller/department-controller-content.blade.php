@@ -298,7 +298,7 @@
                 <tr>
                     <x-sortable-table-header colName="department_name" displayName="Department Name" mxAuto />
 
-                    <th>Status</th>
+                    <x-sortable-table-header colName="status" displayName="Status" mxAuto />
 
                     @if(App\Helpers\CommonHelpers::isUpdate('departments'))
                         <th>Action</th>

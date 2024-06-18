@@ -299,7 +299,7 @@
                 <tr>
                     <x-sortable-table-header colName="location_name" displayName="Location Name" mxAuto />
 
-                    <th>Status</th>
+                    <x-sortable-table-header colName="status" displayName="Status" mxAuto />
 
                     @if(App\Helpers\CommonHelpers::isUpdate('locations'))
 

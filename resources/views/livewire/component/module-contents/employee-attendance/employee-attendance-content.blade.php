@@ -333,7 +333,7 @@
                                 <p>Company</p>
                                 <div class="filter-modal-select">
                                     <select wire:model="company_id">
-                                        <option>Select Company</option>
+                                        <option value="">Select Company</option>
                                         @foreach ($companies as $company)
                                             <option value="{{$company->id}}">{{$company->company_name}}</option>
                                         @endforeach
@@ -345,7 +345,7 @@
                                 <p>Hire Location</p>
                                 <div class="filter-modal-select">
                                     <select wire:model="hire_location">
-                                        <option>Select Location</option>
+                                        <option value="">Select Location</option>
                                         @foreach ($locations as $location)
                                             <option value="{{$location->location_name}}">{{$location->location_name}}</option>
                                         @endforeach
@@ -359,7 +359,7 @@
                                 <p>Time in Location/s</p>
                                 <div class="filter-modal-select">
                                     <select wire:model="time_in_location">
-                                        <option>Select Time in Location/s</option>
+                                        <option value="">Select Time in Location/s</option>
                                         @foreach ($locations as $location)
                                             <option value="{{$location->location_name}}">{{$location->location_name}}</option>
                                         @endforeach
