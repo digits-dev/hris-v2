@@ -107,7 +107,13 @@ class UserForm extends Form
 
         $this->validate();
 
-        $userData = $this->except([ 'user', 'image', 'profileImage', 'password' ]);
+        $userData = $this->except([ 'user', 'image', 'profileImage', 'password', 'middle_name' ]);
+
+        if(trim(strtolower($this->middle_name)) == 'n/a'){
+            $userData['middle_name'] = '';
+        } else {
+            $userData['middle_name'] = $this->middle_name;
+        }
 
         if ($this->profileImage) {
 

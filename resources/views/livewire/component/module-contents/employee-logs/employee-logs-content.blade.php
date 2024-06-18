@@ -4,62 +4,46 @@
 
     <style>
 
-        .table-container {
-            width:100%;
-            max-width: 1500px;
-            overflow-y: hidden;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 30px;
-        }
-
-        .table {
-            width: 1500px;
-            margin: 30px 0;
-            border-collapse: collapse;
-        }
-
-
         /* Table Column Widths  */
 
         .first-name-col {
-           width: 150px;
+           min-width: 150px;
         }
         .middle-name-col {
-            width: 150px;
+            min-width: 150px;
         }
         .last-name-col {
-            width: 150px;
+            min-width: 150px;
         }
         .location-col {
-            width: 180px;
+            min-width: 180px;
         }
         .current-location-col {
-            width: 180px;
+            min-width: 180px;
         }
         .time-in-col {
-            width: 180px;
+            min-width: 180px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .time-out-col {
-            width: 180px;
+            min-width: 180px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .date-col {
-            width: 120px;
+            min-width: 120px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .bio-duration-col {
-            width: 130px;
+            min-width: 130px;
             text-align: center;
             button{
                 margin: auto;

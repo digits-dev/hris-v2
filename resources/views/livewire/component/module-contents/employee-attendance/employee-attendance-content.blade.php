@@ -4,21 +4,6 @@
 
     <style>
 
-        .table-container {
-            width:100%;
-            max-width: 1500px;
-            overflow-y: hidden;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 30px;
-        }
-
-        .table {
-            width: 2000px;
-            margin: 30px 0;
-            border-collapse: collapse;
-        }
-
         /* Override section table css */
         @media screen and (min-width: 800px) {
             .section-header {
@@ -30,60 +15,60 @@
         /* Table Column Widths  */
 
         .first-name-col {
-           width: 150px;
+           min-width: 150px;
         }
         .middle-name-col {
-            width: 150px;
+            min-width: 150px;
         }
         .last-name-col {
-            width: 150px;
+            min-width: 150px;
         }
         .company-col {
-            width: 180px;
+            min-width: 180px;
         }
         .hire-location-col {
-            width: 180px;
+            min-width: 180px;
         }
         .time-in-locations-col {
-            width: 180px;
+            min-width: 180px;
         }
         .first-time-in-col {
-            width: 180px;
+            min-width: 180px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .last-time-out-col {
-            width: 150px;
+            min-width: 180px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .date-col {
-            width: 120px;
+            min-width: 120px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .bio-duration-col {
-            width: 120px;
+            min-width: 150px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .filo-duration-col {
-            width: 120px;
+            min-width: 150px;
             text-align: center;
             button{
                 margin: auto;
             }
         }
         .action-col {
-            width: 100px;
+            min-width: 100px;
             text-align: center;
             button{
                 margin: auto;

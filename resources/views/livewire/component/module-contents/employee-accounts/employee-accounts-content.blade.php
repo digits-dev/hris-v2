@@ -4,68 +4,51 @@
 
     <style>
 
-        .table-container {
-            width:100%;
-            max-width: 1500px;
-            overflow-y: hidden;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 30px;
-        }
-
-        .table {
-            width:2000px;
-            margin: 30px 0;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-
         /* Table Column Widths  */
         .checkbox-col {
-            width:50px;
+            min-width:50px;
             text-align: center;
         }
         .image-col{
-            width:60px;
+            min-width:60px;
         }
 
         .first-name-col {
-            width:130px;
+            min-width:130px;
         }
 
         .middle-name-col {
-            width:140px;
+            min-width:140px;
         }
 
         .last-name-col {
-            width:130px;
+            min-width:130px;
         }
 
         .employee-id-col {
-            width:150px;
+            min-width:150px;
         }
 
         .email-col {
-            width:120px;
+            min-width:120px;
         }
 
         .company-col {
-            width:150px;
+            min-width:150px;
         }
         .department-col {
-            width:150px;
+            min-width:150px;
         }
 
         .hire-location-col {
-            width:150px;
+            min-width:150px;
         }
 
         .hire-date-col {
-            width:100px;
+            min-width:110px;
         }
         .position-col {
-            width:150px;
+            min-width:150px;
             text-align: center;
             button{
                 margin:auto;
@@ -73,7 +56,7 @@
         }
 
         .status-col {
-            width:100px;
+            min-width:100px;
             text-align: center;
 
             button{
@@ -82,7 +65,7 @@
         }
 
         .action-col {
-            width:100px;
+            min-width:100px;
         }
 
         /* End of Table Column Widths  */
