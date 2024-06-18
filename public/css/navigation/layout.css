@@ -203,10 +203,15 @@ height: 7px;
     border-radius: 5px;
 }
 
+.parent-nav-icon{
+    font-size: 24px;
+    margin-left: 2px;
+}
+
 .nav-name{
     color: white;
     flex: 1;
-    margin-left: 10px;
+    margin-left: 12px;
     font-size: 12px;
     white-space: nowrap;
     font-family: "Figtree", sans-serif;
