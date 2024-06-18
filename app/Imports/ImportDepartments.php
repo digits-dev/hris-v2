@@ -2,32 +2,33 @@
 
 namespace App\Imports;
 
-use app\Helpers\CommonHelpers;
 use App\Models\Department;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use app\Helpers\CommonHelpers;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportDepartments implements ToCollection,  SkipsEmptyRows, WithHeadingRow,  WithValidation
+class ImportDepartments implements ToModel,  SkipsEmptyRows, WithHeadingRow,  WithValidation
 {
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $rows)
-    {
-        foreach ($rows->toArray() as $key => $row) 
-        {
-            $row = (object) $row;
 
-            Department::create([
-                'department_name' => $row->department,
-                'coa_id' => $row->coa_id,
-                'created_by' => CommonHelpers::myId(),
-                'created_at' => now(),
-            ]); 
+    public function model(array $row)
+    {
+
+        $exists = DB::table('departments')->where('department_name', $row['department'])->first();
+
+        if($exists) {
+            return null;
         }
+
+        return new Department([
+            'department_name' => $row['department'],
+            'coa_id' => $row['coa_id'] ?? null,
+            'created_by' => CommonHelpers::myId(),
+            'created_at' => now(),
+        ]);
+
     }
 
     public function rules(): array

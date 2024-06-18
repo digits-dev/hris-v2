@@ -248,7 +248,7 @@ class EmployeeAccountsContent extends Component
         }
             session()->flash('message',  $errors[0]);
             session()->flash('message_type', 'danger');
-            return redirect(url('/employee-accounts'), $errors[0], "danger");
+            return redirect(url('/employee-accounts'));
     }
 
    

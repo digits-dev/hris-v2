@@ -101,7 +101,7 @@ class DepartmentControllerContent extends Component{
             session()->flash('message', 'Upload Success!');
             session()->flash('message_type', 'success');
       
-            return $this->redirect('/department');
+            return $this->redirect('/departments');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             
@@ -118,7 +118,7 @@ class DepartmentControllerContent extends Component{
         
         session()->flash('message',  $errors[0]);
         session()->flash('message_type', 'danger');
-        return $this->redirect('/department');
+        return $this->redirect('/departments');
     }
 
     

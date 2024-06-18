@@ -15,7 +15,7 @@ class DepartmentImportTemplate implements FromArray, WithHeadings, ShouldAutoSiz
     {
         return [
             'Department',
-            'Coa Id',
+            // 'Coa Id',
         ];
     }
 
@@ -24,11 +24,11 @@ class DepartmentImportTemplate implements FromArray, WithHeadings, ShouldAutoSiz
         return [
             [
                 'BPG',
-                '1'
+                // '1'
             ],
             [
                 'ISD',
-                '2'
+                // '2'
             ],
         ];
     }
