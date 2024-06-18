@@ -206,7 +206,7 @@
                                                     onclick='{{App\Helpers\CommonHelpers::deleteConfirm(route("MenusControllerGetDelete",["id"=>$menu->id]))}}'
                                                     href='javascript:void(0)'></a></span></div>
                                     <ul>
-                                        @if($menu->children)
+                                        @if(isset($menu->children))
                                             @foreach($menu->children as $child)
                                                 <li data-id='{{$child->id}}' data-name='{{$child->name}}'>
                                                     <div><i class='{{$child->icon}}'></i> {{$child->name}} <span class='pull-right'><a class='fa fa-pencil'
