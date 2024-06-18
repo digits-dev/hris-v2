@@ -23,6 +23,7 @@ class Dashboard extends Model
                         $query->where('company_id', $companyId);
                     });
             })
+            ->where('id_ad_privileges', '!=', 1)
             ->count();
     }
 
@@ -42,6 +43,7 @@ class Dashboard extends Model
                         $query->where('company_id', $companyId);
                     });
             })
+            ->where('id_ad_privileges', '!=', 1)
             ->count();
     }
 
@@ -62,6 +64,7 @@ class Dashboard extends Model
                     ->from('employee_logs')
                     ->whereDate('date_clocked_out', $date);
             })
+            ->where('id_ad_privileges', '!=', 1)
             ->count();
     }
 
