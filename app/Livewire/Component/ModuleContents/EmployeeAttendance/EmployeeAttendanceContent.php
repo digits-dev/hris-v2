@@ -33,7 +33,7 @@ class EmployeeAttendanceContent extends Component
 
     public function mount()
     {
-        $this->setSortByField('date_clocked_in');
+        $this->setSortByField('first_time_in');
 
         date_default_timezone_set('Asia/Manila');
         $this->filename = 'Export ' . CommonHelpers::getCurrentModule()->name . ' - ' . date('Y-m-d H:i:s');
