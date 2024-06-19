@@ -27,22 +27,22 @@ use App\Livewire\Component\ModuleContents\EmployeeAccounts\Create as CreateEmplo
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [LoginAuthController::class, 'index']);
-// Login
-Route::get('login', [LoginAuthController::class, 'index'])->name('login_page');
-// Contact Us
-Route::get('contact-us', function(){return view('authentication.contact-us');})->name('contact-us');
-
-Route::post('login-account', [LoginAuthController::class, 'authenticate'])->name('login');
-
-Route::group(['middleware' => ['web']], function() {
-    // Login
+ // Login
+ Route::get('/', [LoginAuthController::class, 'index']);
+ // Login
+ Route::get('login', [LoginAuthController::class, 'index'])->name('login_page');
+ // Contact Us
+ Route::get('contact-us', function(){return view('authentication.contact-us');})->name('contact-us');
  
+ Route::post('login-account', [LoginAuthController::class, 'authenticate'])->name('login');
+
+ Route::middleware(['auth'])->group(function () {
+   
     // Logout
     Route::get('logout', [LoginAuthController::class, 'logout'])->name('logout');
-    // Backend
+
     // Dashboard
-    Route::get('dashboard', [DashboardContent::class, 'index'])->middleware('auth')->name('dashboard');
+    Route::get('dashboard', [DashboardContent::class, 'index']);
     // Employee Accounts
     Route::get('employee-accounts/create', [CreateEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.create');
     Route::get('employee-accounts/{userId}', [ShowEmployeeAccount::class, 'index'])->middleware('auth')->name('employee.show');
@@ -78,11 +78,11 @@ Route::group(['middleware' => ['web']], function() {
     Route::post(config('ad_url.ADMIN_PATH').'/menu_management/add', [MenusController::class, 'postAddSave'])->middleware('auth')->name('MenusControllerPostSaveMenu');
     Route::post(config('ad_url.ADMIN_PATH').'/menu_management/edit-menu-save/{id}', [MenusController::class, 'postEditSave'])->middleware('auth')->name('edit-menus-save');
 
-});
+ });
 
     //ADMIN ROUTE
     Route::group([
-        'middleware' => ['web'],
+        'middleware' => ['auth'],
         'prefix' => config('ad_url.ADMIN_PATH'),
         'namespace' => 'App\Http\Controllers\Admin',
     ], function () {
@@ -114,11 +114,11 @@ Route::group(['middleware' => ['web']], function() {
                 }
             }
         }
-    });
+    })->middleware('auth');
 
     //OTHERS ROUTE
     Route::group([
-        'middleware' => ['web'],
+        'middleware' => ['auth'],
         'prefix' => config('ad_url.ADMIN_PATH'),
         'namespace' => 'App\Http\Controllers',
     ], function () {
@@ -150,11 +150,11 @@ Route::group(['middleware' => ['web']], function() {
                 }
             }
         }
-    });
+    })->middleware('auth');
 
     //USERS ROUTE
     Route::group([
-        'middleware' => ['web'],
+        'middleware' => ['auth'],
         'prefix' => '',
         'namespace' => 'App\Livewire\Component\ModuleContents',
     ], function () {
@@ -176,5 +176,5 @@ Route::group(['middleware' => ['web']], function() {
                 }
             }
         }
-    });
+    })->middleware('auth');
 
