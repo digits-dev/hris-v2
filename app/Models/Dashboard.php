@@ -24,6 +24,7 @@ class Dashboard extends Model
                     });
             })
             ->where('id_ad_privileges', '!=', 1)
+            ->where('status', 1)
             ->count();
     }
 
@@ -44,6 +45,7 @@ class Dashboard extends Model
                     });
             })
             ->where('id_ad_privileges', '!=', 1)
+            ->where('status', 1)
             ->count();
     }
 
@@ -65,6 +67,7 @@ class Dashboard extends Model
                     ->whereDate('date_clocked_out', $date);
             })
             ->where('id_ad_privileges', '!=', 1)
+            ->where('status', 1)
             ->count();
     }
 
