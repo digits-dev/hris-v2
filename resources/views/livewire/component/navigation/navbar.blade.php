@@ -12,24 +12,25 @@
         @click="isProfileOpen=!isProfileOpen"
         @click.outside="isProfileOpen=false"
     >
-        @if (auth()->user()->image)
-            @php
-                $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
-                $isLandscape = false;
+        @auth
+            @if (auth()->user()->image)
+                @php
+                    $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
+                    $isLandscape = false;
 
-                if ($fileExists) {
-                    $profileImagePath = public_path('storage/' . auth()->user()->image);
-                    [$width, $height] = getimagesize($profileImagePath);
-                    $isLandscape = $width > $height;
-                }
-            @endphp
+                    if ($fileExists) {
+                        $profileImagePath = public_path('storage/' . auth()->user()->image);
+                        [$width, $height] = getimagesize($profileImagePath);
+                        $isLandscape = $width > $height;
+                    }
+                @endphp
 
-            <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
-                src="{{ asset('storage/' . auth()->user()->image) }}">
-        @else
-            <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
-        @endif
-
+                <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
+                    src="{{ asset('storage/' . auth()->user()->image) }}">
+            @else
+                <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
+            @endif
+        @endauth
     </div>
     <div class="setting-popup z-50"
          x-show="isProfileOpen"
@@ -37,25 +38,28 @@
          x-cloak
     >
         <div class="header-info">
-            @if (auth()->user()->image)
-                @php
-                $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
-                $isLandscape = false;
+            @auth
+                @if (auth()->user()->image)
+                    @php
+                    $fileExists = file_exists(public_path('storage/' . auth()->user()->image));
+                    $isLandscape = false;
 
-                if ($fileExists) {
-                    $profileImagePath = public_path('storage/' . auth()->user()->image);
-                    [$width, $height] = getimagesize($profileImagePath);
-                    $isLandscape = $width > $height;
-                }
-                @endphp
+                    if ($fileExists) {
+                        $profileImagePath = public_path('storage/' . auth()->user()->image);
+                        [$width, $height] = getimagesize($profileImagePath);
+                        $isLandscape = $width > $height;
+                    }
+                    @endphp
 
-                <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
-                src="{{ asset('storage/' . auth()->user()->image) }}">
-            @else
-                <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
-            @endif
+                    <img @style(['height:40px' => $isLandscape, 'max-width: unset' => $isLandscape]) alt="profile-picture" class="settings-image"
+                    src="{{ asset('storage/' . auth()->user()->image) }}">
+                @else
+                    <img class="settings-image" src="{{ asset('images/navigation/user.png') }}" width="40">
+                @endif
 
-            <p>{{auth()->user()->full_name}}</p>
+                <p>{{auth()->user()->full_name}}</p>
+            @endauth
+
         </div>
 
         <a href="{{route('profile')}}" class="logout-content">

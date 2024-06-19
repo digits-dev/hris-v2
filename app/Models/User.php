@@ -27,6 +27,7 @@ class User extends Authenticatable
         'last_name', 
         'email', 
         'employee_id', 
+        'status',
         'hire_location_id', 
         'hire_date',
         'image',

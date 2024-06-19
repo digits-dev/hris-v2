@@ -123,6 +123,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
+
     }
 
     @media screen and (min-width: 900px) {
@@ -183,6 +184,7 @@
   }
   .select2-container .select2-selection--single {
     height: 38px !important;
+    width: 100% !important;
     border-radius: 8px;
     border: 1px solid var(--stroke-color);
     padding:5px;
@@ -314,7 +316,7 @@
         {{-- Department  --}}
           <div>
             <label wire:ignore class="flex flex-col " for="department">Department
-              <select  class="text-primary-text select-2" id="department" wire:model.blur="form.department_id" data-livewire-property="form.department_id">
+              <select style="width:100%"  class="text-primary-text select-2" id="department" wire:model.blur="form.department_id" data-livewire-property="form.department_id">
                 <option selected value="">Select Department</option>
                 @foreach ($departments as $department)
                   <option value="{{ $department->id }}">{{ $department->department_name }}</option>
@@ -368,7 +370,7 @@
         {{-- System Privilege  --}}
           <div >
             <label wire:ignore class="flex flex-col" for="privilege">System Privilege
-              <select class="text-primary-text select-2" id="privilege"
+              <select style="width:100%" class="text-primary-text select-2" id="privilege"
                 wire:model.blur="form.id_ad_privileges" data-livewire-property="form.id_ad_privileges">
                 <option selected value="">Select System Privilege</option>
                 @foreach ($privileges as $privilege)
@@ -386,7 +388,7 @@
         {{-- Company  --}}
           <div >
             <label wire:ignore class="flex flex-col" for="company">Company
-              <select class="text-primary-text select-2" id="company" wire:model.blur="form.company_id" data-livewire-property="form.company_id">
+              <select style="width:100%" class="text-primary-text select-2" id="company" wire:model.blur="form.company_id" data-livewire-property="form.company_id">
                 <option selected value="">Select Company</option>
                 @foreach ($companies as $company)
                   <option value="{{ $company->id }}">{{ $company->company_name }}</option>
@@ -403,7 +405,7 @@
         {{-- Location  --}}
           <div >
             <label wire:ignore class="flex flex-col" for="location">Location
-              <select class="text-primary-text select-2" id="location"
+              <select style="width:100%" class="text-primary-text select-2" id="location"
                 wire:model.blur="form.hire_location_id" data-livewire-property="form.hire_location_id">
                 <option selected value="">Select Location</option>
                 @foreach ($locations as $location)
