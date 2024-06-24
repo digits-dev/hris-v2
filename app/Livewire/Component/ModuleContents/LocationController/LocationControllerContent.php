@@ -10,6 +10,7 @@ use App\Helpers\CommonHelpers;
 use App\Imports\ImportLocations;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LocationControllerContent extends Component
@@ -17,6 +18,7 @@ class LocationControllerContent extends Component
 
     use SortableTrait;
     use WithFileUploads;
+    use WithPagination;
 
     public $location_id;
     public $location_name;

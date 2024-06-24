@@ -10,6 +10,7 @@ use App\Helpers\CommonHelpers;
 use App\Imports\ImportCompanies;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyControllerContent extends Component
@@ -17,6 +18,7 @@ class CompanyControllerContent extends Component
 
     use SortableTrait;
     use WithFileUploads;
+    use WithPagination;
 
     public $company_id;
     public $company_name;

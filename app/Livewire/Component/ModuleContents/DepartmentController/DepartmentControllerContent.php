@@ -11,12 +11,14 @@ use App\Helpers\CommonHelpers;
 use App\Imports\ImportDepartments;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentControllerContent extends Component{
 
     use SortableTrait;
     use WithFileUploads;
+    use WithPagination;
 
     public $department_id;
     public $department_name;

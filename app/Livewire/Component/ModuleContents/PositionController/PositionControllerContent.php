@@ -7,11 +7,13 @@ use App\Models\Position;
 use Livewire\Attributes\Url;
 use App\Helpers\CommonHelpers;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination;
 
 class PositionControllerContent extends Component
 {
 
     use SortableTrait;
+    use WithPagination;
 
     public $position_id;
     public $position_name;
