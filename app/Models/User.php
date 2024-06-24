@@ -117,7 +117,8 @@ class User extends Authenticatable
 
 
     public function getFullnameAttribute(){
-        return "{$this->first_name} {$this->middle_name} {$this->last_name}";
+        $middleName = trim(strtolower($this->middle_name)) == 'n/a' ? '' : $this->middle_name;
+        return "{$this->first_name} {$middleName}  {$this->last_name}";
     }
 
     public function employeeLogs(){

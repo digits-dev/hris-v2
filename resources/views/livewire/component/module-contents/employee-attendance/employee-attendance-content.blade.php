@@ -447,7 +447,7 @@
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
                             <td class="first-name-col">{{ $employeeLog->first_name }}</td>
-                            <td class="middle-name-col">{{ $employeeLog->middle_name }}</td>
+                            <td class="middle-name-col">{{ trim(strtolower($employeeLog->middle_name)) == 'n/a' ? '' : $employeeLog->middle_name }}</td>
                             <td class="last-name-col">{{ $employeeLog->last_name }}</td>
                             <td class="company-col">{{ $employeeLog->company ?? '' }}</td>
                             <td class="hire-location-col">{{ $employeeLog->hire_location ?? '' }}</td>

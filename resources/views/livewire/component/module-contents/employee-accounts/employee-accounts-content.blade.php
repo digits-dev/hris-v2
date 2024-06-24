@@ -674,7 +674,7 @@
                                     alt="{{ $user->last_name }} picture"></td>
 
                             <td class="first-name-col">{{ $user->first_name }}</td>
-                            <td class="middle-name-col">{{ $user->middle_name }}</td>
+                            <td class="middle-name-col">{{ trim(strtolower($user->middle_name)) == 'n/a' ? '' : $user->middle_name }}</td>
                             <td class="last-name-col">{{ $user->last_name }}</td>
                             <td class="employee-id-col">{{ $user->employee_id }}</td>
                             <td class="email-col">{{ $user->email }} </td>
