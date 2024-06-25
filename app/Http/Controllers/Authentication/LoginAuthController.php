@@ -27,7 +27,7 @@ class LoginAuthController extends Controller
         ]);
         $users = DB::table("users")->where("email", $credentials['email'])->first();
         if(!$users){
-            $error = 'Email not found!';
+            $error = 'The provided credentials do not match our records';
             return redirect('login')->withErrors(['no_email' => $error]);
         }
         $session_details = self::getOtherSessionDetails($users->id_ad_privileges);
