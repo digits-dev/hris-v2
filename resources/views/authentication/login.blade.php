@@ -291,12 +291,16 @@
                             <button>Login</button>
                         </div>
                         <div class="error_message">
+                            @if ($errors->has('no_email'))
+                                <span class="text-danger">{{ $errors->first('no_email') }}</span>
+                            @endif
                             @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
                             @if ($errors->has('no_priv'))
                                 <span class="text-danger">{{ $errors->first('no_priv') }}</span>
                             @endif
+                            
                             @if ($errors->has('acc_deact'))
                                 <span class="text-danger">{{ $errors->first('acc_deact') }}</span>
                             @endif

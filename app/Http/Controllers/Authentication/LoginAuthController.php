@@ -26,6 +26,10 @@ class LoginAuthController extends Controller
             'password' => ['required'],
         ]);
         $users = DB::table("users")->where("email", $credentials['email'])->first();
+        if(!$users){
+            $error = 'Email not found!';
+            return redirect('login')->withErrors(['no_email' => $error]);
+        }
         $session_details = self::getOtherSessionDetails($users->id_ad_privileges);
 
         if(!$users->id_ad_privileges){
@@ -48,9 +52,9 @@ class LoginAuthController extends Controller
             return redirect()->intended('dashboard');
         }
         return back()->withErrors([
-            'mobile_number' => 'The provided credentials do not match our records',
+            'email' => 'The provided credentials do not match our records',
             'password' => 'Incorrect email or password'
-        ])->onlyInput(['mobile_number', 'password']);
+        ])->onlyInput(['email', 'password']);
     }
 
     public function getOtherSessionDetails($id){
