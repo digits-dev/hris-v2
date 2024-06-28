@@ -11,18 +11,18 @@
     /* 1st Col  */
     .table th:nth-child(1), .table td:nth-child(1){
         width: 40%;
-        width: auto;
+        /* width: auto; */
     }
 
     /* 2nd Col */
     .table th:nth-child(2), .table td:nth-child(2){
         width: 40%;
-        width: auto;
+        /* width: auto; */
     }
     /* 3rd Col */
     .table th:nth-child(3), .table td:nth-child(3){
         width: 20%;
-        width: auto;
+        /* width: auto; */
     }
     /* End of Table Column Widths  */
 
@@ -127,7 +127,7 @@
 
         @else
 
-            <table class="table">
+            <table class="table" wire:loading.class="hidden">
                 <thead>
                 <tr>
                     <x-sortable-table-header colName="position_name" displayName="Position Name" mxAuto />
@@ -140,7 +140,7 @@
                 </tr>
                 </thead>
 
-                <tbody wire:loading.class="hidden">
+                <tbody >
                     @foreach ($positions as $position)
                         <tr >
                             <td>{{ $position->position_name }}</td>
@@ -160,10 +160,56 @@
                 </tbody>
             </table>
             
-            {{-- Loading  --}}
-            <div wire:loading class="loading-container"  >
-                <svg class="animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#3b5c61" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg>
+
+            {{-- TABLE LOADING ------------------------------------------------------------------------- --}}
+            <div class="table-container" wire:loading>
+                @php
+                    $dummyBody = array_fill(0, 5, 'loading');
+                    $dummyHead = array_fill(0, 2, 'heading');
+                @endphp
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @foreach ($dummyHead as $header)
+                                <th>&nbsp;</th>
+                            @endforeach
+
+                            @if(App\Helpers\CommonHelpers::isUpdate('positions'))
+
+                            <th>&nbsp;</th>
+        
+                            @endif
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach ($dummyBody as $index => $loading)
+
+                        <tr wire:key="{{$index}}">
+                            <td>
+                                <div class="animate-pulse h-3 w-1/2 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+
+                            <td> 
+                                <div class="animate-pulse h-7 w-20 bg-slate-700 rounded-full mx-auto"></div>
+                            </td>
+
+                            @if(App\Helpers\CommonHelpers::isUpdate('positions'))
+                                <td >                                         
+                                    <div class="  animate-pulse rounded-sm bg-slate-700 h-5 w-5 mx-auto"></div>
+                                </td>
+
+                            @endif
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
             </div>
+            {{-- END OF TABLE LOADING ------------------------------------------------------------------------- --}}
+        
 
         @endif
 

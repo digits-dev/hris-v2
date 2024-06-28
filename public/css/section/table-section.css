@@ -315,14 +315,16 @@ input[type="checkbox"]:checked::after {
     font-family: "Inter", sans-serif;
 }
 
-.loading-container {
-    width: 100%;
-    padding: 120px 0;
-    text-align: center;
-    background-color: rgb(243 244 246);
-    font-weight: 600;
-    border-radius: 5px;
-    color: var(--primary-color);
-    font-family: "Inter", sans-serif;
-    margin-top:-30px;
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+      to {
+        transform: rotate(360deg);
+    }
 }

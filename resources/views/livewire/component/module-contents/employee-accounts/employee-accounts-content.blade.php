@@ -1,9 +1,7 @@
 @section('css')
-
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-
         /* Table Column Widths  */
         .checkbox-col {
             min-width:50px;
@@ -617,35 +615,34 @@
             <p>No data available in table</p>
         </div>
     @else
-        <div class="table-container">
+        <div class="table-container" wire:loading.remove>
             <table class="table">
                 <thead>
                     <tr>
-                        @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
-                            <th class="checkbox-col"><input wire:model.live="selectedAll" type="checkbox" name="" id=""></th>
+                        @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                            <th class="checkbox-col"><input wire:model.live="selectedAll" type="checkbox"
+                                    name="" id=""></th>
                         @endif
 
                         <th></th>
 
                          @foreach ($colHeaders as $header)
-                            <x-sortable-table-header
-                            :colName="$header['colName']"
-                            :displayName="$header['displayName']"
+                            <x-sortable-table-header :colName="$header['colName']" :displayName="$header['displayName']"
                             class="{{ $header['class'] }}" />
                         @endforeach
 
-                        @if(App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                        @if (App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                             <th class="action-col">Action</th>
                         @endif
                     </tr>
                 </thead>
 
-                <tbody wire:loading.class="hidden">
+                <tbody>
 
                     @foreach ($users as $user)
                         <tr wire:key="{{ $user->id }}">
 
-                            @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                            @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                 @if ($selectedAll)
                                     <td class="checkbox-col">
                                         <input type="checkbox" value="{{ $user->id }}" checked>
@@ -657,11 +654,13 @@
                                 @endif
                             @endif
 
-                            <td class="image-col"><img class="user-img" src="{{$user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png')}}" width="30"
-                                    alt="{{ $user->last_name }} picture"></td>
+                            <td class="image-col"><img class="user-img"
+                                    src="{{ $user->image ? asset('storage/' . $user->image) : asset('/images/navigation/user.png') }}"
+                                    width="30" alt="{{ $user->last_name }} picture"></td>
 
                             <td class="first-name-col">{{ $user->first_name }}</td>
-                            <td class="middle-name-col">{{ trim(strtolower($user->middle_name)) == 'n/a' ? '' : $user->middle_name }}</td>
+                            <td class="middle-name-col">
+                                {{ trim(strtolower($user->middle_name)) == 'n/a' ? '' : $user->middle_name }}</td>
                             <td class="last-name-col">{{ $user->last_name }}</td>
                             <td class="employee-id-col">{{ $user->employee_id }}</td>
                             <td class="email-col">{{ $user->email }} </td>
@@ -676,36 +675,133 @@
 
 
 
-                            @if(App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
-
+                            @if (App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                 <td class="action-col">
 
                                     <div class="table-btns">
-                                        @if(App\Helpers\CommonHelpers::isRead('employee-accounts'))
+                                        @if (App\Helpers\CommonHelpers::isRead('employee-accounts'))
                                             <a role="button" href="{{ route('employee.show', $user->id) }}"
                                                 class="table-btn table-btn--blue"><i class="fa-solid fa-eye"></i></a>
                                         @endif
 
-                                        @if(App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                                        @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
                                             <a role="button" href="{{ route('employee.edit', $user->id) }}"
-                                                class="table-btn table-btn--green"><i class="fa-solid fa-pencil"></i></a>
+                                                class="table-btn table-btn--green"><i
+                                                    class="fa-solid fa-pencil"></i></a>
                                         @endif
                                     </div>
 
                                 </td>
-
                             @endif
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
 
-            {{-- Loading  --}}
-            <div wire:loading class="loading-container">
-                <svg class="animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#3b5c61" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg>
+        {{-- TABLE LOADING ---------------------------------------------------------------------------}}
+
+        @php
+            $dummyBody = array_fill(0, 5, 'loading');
+            $dummyHead = array_fill(0, 11, 'heading');
+        @endphp
+
+        <div class="table-container" wire:loading>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                            <th>&nbsp;</th>
+                        @endif
+
+                        <th></th>
+
+                        @foreach ($dummyHead as $header)
+                            <th>&nbsp;</th>
+                        @endforeach
+
+                        @if (App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                            <th>&nbsp;</th>
+                        @endif
+                    </tr>
+                </thead>
+
+                <tbody >
+
+                    @foreach ($dummyBody as $index => $loading)
+                        <tr wire:key="{{ $index }} ">
+
+                            @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                                <td class="checkbox-col">
+                                    <div class="  animate-pulse h-4 w-4 bg-slate-700 rounded"></div>
+                                </td>
+                            @endif
+
+                            <td class="image-col">
+                                <div class=" animate-pulse rounded-full bg-slate-700 h-8 w-8"></div>
+                            </td>
+
+                            <td class="first-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="middle-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="last-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="employee-id-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="email-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="company-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="department-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="hire-location-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="hire-date-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="position-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="status-col">
+                                <div class="  animate-pulse h-7 w-3/4 bg-slate-700 rounded-full mx-auto"></div>
+                            </td>
+
+
+                            @if (App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                                <td class="action-col">
+
+                                    <div class="table-btns">
+                                        @if (App\Helpers\CommonHelpers::isRead('employee-accounts'))
+                                            <div class="  animate-pulse rounded-sm bg-slate-700 h-5 w-5 mx-1"></div>
+                                        @endif
+
+                                        @if (App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                                            <div class="  animate-pulse rounded-sm bg-slate-700 h-5 w-5"></div>
+                                        @endif
             </div>
         
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+
+                </tbody>
+
+            </table>
         </div>
+
+        {{-- END OF TABLE LOADING ---------------------------------------------------------------------------}}
+        
     @endif
 
 
@@ -716,7 +812,5 @@
 </section>
 
 @section('script')
-<script>
-
-</script>
+    <script></script>
 @endsection

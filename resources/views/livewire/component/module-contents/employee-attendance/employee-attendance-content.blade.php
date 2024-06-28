@@ -1,9 +1,7 @@
 @section('css')
-
     <link rel="stylesheet" href="{{ asset('css/section/table-section.css') }}">
 
     <style>
-
         /* Override section table css */
         @media screen and (min-width: 800px) {
             .section-header {
@@ -415,7 +413,7 @@
             <p>No data available in table</p>
         </div>
     @else
-        <div class="table-container">
+        <div class="table-container" wire:loading.remove>
             <table class="table">
                 <thead>
                  <tr>
@@ -436,18 +434,20 @@
                         @endif
                     @endforeach
 
-                    @if(App\Helpers\CommonHelpers::isRead('employee-attendance'))
+                        @if (App\Helpers\CommonHelpers::isRead('employee-attendance'))
                         <th class="action-col">Action</th>
                     @endif
 
                  </tr>
                 </thead>
 
-                <tbody wire:loading.class="hidden">
+                <tbody>
                     @foreach ($employeeLogs as $employeeLog)
                         <tr>
                             <td class="first-name-col">{{ $employeeLog->first_name }}</td>
-                            <td class="middle-name-col">{{ trim(strtolower($employeeLog->middle_name)) == 'n/a' ? '' : $employeeLog->middle_name }}</td>
+                            <td class="middle-name-col">
+                                {{ trim(strtolower($employeeLog->middle_name)) == 'n/a' ? '' : $employeeLog->middle_name }}
+                            </td>
                             <td class="last-name-col">{{ $employeeLog->last_name }}</td>
                             <td class="company-col">{{ $employeeLog->company ?? '' }}</td>
                             <td class="hire-location-col">{{ $employeeLog->hire_location ?? '' }}</td>
@@ -455,8 +455,8 @@
                             {{-- Time in Location  --}}
                             <td class="time-in-locations-col">
                                 @php
-                                    $currentLocationIdsIn = explode(",", $employeeLog->combined_terminal_in_ids);
-                                    $currentLocationIdsOut = explode(",", $employeeLog->combined_terminal_out_ids);
+                                    $currentLocationIdsIn = explode(',', $employeeLog->combined_terminal_in_ids);
+                                    $currentLocationIdsOut = explode(',', $employeeLog->combined_terminal_out_ids);
                                     $allLocations = array_merge($currentLocationIdsIn, $currentLocationIdsOut);
                                 @endphp
 
@@ -477,11 +477,13 @@
                             <td class="bio-duration-col">{{ $employeeLog->bio_duration }}</td>
                             <td class="filo-duration-col">{{ $employeeLog->filo_duration }}</td>
 
-                            @if(App\Helpers\CommonHelpers::isRead('employee-attendance'))
+                            @if (App\Helpers\CommonHelpers::isRead('employee-attendance'))
                                 <td class="action-col">
                                     <div class="table-btns">
-                                        <a role="button" href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
-                                            class="table-btn table-btn--blue mx-auto"><i class="fa-solid fa-eye"></i></a>
+                                        <a role="button"
+                                            href="{{ route('employee-attendance.show', $employeeLog->employee_id) }}"
+                                            class="table-btn table-btn--blue mx-auto"><i
+                                                class="fa-solid fa-eye"></i></a>
                                     </div>
 
                                 </td>
@@ -491,13 +493,89 @@
                 </tbody>
 
             </table>
-
-            {{-- Loading  --}}
-            <div wire:loading class="loading-container">
-                <svg class="animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#3b5c61" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg>
             </div>
 
+
+        {{-- TABLE LOADING ------------------------------------------------------------------------- --}}
+
+        <div class="table-container" wire:loading>
+            @php
+                $dummyBody = array_fill(0, 5, 'loading');
+                $dummyHead = array_fill(0, 11, 'heading');
+            @endphp
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        @foreach ($dummyHead as $header)
+                            <th>&nbsp;</th>
+                        @endforeach
+
+                        @if (App\Helpers\CommonHelpers::isRead('employee-accounts') || App\Helpers\CommonHelpers::isUpdate('employee-accounts'))
+                            <th>&nbsp;</th>
+                        @endif
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach ($dummyBody as $index => $loading)
+                        <tr wire:key="{{ $index }} ">
+
+                            <td class="first-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="middle-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="last-name-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="company-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+                            <td class="hire-location-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+
+                            <td class="time-in-locations-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded"></div>
+                            </td>
+
+                            <td class="first-time-in-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="last-time-out-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="date-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="bio-duration-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+                            <td class="filo-duration-col">
+                                <div class="  animate-pulse h-3 w-3/4 bg-slate-700 rounded mx-auto"></div>
+                            </td>
+
+                            @if (App\Helpers\CommonHelpers::isRead('employee-attendance'))
+                                <td class="action-col">
+                                    <div class="table-btns">
+                                        <div class="  animate-pulse rounded-sm bg-slate-700 h-5 w-5 mx-auto"></div>
+                                    </div>
+                                </td>
+                            @endif
+
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
         </div>
+
+        {{-- END OF TABLE LOADING ------------------------------------------------------------------------- --}}
+
+
     @endif
     <div class="pagination">
     {{ $employeeLogs->links() }}
